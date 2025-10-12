@@ -10,12 +10,16 @@ import java.util.List;
 public class Player {
     private String name;
     private ProfessionType profession;
-    private Hand hand;
+    private final Hand hand;
     private List<PokemonCard> team;
 
     private final int MAX_POKEMON = 6;
     private int position = 0;
     private int coin = 0;
+    private int badges = 0;
+    private int redBall = 4;
+    private int greatBall = 0;
+    private int hyperBall = 0;
 
 
     public Player(String name, ProfessionType profession) {
@@ -98,5 +102,36 @@ public class Player {
 
     public int getMaxPokemon() {
         return MAX_POKEMON;
+    }
+
+    public int getBadges() {
+        return badges;
+    }
+
+    public void setBadges(int badges) {
+        this.badges = badges;
+    }
+
+    public int getRedBall() {
+        return redBall;
+    }
+    public void setRedBall(int redBall) {
+        this.redBall = redBall;
+    }
+
+    public int getGreatBall() {
+        return greatBall;
+    }
+
+    public void setGreatBall(int greatBall) {
+        this.greatBall = greatBall;
+    }
+
+    public int getHyperBall() {
+        return hyperBall;
+    }
+
+    public void setHyperBall(int hyperBall) {
+        this.hyperBall = hyperBall;
     }
 }
