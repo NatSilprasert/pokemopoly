@@ -8,6 +8,7 @@ public abstract class PokemonCard implements Card {
     private final int price;
     private int hp;
     private int power;
+    private boolean isAlive = true;
 
     public PokemonCard(String id, String name, String description, int hp, int power, int price) {
         this.id = id;
@@ -41,5 +42,13 @@ public abstract class PokemonCard implements Card {
 
     public int getPrice() {
         return price;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 }
