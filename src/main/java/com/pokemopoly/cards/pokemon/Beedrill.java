@@ -3,7 +3,7 @@ package com.pokemopoly.cards.pokemon;
 import com.pokemopoly.cards.PokemonCard;
 
 public class Beedrill extends PokemonCard {
-    public Beedrill(String id, String name, String description, int hp, int power, int price) {
+    public Beedrill() {
         super("P015",
                 "Beedrill",
                 "Beedrill is a Bug/Flying type Pokémon introduced in Generation 1.",

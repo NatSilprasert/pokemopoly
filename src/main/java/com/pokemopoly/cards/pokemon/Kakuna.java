@@ -6,7 +6,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 
 public class Kakuna extends PokemonCard implements Evolvable, BattleAbility {
-    public Kakuna(String id, String name, String description, int hp, int power, int price) {
+    public Kakuna() {
         super("P014",
                 "Kakuna",
                 "Kakuna is a Bug/Poison type Pokémon introduced in Generation 1.",
@@ -23,12 +23,7 @@ public class Kakuna extends PokemonCard implements Evolvable, BattleAbility {
 
     @Override
     public PokemonCard evolve() {
-        return new Beedrill("P015",
-                "Beedrill",
-                "Beedrill is a Bug/Flying type Pokémon introduced in Generation 1.",
-                11,
-                10,
-                6);
+        return new Beedrill(); //Edit 10/29/68
     }
     //Create 10/23/68
 }

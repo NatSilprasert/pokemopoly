@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Butterfree extends PokemonCard implements PreRollAbility {
-    public Butterfree(String id, String name, String description, int hp, int power, int price) {
+    public Butterfree() {
         super(
                 "P012",
                 "Butterfree",

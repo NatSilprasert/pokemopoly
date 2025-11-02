@@ -5,7 +5,7 @@ import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 
 public class Bulbasaur extends PokemonCard implements Evolvable {
 
-    public Bulbasaur(String id, String name, String description, int hp, int power, int price) {
+    public Bulbasaur() {
         super(
                 "P001",
                 "bulbasaur",
@@ -18,12 +18,7 @@ public class Bulbasaur extends PokemonCard implements Evolvable {
 
     @Override
     public PokemonCard evolve() {
-        return new Ivysaur("P002",
-                "Ivysaur",
-                "Ivysaur is a Grass/Poison type Pokémon introduced in Generation 1.",
-                12,
-                8,
-                6);
+        return new Ivysaur(); //Edit 10/29/68
     }
     //Create 10/23/68
 }

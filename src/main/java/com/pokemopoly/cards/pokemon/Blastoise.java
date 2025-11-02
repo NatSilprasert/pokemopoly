@@ -6,7 +6,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 public class Blastoise extends PokemonCard implements BattleAbility {
 
-    public Blastoise(String id, String name, String description, int hp, int power, int price) {
+    public Blastoise() {
         super("P009","Blastoise",
                 "Blastoise is a Water type Pokémon introduced in Generation 1.",
                 15,

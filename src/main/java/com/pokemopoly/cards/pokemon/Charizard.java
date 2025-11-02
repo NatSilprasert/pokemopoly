@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Charizard extends PokemonCard implements PreRollAbility {
 
-    public Charizard(String id, String name, String description, int hp, int power, int price) {
+    public Charizard() {
         super("P006","Charizard",
                 "Charizard is a Fire/Flying type Pokémon introduced in Generation 1.",
                 14,

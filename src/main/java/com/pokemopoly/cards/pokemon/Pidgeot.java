@@ -7,14 +7,14 @@ import com.pokemopoly.player.Player;
 
 public class Pidgeot extends PokemonCard implements PreRollAbility {
 
-    public Pidgeot(String id, String name, String description, int hp, int power, int price) {
+    public Pidgeot() {
         super("P018",
                 "Pidgeot",
                 "Pidgeot is a Normal/Flying type Pokémon introduced in Generation 1.",
                 14,
                 14,
                 8);
-    }
+    } //Edit 10/29/68
 
     @Override
     public void usePreRollPassive(Game game) {

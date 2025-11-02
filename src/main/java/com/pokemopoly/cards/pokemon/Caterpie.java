@@ -4,7 +4,7 @@ import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 
 public class Caterpie extends PokemonCard implements Evolvable {
-    public Caterpie(String id, String name, String description, int hp, int power, int price) {
+    public Caterpie() {
         super("P010",
                 "Caterpie",
                 "Caterpie is a Bug type Pokémon introduced in Generation 1.",
@@ -15,12 +15,7 @@ public class Caterpie extends PokemonCard implements Evolvable {
 
     @Override
     public PokemonCard evolve() {
-        return new Metapod("P011",
-                "Metapod",
-                "Metapod is a Bug type Pokémon introduced in Generation 1.",
-                10,
-                2,
-                2);
+        return new Metapod(); //Edit 10/29/68
     }
     //Create 10/23/68
 }

@@ -6,7 +6,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 
 public class Metapod extends PokemonCard implements Evolvable, BattleAbility {
-    public Metapod(String id, String name, String description, int hp, int power, int price) {
+    public Metapod() {
         super("P011",
                 "Metapod",
                 "Metapod is a Bug type Pokémon introduced in Generation 1.",
@@ -17,12 +17,7 @@ public class Metapod extends PokemonCard implements Evolvable, BattleAbility {
 
     @Override
     public PokemonCard evolve() {
-        return new Butterfree("P012",
-                "Butterfree",
-                "Butterfree is a Bug/Flying type Pokémon introduced in Generation 1.",
-                12,
-                7,
-                6);
+        return new Butterfree(); //Edit 10/29/68
     }
 
     @Override

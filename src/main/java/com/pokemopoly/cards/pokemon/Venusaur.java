@@ -7,7 +7,7 @@ import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
 import java.util.Scanner;
 
 public class Venusaur extends PokemonCard implements PreRollAbility {
-    public Venusaur(String id, String name, String description, int hp, int power, int price) {
+    public Venusaur() {
         super(
                 "P003",
                 "Venusaur",

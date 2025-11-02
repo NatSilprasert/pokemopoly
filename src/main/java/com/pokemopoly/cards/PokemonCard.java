@@ -13,6 +13,7 @@ public abstract class PokemonCard implements Card {
     private boolean isAlive = true;
     private Player owner;
     private boolean burned = false;
+    private boolean paralyzed = false; //Edited 10/29/68
 
 
     public PokemonCard(String id, String name, String description, int hp, int power, int price) {
@@ -80,4 +81,17 @@ public abstract class PokemonCard implements Card {
             System.out.println(name + " has fainted!");
         }
     } //Edit 10/23/68
+
+    public boolean isParalyzed() {
+        return paralyzed;
+    }
+
+    public void setParalyzed(boolean paralyzed) {
+        this.paralyzed = paralyzed;
+        if (paralyzed) {
+            System.out.println(name + " is paralyzed! It may not move next turn ⚡");
+        } else {
+            System.out.println(name + " is no longer paralyzed.");
+        }
+    } //Edited 10/29/68
 }
