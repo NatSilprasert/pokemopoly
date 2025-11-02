@@ -21,7 +21,7 @@ public class Board {
         player.setPosition(newPos);
 
         Tile tile = getTileAt(newPos);
-        tile.onLand(player, game);
+        tile.moveIn(player, game);
     }
 
     public int getSize() {

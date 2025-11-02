@@ -148,7 +148,6 @@ public class Game {
             System.out.println(currentPlayer.getName() + " rolled a " + n + "!");
             board.movePlayer(currentPlayer, n, this);
             currentPlayer.move(n);
-            // todo check player in the same tile
 
             turn++;
         }
