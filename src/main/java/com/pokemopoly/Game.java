@@ -200,6 +200,12 @@ public class Game {
                 daycareTile.walkPass(currentPlayer, this);
             }
 
+            // Check if walk pass start tile
+            if (currentPlayer.getPosition() + n >= 40) {
+                StartTile startTile = (StartTile) board.getTileAt(0);
+                startTile.walkPass(currentPlayer, this);
+            }
+
             board.movePlayer(currentPlayer, n, this);
             currentPlayer.move(n);
 
