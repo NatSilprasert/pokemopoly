@@ -192,6 +192,7 @@ public class Game {
 
             // roll dice
             int n = rollDice();
+            currentPlayer.setLastRoll(n);
             System.out.println(currentPlayer.getName() + " rolled a " + n + "!");
 
             checkAdditionalConditions(currentPlayer, n);

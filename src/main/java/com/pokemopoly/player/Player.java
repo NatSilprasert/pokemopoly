@@ -24,7 +24,7 @@ public class Player {
     private boolean badge1 = false;
     private boolean badge2 = false;
     private boolean skipTurn = false;
-
+    private int lastRoll = 0;
 
     public Player(String name, ProfessionType profession) {
         setName(name);
@@ -163,4 +163,13 @@ public class Player {
     public void setSkipTurn(boolean skipTurn) {
         this.skipTurn = skipTurn;
     } //Edit 10/23/68
+
+    public int getLastRoll() {
+        return lastRoll;
+    }
+
+    public void setLastRoll(int lastRoll) {
+        this.lastRoll = lastRoll;
+    }
+    // Edited 11/2/68
 }

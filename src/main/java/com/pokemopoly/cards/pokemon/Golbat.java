@@ -19,4 +19,5 @@ public class Golbat extends PokemonCard implements BattleAbility {
         //Wait Battle Class
         //Inner Focus
     }
+    //Create 11/2/68
 }

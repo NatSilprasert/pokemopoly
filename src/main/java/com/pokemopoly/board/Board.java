@@ -17,14 +17,13 @@ public class Board {
     }
 
     public void movePlayer(Player player, int steps, Game game) {
-        int newPos = (player.getPosition() + steps) % tiles.size();
-        player.setPosition(newPos);
 
-        Tile tile = getTileAt(newPos);
-        tile.moveIn(player, game);
     }
 
     public int getSize() {
         return tiles.size();
+    }
+
+    public void blockTile(int currentPosition, int size) {
     }
 }

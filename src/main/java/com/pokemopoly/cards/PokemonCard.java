@@ -104,4 +104,8 @@ public abstract class PokemonCard implements Card {
             System.out.println(name + " is no longer paralyzed.");
         }
     } //Edited 10/29/68
+
+    public void setPower(int newPower) {
+
+    }
 }

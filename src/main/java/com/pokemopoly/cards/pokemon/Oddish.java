@@ -17,7 +17,7 @@ public class Oddish extends PokemonCard implements Evolvable , BattleAbility {
 
     @Override
     public PokemonCard evolve() {
-        return null;
+        return new Gloom();
     }
 
     @Override
@@ -25,4 +25,5 @@ public class Oddish extends PokemonCard implements Evolvable , BattleAbility {
         //Waiting Battle Class
         //Growth
     }
+    //Create 11/2/68
 }
