@@ -4,7 +4,7 @@ import com.pokemopoly.Game;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
 
-public class Alakazam extends PokemonCard implements PreRollAbility {
+public class Alakazam extends PokemonCard {
     public Alakazam() {
         super("P065",
                 "Alakazam",
@@ -14,8 +14,4 @@ public class Alakazam extends PokemonCard implements PreRollAbility {
                 8);
     }
 
-    @Override
-    public void usePreRollPassive(Game game) {
-        //Magic Guard
-    }
 }

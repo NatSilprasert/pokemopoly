@@ -16,6 +16,7 @@ public class Arcanine extends PokemonCard implements BattleAbility {
 
     @Override
     public void useBattlePassive(Battle battle) {
-        //intimidate
+        PokemonCard opponentPokemon = battle.getOpponentPokemon(this);
+        opponentPokemon.setPower(opponentPokemon.getPower() - 2);
     }
 }
