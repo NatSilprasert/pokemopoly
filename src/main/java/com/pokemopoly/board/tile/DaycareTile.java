@@ -5,6 +5,7 @@ import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 import com.pokemopoly.player.Player;
+import com.pokemopoly.player.ProfessionType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class DaycareTile extends Tile {
-    private Map<Player, PokemonCard> hatch = new HashMap<>();
+    private Map<Player, PokemonCard> hatch = new HashMap<Player, PokemonCard>();
 
     public DaycareTile(String name, int index) {
         super(name, index);
@@ -20,6 +21,36 @@ public class DaycareTile extends Tile {
 
     public void onLand(Player player, Game game) {
         System.out.println(player.getName() + " landed on " + name + "!");
+
+        Scanner scanner = new Scanner(System.in);
+
+        if (player.getProfession() == ProfessionType.ROCKET && !hatch.isEmpty() && !player.isTeamFull()) {
+            Map<Integer, Player> indexToPlayer = new HashMap<>();
+            int i = 1;
+            for (Map.Entry<Player, PokemonCard> entry : hatch.entrySet()) {
+                System.out.println(i + ": " + entry.getValue().getName());
+                indexToPlayer.put(i, entry.getKey());
+                i++;
+            }
+
+            System.out.print("Enter ID: ");
+
+            int choice = scanner.nextInt();
+
+            if (!indexToPlayer.containsKey(choice)) {
+                System.out.println("Invalid choice!");
+            }
+            else {
+                Player keyPlayer = indexToPlayer.get(choice);
+                PokemonCard stolen = hatch.get(keyPlayer);
+
+                player.addPokemon(stolen);
+                hatch.remove(keyPlayer);
+
+                System.out.println("You stole " + stolen.getName() + "!");
+            }
+        }
+
         List<PokemonCard> evolvablePokemons = player.getTeam().stream()
                 .filter(p -> p instanceof Evolvable)
                 .toList();
@@ -31,7 +62,6 @@ public class DaycareTile extends Tile {
             }
         }
 
-        Scanner scanner = new Scanner(System.in);
         int choice = -1;
 
         while (true) {

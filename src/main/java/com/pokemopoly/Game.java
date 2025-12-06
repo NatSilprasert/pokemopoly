@@ -181,7 +181,7 @@ public class Game {
                         ability.usePreRollPassive(this);
                         break;
                     }
-                } // Edit 10/24/68
+                }
             }
             else if (choice == 3) {
                 // todo
@@ -198,7 +198,6 @@ public class Game {
             checkAdditionalConditions(currentPlayer, n);
 
             board.movePlayer(currentPlayer, n, this);
-            currentPlayer.move(n);
 
             turn++;
         }

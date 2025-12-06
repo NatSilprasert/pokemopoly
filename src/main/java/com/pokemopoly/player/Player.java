@@ -3,6 +3,8 @@ package com.pokemopoly.player;
 import com.pokemopoly.board.Board;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.cards.PokemonCard;
+import com.pokemopoly.cards.PokemonType;
+import com.pokemopoly.cards.pokemon.Ditto;
 import com.pokemopoly.cards.pokemon.Pikachu;
 import com.pokemopoly.cards.pokemon.Rattata;
 
@@ -38,9 +40,9 @@ public class Player {
             // Damage += 2
         }
         else if (profession == ProfessionType.FISHER) {
-            // addPokemon(new Magikarp());
-            // Steal other player's item
-            // evo 1 water pokemon after walk complete round
+            addPokemon(new Magikarp());
+            // HP water += 3
+            // Damage water += 3
         }
         else if (profession == ProfessionType.ROCKET) {
             addPokemon(new Rattata());
@@ -48,18 +50,32 @@ public class Player {
             // Steal other player's pokemon if walk land on daycare center
         }
         else if (profession == ProfessionType.SCIENTIST) {
-            // addPokemon(new Metamon());
-            // Damage += 1 for lightning/metal pokemon
-            // HP += ??
+            addPokemon(new Ditto());
+            // Damage += 1
+            // HP += 1
         }
     }
 
-    public void move(int n) {
-        setPosition(getPosition() + n);
+    public boolean isTeamFull() {
+        return team.size() == MAX_POKEMON;
     }
 
     public void addPokemon(PokemonCard pokemon) {
-        if (team.size() != MAX_POKEMON) team.add(pokemon);
+        if (!isTeamFull()) {
+            if (profession == ProfessionType.TRAINER) {
+                pokemon.setPower(pokemon.getPower() + 2);
+            }
+            if (profession == ProfessionType.SCIENTIST) {
+                pokemon.setPower(pokemon.getPower() + 1);
+                pokemon.setHp(pokemon.getHp() + 1);
+            }
+            if (profession == ProfessionType.FISHER && pokemon.getTypes().contains(PokemonType.WATER)) {
+                pokemon.setPower(pokemon.getPower() + 3);
+                pokemon.setHp(pokemon.getHp() + 3);
+            }
+
+            team.add(pokemon);
+        }
         else System.out.println("You have reached the maximum amount of pokemons");
     }
 
@@ -129,7 +145,7 @@ public class Player {
     }
 
     public void setBadges2() {
-        this.badge1 = true;
+        this.badge2 = true;
     }
 
     public int getRedBall() {
