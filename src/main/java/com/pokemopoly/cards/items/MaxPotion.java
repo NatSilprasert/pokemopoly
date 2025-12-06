@@ -8,9 +8,9 @@ import com.pokemopoly.player.Player;
 import java.util.List;
 import java.util.Scanner;
 
-public class Super_Potion extends ItemCard {
-    public Super_Potion() {
-        super("I002", "Super Potion", "Restore 5 HP to one Pokémon in your team.");
+public class MaxPotion extends ItemCard {
+    public MaxPotion() {
+        super("I003", "Max Potion", "Restore 15 HP to one Pokémon in your team.");
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Super_Potion extends ItemCard {
             return;
         }
 
-        System.out.println("Choose a Pokémon to heal (+5 HP):");
+        System.out.println("Choose a Pokémon to heal (+15 HP):");
         for (int i = 0; i < team.size(); i++) {
             PokemonCard p = team.get(i);
             System.out.println((i + 1) + ". " + p.getName() +
@@ -46,7 +46,7 @@ public class Super_Potion extends ItemCard {
         int newHp = Math.min(selected.getHp() + 5, selected.getMaxHp()); // เติมเลือด
         selected.setHp(newHp);
 
-        System.out.println("🧪 Potion used on " + selected.getName() + "!");
+        System.out.println("🧪 Max Potion used on " + selected.getName() + "!");
         System.out.println("HP: " + oldHp + " → " + newHp);
     }
 }

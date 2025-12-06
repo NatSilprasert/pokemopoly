@@ -8,8 +8,8 @@ import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 import java.util.List;
 import java.util.Scanner;
 
-public class Rare_Candy extends ItemCard {
-    public Rare_Candy() {
+public class RareCandy extends ItemCard {
+    public RareCandy() {
         super("I017",
                 "Rare Candy",
                 "Choose 1 Pokémon to evolve!");
