@@ -221,8 +221,8 @@ public class Game {
         itemDeck.addCard(new Revive());
 
         Deck<EventCard> eventDeck = new Deck<>();
-        eventDeck.addCard(new EventCard("E001", "You found 100 coins!", "My description"));
-        eventDeck.addCard(new EventCard("E002", "Wild Pokémon appears!", "My description"));
+        //eventDeck.addCard(new EventCard("E001", "You found 100 coins!", "My description"));
+        //eventDeck.addCard(new EventCard("E002", "Wild Pokémon appears!", "My description"));
 
         Deck<QuestCard> questDeck = new Deck<>();
         questDeck.addCard(new QuestCard("Q001", "Catch 3 Pokémon", "Do it"));

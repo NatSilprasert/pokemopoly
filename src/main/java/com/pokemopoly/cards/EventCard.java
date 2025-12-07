@@ -1,6 +1,8 @@
 package com.pokemopoly.cards;
 
-public class EventCard implements Card {
+import com.pokemopoly.Game;
+
+public abstract class EventCard implements Card {
     private String id;
     private String name;
     private String description;
@@ -18,4 +20,6 @@ public class EventCard implements Card {
     public String getDescription() {
         return description;
     }
+
+    public abstract void activate(Game game);
 }
