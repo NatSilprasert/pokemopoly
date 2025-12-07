@@ -126,13 +126,10 @@ public class Battle {
             }
         }
 
-        // check for additional damage
-        if (attacker.getProfession() == ProfessionType.TRAINER) {
-            damage += 2;
-        }
-
         defenderPokemon.setHp(defenderPokemon.getHp() - damage);
+
         if (defenderPokemon.getHp() <= 0) {
+            Scanner scanner = new Scanner(System.in);
             System.out.println(attacker.getName() + " win!");
 
             // player vs bot rewards
@@ -156,7 +153,6 @@ public class Battle {
                         }
                     }
 
-                    Scanner scanner = new Scanner(System.in);
                     int choice = -1;
 
                     while (true) {
@@ -190,6 +186,20 @@ public class Battle {
             // player vs player rewards
             else {
                 attacker.setCoin(attacker.getCoin() + 3);
+
+                if (attacker.getProfession() == ProfessionType.ROCKET && !attacker.isTeamFull()) {
+                    System.out.println("Choose pokemon to steal!");
+                    for (int i = 0; i < defender.getTeam().size(); i++) {
+                        System.out.println(i+1 + ": " + defender.getTeam().get(i).getName());
+                    }
+
+                    int choice = scanner.nextInt();
+                    PokemonCard selected = defender.getTeam().get(choice - 1);
+
+                    attacker.addPokemon(selected);
+                    defender.removePokemon(selected);
+                    System.out.println("You chose " + selected.getName() + " to your team!");
+                }
             }
 
             resetPokemonPowers();
