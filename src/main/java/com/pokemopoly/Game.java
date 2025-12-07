@@ -138,7 +138,7 @@ public class Game {
                         int pokemonChoice = scanner.nextInt();
                         scanner.nextLine();
 
-                        PokemonCard selected = currentPlayer.getTeam().get(pokemonChoice);
+                        PokemonCard selected = currentPlayer.getTeam().get(pokemonChoice - 1);
 
                         if (selected instanceof PreRollAbility) {
                             PreRollAbility abilityPokemon = (PreRollAbility) selected;
@@ -158,7 +158,7 @@ public class Game {
                     int itemChoice = scanner.nextInt();
                     scanner.nextLine();
 
-                    currentPlayer.getHand().getItems().get(itemChoice).activate(this);
+                    currentPlayer.getHand().getItems().get(itemChoice - 1).activate(this);
                 }
                 else {
                     System.out.println("No item.");

@@ -76,6 +76,7 @@ public class Player {
                 pokemon.setHp(pokemon.getHp() + 3);
             }
 
+            pokemon.setOwner(this);
             team.add(pokemon);
         }
         else System.out.println("You have reached the maximum amount of pokemons");
