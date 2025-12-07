@@ -40,7 +40,7 @@ public class Pidgeot extends PokemonCard implements PreRollAbility {
 
         // Move player on board
         game.getBoard().movePlayer(owner, totalMove, game);
-        owner.move(totalMove);
+        game.getCurrentPlayer().setDoNothing(true);
     }
     //Create 10/24/2025
 }

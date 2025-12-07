@@ -39,7 +39,7 @@ public class Fearow extends PokemonCard implements PreRollAbility {
 
         // Move player on board
         game.getBoard().movePlayer(owner, totalMove, game);
-        owner.move(totalMove);
-    } // Tailwind but +1 move
-    //Create 10/29/68
+        game.getCurrentPlayer().setDoNothing(true);
+    }
+    // Tailwind but +1 move
 }

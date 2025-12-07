@@ -47,7 +47,6 @@ public class Golduck extends PokemonCard implements PreRollAbility {
         System.out.println("✨ Golduck copies " + lastPlayer.getName() + "'s last roll of " + lastRoll + "!");
         Board board = game.getBoard();
         board.movePlayer(owner, lastRoll, game);
-        owner.move(lastRoll);
+        game.getCurrentPlayer().setDoNothing(true);
     }
-    //Create 11/2/68
 }

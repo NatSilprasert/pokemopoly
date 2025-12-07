@@ -11,8 +11,8 @@ import java.util.List;
 public class Rapidash extends PokemonCard implements PreRollAbility {
     public Rapidash() {
         super("P078",
-                "Ivysaur",
-                "Ponyta is a Fire type Pokémon introduced in Generation 1.",
+                "Rapidash",
+                "Rapidash is a Fire type Pokémon introduced in Generation 1.",
                 11,
                 11,
                 6,
@@ -26,7 +26,8 @@ public class Rapidash extends PokemonCard implements PreRollAbility {
         System.out.println("🔥 Rapidash used Run Away! Moving forward 6 spaces!");
 
         // 1) เดินทันที 6 ช่อง
-        p.move(6);
+        game.getBoard().movePlayer(p, 6, game);
+        game.getCurrentPlayer().setDoNothing(true);
 
         // 2) ปิดการทอยเต๋าในเทิร์นนี้ (เพราะ lastRoll != 0 = เทิร์นนี้ถือว่าเดินแล้ว)
         p.setLastRoll(1); // หรือ 6 ก็ได้ แต่ต้อง ≠ 0

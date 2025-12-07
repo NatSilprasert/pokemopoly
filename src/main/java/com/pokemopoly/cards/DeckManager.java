@@ -4,7 +4,6 @@ package com.pokemopoly.cards;
 public class DeckManager {
     private Deck<ItemCard> itemDeck;
     private Deck<EventCard> eventDeck;
-    private Deck<QuestCard> questDeck;
     private Deck<PokemonCard> bluePokemonDeck;
     private Deck<PokemonCard> greenPokemonDeck;
     private Deck<PokemonCard> purplePokemonDeck;
@@ -14,7 +13,6 @@ public class DeckManager {
     public DeckManager(
             Deck<ItemCard> itemDeck,
             Deck<EventCard> eventDeck,
-            Deck<QuestCard> questDeck,
             Deck<PokemonCard> bluePokemonDeck,
             Deck<PokemonCard> greenPokemonDeck,
             Deck<PokemonCard> purplePokemonDeck,
@@ -23,7 +21,6 @@ public class DeckManager {
     ) {
         this.itemDeck = itemDeck;
         this.eventDeck = eventDeck;
-        this.questDeck = questDeck;
         this.bluePokemonDeck = bluePokemonDeck;
         this.greenPokemonDeck = greenPokemonDeck;
         this.purplePokemonDeck = purplePokemonDeck;
@@ -37,10 +34,6 @@ public class DeckManager {
 
     public EventCard drawEvent() {
         return eventDeck.draw();
-    }
-
-    public QuestCard drawQuest() {
-        return questDeck.draw();
     }
 
     public PokemonCard drawBluePokemon() {
@@ -71,10 +64,6 @@ public class DeckManager {
         return eventDeck;
     }
 
-    public Deck<QuestCard> getQuestDeck() {
-        return questDeck;
-    }
-
     public Deck<PokemonCard> getBluePokemonDeck() {
         return bluePokemonDeck;
     }
@@ -98,7 +87,6 @@ public class DeckManager {
     public void shuffleAll() {
         itemDeck.shuffle();
         eventDeck.shuffle();
-        questDeck.shuffle();
         bluePokemonDeck.shuffle();
         greenPokemonDeck.shuffle();
         purplePokemonDeck.shuffle();

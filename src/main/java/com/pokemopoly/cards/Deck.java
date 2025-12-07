@@ -11,8 +11,8 @@ public class Deck<T extends Card> {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(T card) {
-        cards.add(card);
+    public void addCard(List<T> cardsList) {
+        cards.addAll(cardsList);
     }
 
     public void shuffle() {

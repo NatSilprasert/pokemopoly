@@ -5,7 +5,10 @@ import com.pokemopoly.board.GrassColor;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.board.tile.*;
 import com.pokemopoly.cards.*;
+import com.pokemopoly.cards.event.DoesPokeBallHaveEye;
+import com.pokemopoly.cards.items.Bicycle;
 import com.pokemopoly.cards.items.Revive;
+import com.pokemopoly.cards.pokemon.*;
 import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
 import com.pokemopoly.player.Hand;
 import com.pokemopoly.player.Player;
@@ -27,7 +30,7 @@ public class Game {
         List<Tile> tiles = new ArrayList<>(Arrays.asList(
                 new StartTile("Start Tile", 0),
                 new GrassTile("Green Grass Tile", 1, GrassColor.GREEN),
-                new QuestTile("Quest Tile", 2),
+                new ItemTile("Item Tile", 2),
                 new GrassTile("Green Grass Tile", 3, GrassColor.GREEN),
                 new GrassTile("Green Grass Tile", 4, GrassColor.GREEN),
                 new CityTile("City Tile", 5),
@@ -47,7 +50,7 @@ public class Game {
                 new GrassTile("Green Grass Tile", 19, GrassColor.BLUE),
                 new BattleTile("Villain", 20),
                 new GrassTile("Purple Grass Tile", 21, GrassColor.PURPLE),
-                new QuestTile("Quest Tile", 22),
+                new ItemTile("Item Tile", 22),
                 new GrassTile("Purple Grass Tile", 23, GrassColor.PURPLE),
                 new GrassTile("Purple Grass Tile", 24, GrassColor.PURPLE),
                 new CityTile("City Tile", 25),
@@ -109,78 +112,59 @@ public class Game {
 
             Scanner scanner = new Scanner(System.in);
 
-            // draw items
-            ItemCard itemCard = deckManager.drawItem();
-            System.out.println(currentPlayer.getName() + " has drawn an item!");
-            System.out.println("Item Card Details: ");
-            System.out.println("Name: " + itemCard.getName());
-            System.out.println("Description: " + itemCard.getDescription());
-
-            Hand hand = currentPlayer.getHand();
-            if (hand.isFull()) {
-                System.out.println("Your hand is full!");
-                System.out.println("Do you want to:");
-                System.out.println("1. Replace an existing item");
-                System.out.println("2. Discard the new card");
-
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // consume newline
-
-                if (choice == 1) {
-                    System.out.println("Your current items:");
-                    for (int i = 0; i < hand.getItems().size(); i++) {
-                        ItemCard c = hand.getItems().get(i);
-                        System.out.println((i + 1) + ". " + c.getName() + " - " + c.getDescription());
-                    }
-
-                    while (true) {
-                        System.out.print("Select the item to replace (1-" + hand.getItems().size() + "): ");
-                        int index = scanner.nextInt() - 1;
-
-                        if (index >= 0 && index < hand.getItems().size()) {
-                            ItemCard removed = hand.getItems().remove(index);
-                            System.out.println("Removed: " + removed.getName());
-                            hand.add(itemCard);
-                            System.out.println("Added: " + itemCard.getName());
-                            break;
-                        } else {
-                            System.out.println("Invalid selection. Please try again!");
-                        }
-                    }
-                } else if (choice == 2) {
-                    System.out.println("You discarded the new item card: " + itemCard.getName());
-                    deckManager.getItemDeck().discard(itemCard);
-                }
-
-            } else {
-                hand.add(itemCard);
-                System.out.println(itemCard.getName() + " has been added to your hand!");
-            }
-
             // use ability
             System.out.println("Select ability to use:");
-            System.out.println("1. Player ability");
-            System.out.println("2. Pokemon ability");
-            System.out.println("3. Items ability");
-            System.out.println("4. Not use");
+            System.out.println("1. Pokemon ability");
+            System.out.println("2. Items ability");
+            System.out.println("3. Not use");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
-
+            
             if (choice == 1) {
-                // todo
-            } else if (choice == 2) {
-                // Example: choose a Pokémon with a PreRollAbility
-                // (You may later add a proper selection system)
-                for (PokemonCard p : currentPlayer.getTeam()) {
-                    if (p instanceof PreRollAbility ability) {
-                        ability.usePreRollPassive(this);
-                        break;
+                if (!currentPlayer.getTeam().isEmpty()) {
+                    boolean check = false;
+                    for (int i = 0; i < currentPlayer.getTeam().size(); i++) {
+                        if (currentPlayer.getTeam().get(i) instanceof PreRollAbility) {
+                            System.out.println(i+1 + ". " + currentPlayer.getTeam().get(i).getName());
+                            check = true;
+                        }
+                    }
+
+                    if (!check) {
+                        System.out.println("No such ability!");
+                    }
+                    else {
+                        int pokemonChoice = scanner.nextInt();
+                        scanner.nextLine();
+
+                        PokemonCard selected = currentPlayer.getTeam().get(pokemonChoice);
+
+                        if (selected instanceof PreRollAbility) {
+                            PreRollAbility abilityPokemon = (PreRollAbility) selected;
+                            abilityPokemon.usePreRollPassive(this);
+                        }
                     }
                 }
+                else {
+                    System.out.println("No pokemon in team.");
+                }
+
+            } else if (choice == 2) {
+                if (!currentPlayer.getHand().getItems().isEmpty()) {
+                    for (int i = 0; i < currentPlayer.getHand().getItems().size(); i++) {
+                        System.out.println(i+1 + ". " + currentPlayer.getHand().getItems().get(i).getName());
+                    }
+                    int itemChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    currentPlayer.getHand().getItems().get(itemChoice).activate(this);
+                }
+                else {
+                    System.out.println("No item.");
+                }
+
             } else if (choice == 3) {
-                // todo
-            } else if (choice == 4) {
                 System.out.println(currentPlayer.getName() + " not use ability.");
             }
 
@@ -218,22 +202,42 @@ public class Game {
         // Example Deck
         // todo
         Deck<ItemCard> itemDeck = new Deck<>();
-        itemDeck.addCard(new Revive());
+        itemDeck.addCard(List.of(new ItemCard[]{
+                new Revive(),
+                new Bicycle(),
+        }));
 
         Deck<EventCard> eventDeck = new Deck<>();
-        //eventDeck.addCard(new EventCard("E001", "You found 100 coins!", "My description"));
-        //eventDeck.addCard(new EventCard("E002", "Wild Pokémon appears!", "My description"));
-
-        Deck<QuestCard> questDeck = new Deck<>();
-        questDeck.addCard(new QuestCard("Q001", "Catch 3 Pokémon", "Do it"));
+        eventDeck.addCard(List.of(new EventCard[]{
+                new DoesPokeBallHaveEye(),
+        }));
 
         Deck<PokemonCard> bluePokemonDeck = new Deck<>();
-        Deck<PokemonCard> greenPokemonDeck = new Deck<>();
-        Deck<PokemonCard> purplePokemonDeck = new Deck<>();
-        Deck<PokemonCard> redPokemonDeck = new Deck<>();
-        Deck<PokemonCard> crownPokemonDeck = new Deck<>();
+        bluePokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Ditto(),
+        }));
 
-        deckManager = new DeckManager(itemDeck, eventDeck, questDeck, bluePokemonDeck, greenPokemonDeck, purplePokemonDeck, redPokemonDeck, crownPokemonDeck);
+        Deck<PokemonCard> greenPokemonDeck = new Deck<>();
+        greenPokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Diglett(),
+        }));
+
+        Deck<PokemonCard> purplePokemonDeck = new Deck<>();
+        purplePokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Golem(),
+        }));
+
+        Deck<PokemonCard> redPokemonDeck = new Deck<>();
+        redPokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Gengar(),
+        }));
+
+        Deck<PokemonCard> crownPokemonDeck = new Deck<>();
+        crownPokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Mewtwo(),
+        }));
+
+        deckManager = new DeckManager(itemDeck, eventDeck, bluePokemonDeck, greenPokemonDeck, purplePokemonDeck, redPokemonDeck, crownPokemonDeck);
         deckManager.shuffleAll();
     }
 
