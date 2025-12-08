@@ -1,0 +1,43 @@
+.root {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 18px;
+}
+
+.normal-text {
+    -fx-font-weight: 400;
+}
+
+.medium-text {
+    -fx-font-weight: 500;
+}
+/
+.semibold-text {
+    -fx-font-weight: 600;
+}
+
+.bold-text {
+    -fx-font-weight: 700;
+}
+
+@font-face {
+    font-family: "PixelifySans";
+    src: url("fonts/PixelifySans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "PixelifySans";
+    src: url("fonts/PixelifySans-Medium.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "PixelifySans";
+    src: url("fonts/PixelifySans-SemiBold.ttf");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "PixelifySans";
+    src: url("fonts/PixelifySans-Bold.ttf");
+    font-weight: 700;
+}

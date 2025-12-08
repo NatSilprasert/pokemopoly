@@ -1,6 +1,6 @@
 package com.pokemopoly;
 
-import com.pokemopoly.ui.numberPlayerSelectUI;
+import com.pokemopoly.ui.NumberPlayerSelectUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         game = new Game();
-        numberPlayerSelectUI numberPlayerSelectUI = new numberPlayerSelectUI(game, primaryStage);
+        NumberPlayerSelectUI numberPlayerSelectUI = new NumberPlayerSelectUI(game, primaryStage);
         primaryStage.setTitle("Pokemon Monopoly - Setup");
         primaryStage.setScene(numberPlayerSelectUI.getScene());
         primaryStage.show();

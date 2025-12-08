@@ -10,12 +10,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class numberPlayerSelectUI {
+public class NumberPlayerSelectUI {
 
     private Scene scene;
     private int selectedPlayers = 0;
 
-    public numberPlayerSelectUI(Game game, Stage stage) {
+    public NumberPlayerSelectUI(Game game, Stage stage) {
 
         Label title = new Label("Choose number of players");
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
@@ -38,24 +38,26 @@ public class numberPlayerSelectUI {
         confirmBtn.setOnAction(e -> {
             game.setPlayerCount(selectedPlayers);
 
-//            PlayerSetupUI nextUI = new PlayerSetupUI(game, stage, selectedPlayers);
-//            stage.setScene(nextUI.getScene());
+            PlayerSetupUI nextUI = new PlayerSetupUI(game, stage, selectedPlayers);
+            stage.setScene(nextUI.getScene());
         });
 
         VBox root = new VBox(30, title, playerButtonRow, confirmBtn);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(40));
 
-        scene = new Scene(root, 500, 300);
+        scene = new Scene(root, 1024, 1024);
+        scene.getStylesheets().add(
+                getClass().getResource("/global.css").toExternalForm()
+        );
     }
 
     private Button createSquareButton(String text) {
         Button b = new Button(text);
         b.setPrefSize(80, 80);
         b.setStyle(
-                "-fx-font-size: 22px; -fx-font-weight: bold; " +
-                        "-fx-background-radius: 10; " +
-                        "-fx-border-color: black; -fx-border-width: 2;"
+                "-fx-font-size: 32px; -fx-font-weight: bold; " +
+                        "-fx-background-radius: 10; "
         );
         return b;
     }
@@ -75,10 +77,10 @@ public class numberPlayerSelectUI {
         };
 
         selectedBtn.setStyle(
-                "-fx-font-size: 22px; -fx-font-weight: bold;" +
+                "-fx-font-size: 32px; -fx-font-weight: bold;" +
                         "-fx-background-color: #9cd6ff;" +
                         "-fx-background-radius: 10;" +
-                        "-fx-border-color: black; -fx-border-width: 2;"
+                        "-fx-border-radius: 10 -fx-border-color: black; -fx-border-width: 2;"
         );
 
         Scene s = scene;
@@ -88,9 +90,8 @@ public class numberPlayerSelectUI {
     }
 
     private String defaultStyle() {
-        return "-fx-font-size: 22px; -fx-font-weight: bold; " +
-                "-fx-background-radius: 10; " +
-                "-fx-border-color: black; -fx-border-width: 2;";
+        return "-fx-font-size: 32px; -fx-font-weight: bold; " +
+                "-fx-background-radius: 10; ";
     }
 
     public Scene getScene() { return scene; }
