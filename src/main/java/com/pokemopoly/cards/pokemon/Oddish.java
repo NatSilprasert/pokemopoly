@@ -9,7 +9,7 @@ import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 import java.util.List;
 
 public class Oddish extends PokemonCard implements Evolvable , BattleAbility {
-    public Oddish(String id, String name, String description, int hp, int power, int price) {
+    public Oddish() {
         super("P043",
                 "Oddish",
                 "Oddish is a Grass/Poison type Pokémon introduced in Generation 1.",

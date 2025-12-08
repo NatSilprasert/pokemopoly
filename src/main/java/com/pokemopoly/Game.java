@@ -5,12 +5,10 @@ import com.pokemopoly.board.GrassColor;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.board.tile.*;
 import com.pokemopoly.cards.*;
-import com.pokemopoly.cards.event.DoesPokeBallHaveEye;
-import com.pokemopoly.cards.items.Bicycle;
-import com.pokemopoly.cards.items.Revive;
+import com.pokemopoly.cards.event.*;
+import com.pokemopoly.cards.items.*;
 import com.pokemopoly.cards.pokemon.*;
 import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
-import com.pokemopoly.player.Hand;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.player.ProfessionType;
 
@@ -203,33 +201,202 @@ public class Game {
         // todo
         Deck<ItemCard> itemDeck = new Deck<>();
         itemDeck.addCard(List.of(new ItemCard[]{
-                new Revive(),
                 new Bicycle(),
+                new EjectButton(),
+                new EXPShare(),
+                new FullHeal(),
+                new HM02Fly(),
+                new MaxPotion(),
+                new MaxRepel(),
+                new Pokedex(),
+                new Potion(),
+                new RareCandy(),
+                new Repel(),
+                new Revive(),
+                new Snowball(),
+                new SuperPotion(),
+                new SuperRepel(),
+                new TrainPass()
         }));
 
         Deck<EventCard> eventDeck = new Deck<>();
         eventDeck.addCard(List.of(new EventCard[]{
                 new DoesPokeBallHaveEye(),
+                new FightGiovanni(),
+                new GoldenMagikarp(),
+                new ItemReset(),
+                new LegendaryInArea(),
+                new Mother(),
+                new NuggetBridgeChallenge(),
+                new StopThisIsPolice(),
+                new SuspiciousMerchant(),
+                new TrueRocket()
         }));
 
         Deck<PokemonCard> bluePokemonDeck = new Deck<>();
         bluePokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Abra(),
+                new Bulbasaur(),
+                new Charmander(),
+                new Clefable(),
+                new Cubone(),
                 new Ditto(),
+                new Drowzee(),
+                new Dratini(),
+                new Eevee(),
+                new FarfetchD(),
+                new Gloom(),
+                new Golbat(),
+                new Graveler(),
+                new Grimer(),
+                new Growlithe(),
+                new Jynx(),
+                new Kabuto(),
+                new Kingler(),
+                new Lickitung(),
+                new Machoke(),
+                new Marowak(),
+                new Meowth(),
+                new MrMime(),
+                new Nidorina(),
+                new Nidorino(),
+                new Omanyte(),
+                new Parasect(),
+                new Pinsir(),
+                new Pidgeotto(),
+                new Pikachu(),
+                new Poliwhirl(),
+                new Ponyta(),
+                new Primeape(),
+                new Raticate(),
+                new Rhyhorn(),
+                new Seadra(),
+                new Seel(),
+                new Shellder(),
+                new Slowpoke(),
+                new Tauros(),
+                new Scyther(),
+                new Seaking(),
+                new Sandslash(),
+                new Squirtle(),
+                new Venomoth(),
+                new Voltorb(),
+                new Weepinbell(),
+                new Wigglytuff()
         }));
 
         Deck<PokemonCard> greenPokemonDeck = new Deck<>();
         greenPokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Magikarp(),
+                new Bellsprout(),
+                new Caterpie(),
+                new Clefairy(),
                 new Diglett(),
+                new Doduo(),
+                new Exeggcute(),
+                new Gastly(),
+                new Geodude(),
+                new Goldeen(),
+                new Horsea(),
+                new Jigglypuff(),
+                new Kakuna(),
+                new Koffing(),
+                new Krabby(),
+                new Magnemite(),
+                new Mankey(),
+                new Machop(),
+                new Metapod(),
+                new NidoranFemale(),
+                new NidoranMale(),
+                new Oddish(),
+                new Paras(),
+                new Pidgey(),
+                new Poliwag(),
+                new Psyduck(),
+                new Rattata(),
+                new Sandshrew(),
+                new Spearow(),
+                new Staryu(),
+                new Tentacool(),
+                new Venonat(),
+                new Vulpix(),
+                new Weedle(),
+                new Zubat()
         }));
 
         Deck<PokemonCard> purplePokemonDeck = new Deck<>();
         purplePokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Aerodactyl(),
+                new Arbok(),
+                new Beedrill(),
+                new Butterfree(),
+                new Charmeleon(),
+                new Chansey(),
+                new Dewgong(),
+                new Dodrio(),
+                new Dugtrio(),
+                new Dragonair(),
+                new Electabuzz(),
+                new Electrode(),
+                new Ekans(),
+                new Exeggutor(),
+                new Fearow(),
+                new Flareon(),
+                new Golduck(),
                 new Golem(),
+                new Gyarados(),
+                new Haunter(),
+                new Hitmonchan(),
+                new Hitmonlee(),
+                new Hypno(),
+                new Ivysaur(),
+                new Jolteon(),
+                new Kadabra(),
+                new Kabutops(),
+                new Kangaskhan(),
+                new Magmar(),
+                new Magneton(),
+                new Nidoking(),
+                new Nidoqueen(),
+                new Ninetales(),
+                new Omastar(),
+                new Persian(),
+                new Poliwrath(),
+                new Porygon(),
+                new Raichu(),
+                new Rapidash(),
+                new Slowbro(),
+                new Starmie(),
+                new Tangela(),
+                new Tentacruel(),
+                new Vaporeon(),
+                new Victreebel(),
+                new Vileplume(),
+                new Wartortle(),
+                new Weezing()
         }));
 
         Deck<PokemonCard> redPokemonDeck = new Deck<>();
         redPokemonDeck.addCard(List.of(new PokemonCard[]{
+                new Alakazam(),
+                new Arcanine(),
+                new Articuno(),
+                new Blastoise(),
+                new Charizard(),
+                new Cloyster(),
+                new Dragonite(),
                 new Gengar(),
+                new Lapras(),
+                new Machamp(),
+                new Muk(),
+                new Onix(),
+                new Pidgeot(),
+                new Rhydon(),
+                new Snorlax(),
+                new Venusaur(),
+                new Zapdos(),
+                new Moltres(),
+                new Mew()
         }));
 
         Deck<PokemonCard> crownPokemonDeck = new Deck<>();

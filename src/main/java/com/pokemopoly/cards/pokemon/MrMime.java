@@ -7,9 +7,9 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 import java.util.List;
 
-public class Mr_Mime extends PokemonCard implements BattleAbility {
+public class MrMime extends PokemonCard implements BattleAbility {
 
-    public Mr_Mime() {
+    public MrMime() {
         super("P122",
                 "Mr. Mime",
                 "Mr. Mime is a Psychic type Pokémon introduced in Generation 1.",
