@@ -21,6 +21,7 @@ public class Game {
     private Board board;
     private DeckManager deckManager;
     private List<Player> players;
+    private int playerCount;
     private int turn = 0;
 
     public Game() {
@@ -435,6 +436,14 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public void setPlayerCount(int n) {
+        playerCount = n;
     }
 
     public Player getCurrentPlayer() {
