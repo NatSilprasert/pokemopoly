@@ -4,6 +4,7 @@ import com.pokemopoly.cards.*;
 import com.pokemopoly.cards.event.*;
 import com.pokemopoly.cards.items.*;
 import com.pokemopoly.cards.pokemon.*;
+import com.pokemopoly.ui.cards.PokemonCardUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;

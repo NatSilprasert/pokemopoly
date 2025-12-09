@@ -1,9 +1,8 @@
 package com.pokemopoly.ui;
 
-import com.pokemopoly.Game;
 import com.pokemopoly.cards.EventCard;
 import com.pokemopoly.cards.event.LegendaryInArea;
-import com.pokemopoly.ui.EventCardUI;
+import com.pokemopoly.ui.cards.EventCardUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;

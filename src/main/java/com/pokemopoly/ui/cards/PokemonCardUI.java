@@ -1,4 +1,4 @@
-package com.pokemopoly.ui;
+package com.pokemopoly.ui.cards;
 
 import com.pokemopoly.cards.DeckManager;
 import com.pokemopoly.cards.PokemonCard;
@@ -24,7 +24,7 @@ public class PokemonCardUI extends StackPane {
 
     // โหลดฟอนต์ (ถ้ามีไฟล์ .ttf ให้เปลี่ยน path ตรงนี้)
     // ถ้าไม่มีจะใช้ Monospaced เพื่อให้ดูเป็น Pixel
-    private static final String PIXEL_FONT = "Monospaced";
+    private static final String PIXEL_FONT = "Pixelify Sans";
 
     public PokemonCardUI(PokemonCard card, DeckManager deckManager) {
         // 1. หาค่าสีจาก DeckManager

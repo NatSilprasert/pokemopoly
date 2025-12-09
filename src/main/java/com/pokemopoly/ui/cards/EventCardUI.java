@@ -1,6 +1,6 @@
-package com.pokemopoly.ui;
+package com.pokemopoly.ui.cards;
 
-import com.pokemopoly.cards.ItemCard;
+import com.pokemopoly.cards.EventCard;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -12,9 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import java.io.File;
-
-public class ItemCardUI extends VBox {
+public class EventCardUI extends VBox {
 
     // Configuration
     private static final int CARD_WIDTH = 300;
@@ -25,13 +23,13 @@ public class ItemCardUI extends VBox {
     private static final Color BORDER_COLOR = Color.BLACK;
     private static final int BORDER_THICKNESS = 2;
 
-    private final ItemCard card;
-    private Font pixelFont;
+    private final EventCard card;
+    private static final String PIXEL_FONT = "Pixelify Sans";
 
-    public ItemCardUI(ItemCard card) {
+    public EventCardUI(EventCard card) {
         this.card = card;
 
-       setPrefSize(CARD_WIDTH, CARD_HEIGHT);
+        setPrefSize(CARD_WIDTH, CARD_HEIGHT);
         setMaxSize(CARD_WIDTH, CARD_HEIGHT);
 
         setBackground(new Background(
@@ -49,18 +47,7 @@ public class ItemCardUI extends VBox {
         setSpacing(10);
         setPadding(new Insets(15, 20, 20, 20));
 
-        loadCustomFont();
         initComponents();
-    }
-
-    private void loadCustomFont() {
-        try {
-            // ถ้ามีฟอนต์จริง
-            // pixelFont = Font.loadFont(new File("resource/font/PokemonGB.ttf").toURI().toString(), 14);
-            pixelFont = Font.font("Monospaced", 14);
-        } catch (Exception e) {
-            pixelFont = Font.font("System", 14);
-        }
     }
 
     private void initComponents() {
@@ -68,8 +55,8 @@ public class ItemCardUI extends VBox {
         // =========================
         // 1. EVENT TAG
         // =========================
-        Label eventTag = new Label("ITEM");
-        eventTag.setFont(Font.font(pixelFont.getFamily(), 16));
+        Label eventTag = new Label("EVENT");
+        eventTag.setFont(Font.font(PIXEL_FONT, 16));
         eventTag.setTextFill(Color.WHITE);
         eventTag.setAlignment(Pos.CENTER);
         eventTag.setPrefSize(80, 30);
@@ -84,7 +71,7 @@ public class ItemCardUI extends VBox {
         // 2. EVENT TITLE
         // =========================
         Label titleLabel = new Label(card.getName());
-        titleLabel.setFont(Font.font(pixelFont.getFamily(), 20));
+        titleLabel.setFont(Font.font(PIXEL_FONT, 20));
         titleLabel.setAlignment(Pos.CENTER);
         titleLabel.setPrefSize(260, 45);
 
@@ -101,7 +88,7 @@ public class ItemCardUI extends VBox {
         Node imageRegion;
 
         // โหลดจาก resource ภายใน jar/classpath
-        String resPath = "/item/" + card.getId() + ".png";
+        String resPath = "/event/" + card.getId() + ".png";
         System.out.println("Loading image: " + resPath);
 
         var stream = getClass().getResourceAsStream(resPath);
@@ -134,7 +121,7 @@ public class ItemCardUI extends VBox {
         TextArea descArea = new TextArea(card.getDescription());
         descArea.setWrapText(true);
         descArea.setEditable(false);
-        descArea.setFont(Font.font(pixelFont.getFamily(), 12));
+        descArea.setFont(Font.font(PIXEL_FONT, 12));
         descArea.setPrefSize(260, 100);
 
         // ตั้งพื้นหลังของ TextArea ให้เป็นสีเดียวกับพื้นหลังการ์ด
@@ -157,7 +144,7 @@ public class ItemCardUI extends VBox {
         descPanel.setPadding(new Insets(10));
         descPanel.setPrefSize(260, 100);
 
-// กรอบดำรอบนอก
+        // กรอบดำรอบนอก
         descPanel.setBorder(new Border(new BorderStroke(
                 BORDER_COLOR,
                 BorderStrokeStyle.SOLID,
