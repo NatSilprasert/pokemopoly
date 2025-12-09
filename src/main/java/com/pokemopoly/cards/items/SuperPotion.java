@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class SuperPotion extends ItemCard {
     public SuperPotion() {
-        super("I002", "Super Potion", "Restore 5 HP to one Pokémon in your team.");
+        super("ITM_SUPER_POTION", "Super Potion", "Restore 5 HP to one Pokémon in your team.");
     }
 
     @Override

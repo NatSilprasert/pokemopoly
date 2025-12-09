@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Snowball extends ItemCard {
 
     public Snowball() {
-        super("I016",
+        super("ITM_SNOWBALL",
                 "Snowball",
                 "Choose 1 Pokémon. That Pokémon loses 2 HP.");
     }

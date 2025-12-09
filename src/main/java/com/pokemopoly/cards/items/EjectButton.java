@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class EjectButton extends ItemCard {
     public EjectButton() {
-        super("I050", "Eject Button",
+        super("ITM_EJECT_BUTTON", "Eject Button",
                 "Choose 1 player to move backward 3 tiles.");
     }
 

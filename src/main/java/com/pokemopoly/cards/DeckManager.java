@@ -93,4 +93,13 @@ public class DeckManager {
         redPokemonDeck.shuffle();
         crownPokemonDeck.shuffle();
     }
+
+    public PokemonDeckColor getDeckColorOf(PokemonCard card) {
+        if (bluePokemonDeck.contains(card)) return PokemonDeckColor.BLUE;
+        if (greenPokemonDeck.contains(card)) return PokemonDeckColor.GREEN;
+        if (purplePokemonDeck.contains(card)) return PokemonDeckColor.PURPLE;
+        if (redPokemonDeck.contains(card)) return PokemonDeckColor.RED;
+        if (crownPokemonDeck.contains(card)) return PokemonDeckColor.CROWN;
+        return null; // ไม่เจอ
+    }
 }

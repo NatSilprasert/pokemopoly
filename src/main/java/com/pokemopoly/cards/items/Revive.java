@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Revive extends ItemCard {
 
     public Revive() {
-        super("I019", "Revive",
+        super("ITM_REVIVE", "Revive",
                 "Revives a fainted Pokémon to 50% HP.");
     }
 

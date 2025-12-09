@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class EXPShare extends ItemCard {
     public EXPShare() {
-        super("I017",
+        super("ITM_EXP_SHARE",
                 "EXP. Share",
                 "All Pokémon evolve!");
     }
