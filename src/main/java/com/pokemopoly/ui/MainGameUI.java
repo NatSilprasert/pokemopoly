@@ -285,8 +285,6 @@ public class MainGameUI {
 
         diceUIHolder[0] = new RollDiceUI((n) -> {
 
-            n = 8;
-
             root.getChildren().remove(diceUIHolder[0].getView());
 
             Player currentPlayer = game.getCurrentPlayer();
@@ -381,7 +379,7 @@ public class MainGameUI {
                 new EventTile("Event Tile", 2),
                 new GrassTile("Green Grass Tile", 3, GrassColor.GREEN),
                 new GrassTile("Green Grass Tile", 4, GrassColor.GREEN),
-                new CityTile("City Tile", 5),
+                new CityTile("City Tile", 5, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 6, GrassColor.GREEN),
                 new GrassTile("Green Grass Tile", 7, GrassColor.GREEN),
                 new ItemTile("Item Tile", 8, root, v -> nextTurn()),
@@ -391,7 +389,7 @@ public class MainGameUI {
                 new CaveTile("Cave Tile", 12),
                 new GrassTile("Green Grass Tile", 13, GrassColor.BLUE),
                 new GrassTile("Green Grass Tile", 14, GrassColor.BLUE),
-                new CityTile("City Tile", 15),
+                new CityTile("City Tile", 15,  root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 16, GrassColor.BLUE),
                 new GrassTile("Green Grass Tile", 17, GrassColor.BLUE),
                 new DaycareTile("Daycare Tile", 18),
@@ -401,7 +399,7 @@ public class MainGameUI {
                 new EventTile("Event Tile", 22),
                 new GrassTile("Purple Grass Tile", 23, GrassColor.PURPLE),
                 new GrassTile("Purple Grass Tile", 24, GrassColor.PURPLE),
-                new CityTile("City Tile", 25),
+                new CityTile("City Tile", 25,  root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 26, GrassColor.PURPLE),
                 new GrassTile("Purple Grass Tile", 27, GrassColor.PURPLE),
                 new ItemTile("Item Tile", 28, root, v -> nextTurn()),
@@ -411,7 +409,7 @@ public class MainGameUI {
                 new CaveTile("Cave Tile", 32),
                 new GrassTile("Red Grass Tile", 33, GrassColor.RED),
                 new GrassTile("Red Grass Tile", 34, GrassColor.RED),
-                new CityTile("City Tile", 35),
+                new CityTile("City Tile", 35,  root, v -> nextTurn()),
                 new GrassTile("Red Grass Tile", 36, GrassColor.RED),
                 new GrassTile("Red Grass Tile", 37, GrassColor.RED),
                 new GrassTile("Red Grass Tile", 38, GrassColor.RED),

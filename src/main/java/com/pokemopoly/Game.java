@@ -367,4 +367,30 @@ public class Game {
     public Board getBoard() {
         return board;
     }
+
+    public ItemCard createItemById(String id) {
+        if (id == null) return null;
+
+        switch (id.toLowerCase()) {
+            case "bicycle": return new Bicycle();
+            case "ejectbutton": return new EjectButton();
+            case "expshare": return new EXPShare();
+            case "fullheal": return new FullHeal();
+            case "hm02fly": return new HM02Fly();
+            case "maxpotion": return new MaxPotion();
+            case "max_repel": return new MaxRepel();
+            case "pokedex": return new Pokedex();
+            case "potion": return new Potion();
+            case "rarecandy": return new RareCandy();
+            case "repel": return new Repel();
+            case "revive": return new Revive();
+            case "snowball": return new Snowball();
+            case "superpotion": return new SuperPotion();
+            case "superrepel": return new SuperRepel();
+            case "trainpass": return new TrainPass();
+        }
+
+        System.err.println("Unknown item id: " + id);
+        return null;
+    }
 }

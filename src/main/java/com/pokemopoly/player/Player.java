@@ -22,7 +22,7 @@ public class Player {
 
     private final int MAX_POKEMON = 6;
     private int position = 0;
-    private int coin = 0;
+    private int coin = 100;
     private int redBall = 4;
     private int greatBall = 0;
     private int hyperBall = 0;

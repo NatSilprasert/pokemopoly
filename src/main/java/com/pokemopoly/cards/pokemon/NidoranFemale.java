@@ -9,7 +9,7 @@ import java.util.List;
 public class NidoranFemale extends PokemonCard implements Evolvable {
     public NidoranFemale() {
         super("P029",
-                "Nidoran♀",
+                "Nidoran♀ (female)",
                 "Nidoran♀ is a Poison type Pokémon introduced in Generation 1.",
                 5,
                 3,
