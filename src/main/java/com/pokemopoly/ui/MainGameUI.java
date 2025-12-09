@@ -399,7 +399,7 @@ public class MainGameUI {
 
     public void setUpBoard() {
         List<Tile> tiles = new ArrayList<>(Arrays.asList(
-                new StartTile("Start Tile", 0),
+                new StartTile("Start Tile", 0, root, this::nextTurn),
                 new GrassTile("Green Grass Tile", 1, GrassColor.GREEN, root, v -> nextTurn()),
                 new EventTile("Event Tile", 2, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 3, GrassColor.GREEN, root, v -> nextTurn()),
