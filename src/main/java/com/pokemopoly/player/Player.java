@@ -22,7 +22,7 @@ public class Player {
 
     private final int MAX_POKEMON = 6;
     private int position = 0;
-    private int coin = 100;
+    private int coin = 0;
     private int redBall = 4;
     private int greatBall = 4;
     private int hyperBall = 4;
@@ -39,12 +39,6 @@ public class Player {
 
         if (profession == ProfessionType.TRAINER) {
             hand.setCapacity(6);
-            addPokemon(new Pikachu());
-            addPokemon(new Pikachu());
-            addPokemon(new Pikachu());
-            addPokemon(new Pikachu());
-            addPokemon(new Pikachu());
-            addPokemon(new Pikachu());
             // Damage += 2
         }
         else if (profession == ProfessionType.FISHER) {
