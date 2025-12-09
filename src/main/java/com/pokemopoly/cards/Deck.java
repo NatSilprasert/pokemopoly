@@ -38,4 +38,8 @@ public class Deck<T extends Card> {
     public int size() {
         return cards.size();
     }
+
+    public boolean contains(T card) {
+        return cards.contains(card);
+    }
 }

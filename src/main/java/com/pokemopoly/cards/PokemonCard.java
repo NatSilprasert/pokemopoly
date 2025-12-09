@@ -14,6 +14,7 @@ public abstract class PokemonCard implements Card {
     private final int maxHp;
     private final int maxPower;
     private final int price;
+    private PokemonDeckColor deckColor;
     private int hp;
     private int power;
 
@@ -112,5 +113,13 @@ public abstract class PokemonCard implements Card {
         } else {
             System.out.println(name + " is no longer paralyzed.");
         }
+    }
+
+    public PokemonDeckColor getDeckColor() {
+        return deckColor;
+    }
+
+    public void setDeckColor(PokemonDeckColor deckColor) {
+        this.deckColor = deckColor;
     }
 }

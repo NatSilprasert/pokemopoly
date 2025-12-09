@@ -6,7 +6,7 @@ import com.pokemopoly.player.Player;
 
 public class Repel extends ItemCard {
     public Repel() {
-        super("I021", "Repel",
+        super("ITM_REPEL", "Repel",
                 "Move forward 2 tiles. You cannot roll dice or catch Pokémon this turn.");
     }
 

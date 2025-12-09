@@ -12,7 +12,7 @@ import java.util.*;
 public class LegendaryInArea extends EventCard {
     public LegendaryInArea() {
         super("event_legendary", "Legendary in Area",
-                "ทุกคนทอยเต๋า 2 ลูก ผู้ที่ได้แต้มรวมสูงสุด ได้สิทธิจับโปเกมอนในตำนาน");
+                "Everyone rolls 2 dice. Highest roll will get a chance to catch MEWTWO!");
     }
 
     @Override

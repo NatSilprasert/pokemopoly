@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class FullHeal extends ItemCard {
     public FullHeal() {
-        super("I018", "Full Heal",
+        super("ITM_FULL_HEAL", "Full Heal",
                 "Cures all abnormal status conditions from one Pokémon in your team.");
     }
 
