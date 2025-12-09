@@ -11,6 +11,7 @@ import com.pokemopoly.cards.pokemon.*;
 import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.player.ProfessionType;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,54 +26,13 @@ public class Game {
     private int turn = 0;
 
     public Game() {
-        // setup board
-        List<Tile> tiles = new ArrayList<>(Arrays.asList(
-                new StartTile("Start Tile", 0),
-                new GrassTile("Green Grass Tile", 1, GrassColor.GREEN),
-                new ItemTile("Item Tile", 2),
-                new GrassTile("Green Grass Tile", 3, GrassColor.GREEN),
-                new GrassTile("Green Grass Tile", 4, GrassColor.GREEN),
-                new CityTile("City Tile", 5),
-                new GrassTile("Green Grass Tile", 6, GrassColor.GREEN),
-                new GrassTile("Green Grass Tile", 7, GrassColor.GREEN),
-                new EventTile("Event Tile", 8),
-                new GrassTile("Green Grass Tile", 9, GrassColor.GREEN),
-                new BattleTile("Gym 1", 10),
-                new GrassTile("Green Grass Tile", 11, GrassColor.BLUE),
-                new CaveTile("Cave Tile", 12),
-                new GrassTile("Green Grass Tile", 13, GrassColor.BLUE),
-                new GrassTile("Green Grass Tile", 14, GrassColor.BLUE),
-                new CityTile("City Tile", 15),
-                new GrassTile("Green Grass Tile", 16, GrassColor.BLUE),
-                new GrassTile("Green Grass Tile", 17, GrassColor.BLUE),
-                new DaycareTile("Daycare Tile", 18),
-                new GrassTile("Green Grass Tile", 19, GrassColor.BLUE),
-                new BattleTile("Villain", 20),
-                new GrassTile("Purple Grass Tile", 21, GrassColor.PURPLE),
-                new ItemTile("Item Tile", 22),
-                new GrassTile("Purple Grass Tile", 23, GrassColor.PURPLE),
-                new GrassTile("Purple Grass Tile", 24, GrassColor.PURPLE),
-                new CityTile("City Tile", 25),
-                new GrassTile("Purple Grass Tile", 26, GrassColor.PURPLE),
-                new GrassTile("Purple Grass Tile", 27, GrassColor.PURPLE),
-                new EventTile("Event Tile", 28),
-                new GrassTile("Purple Grass Tile", 29, GrassColor.PURPLE),
-                new BattleTile("Gym 2", 30),
-                new GrassTile("Red Grass Tile", 31, GrassColor.RED),
-                new CaveTile("Cave Tile", 32),
-                new GrassTile("Red Grass Tile", 33, GrassColor.RED),
-                new GrassTile("Red Grass Tile", 34, GrassColor.RED),
-                new CityTile("City Tile", 35),
-                new GrassTile("Red Grass Tile", 36, GrassColor.RED),
-                new GrassTile("Red Grass Tile", 37, GrassColor.RED),
-                new GrassTile("Red Grass Tile", 38, GrassColor.RED),
-                new GrassTile("Crown Grass Tile", 39, GrassColor.CROWN)
-        ));
-
-        this.board = new Board(tiles);
+        // setup
         this.players = new ArrayList<>();
-
         setUpDeckManager();
+    }
+
+    public void setUpBoard(List<Tile> tiles) {
+        this.board = new Board(tiles);
     }
 
     public int rollDice() {
@@ -202,11 +162,11 @@ public class Game {
     private void setUpDeckManager() {
         Deck<ItemCard> itemDeck = new Deck<>();
         itemDeck.addCard(List.of(new ItemCard[]{
-                new Bicycle(),
-                new EjectButton(),
-                new EXPShare(),
-                new FullHeal(),
-                new HM02Fly(),
+                new Bicycle(), new Bicycle(), new Bicycle(), new Bicycle(), new Bicycle(),
+                new EjectButton(), new EjectButton(), new EjectButton(), new EjectButton(), new EjectButton(),
+                new EXPShare(), new EXPShare(), new EXPShare(), new EXPShare(), new EXPShare(),
+                new FullHeal(), new FullHeal(), new FullHeal(), new FullHeal(), new FullHeal(),
+                new HM02Fly(), new HM02Fly(), new HM02Fly(), new HM02Fly(), new HM02Fly(),
                 new MaxPotion(),
                 new MaxRepel(),
                 new Pokedex(),
@@ -217,21 +177,65 @@ public class Game {
                 new Snowball(),
                 new SuperPotion(),
                 new SuperRepel(),
-                new TrainPass()
+                new TrainPass(),
+                new MaxPotion(),
+                new MaxRepel(),
+                new Pokedex(),
+                new Potion(),
+                new RareCandy(),
+                new Repel(),
+                new Revive(),
+                new Snowball(),
+                new SuperPotion(),
+                new SuperRepel(),
+                new TrainPass(),
+                new MaxPotion(),
+                new MaxRepel(),
+                new Pokedex(),
+                new Potion(),
+                new RareCandy(),
+                new Repel(),
+                new Revive(),
+                new Snowball(),
+                new SuperPotion(),
+                new SuperRepel(),
+                new TrainPass(),
+                new MaxPotion(),
+                new MaxRepel(),
+                new Pokedex(),
+                new Potion(),
+                new RareCandy(),
+                new Repel(),
+                new Revive(),
+                new Snowball(),
+                new SuperPotion(),
+                new SuperRepel(),
+                new TrainPass(),
+                new MaxPotion(),
+                new MaxRepel(),
+                new Pokedex(),
+                new Potion(),
+                new RareCandy(),
+                new Repel(),
+                new Revive(),
+                new Snowball(),
+                new SuperPotion(),
+                new SuperRepel(),
+                new TrainPass(),
         }));
 
         Deck<EventCard> eventDeck = new Deck<>();
         eventDeck.addCard(List.of(new EventCard[]{
-                new DoesPokeBallHaveEye(),
-                new FightGiovanni(),
-                new GoldenMagikarp(),
-                new ItemReset(),
-                new LegendaryInArea(),
-                new Mother(),
-                new NuggetBridgeChallenge(),
-                new StopThisIsPolice(),
-                new SuspiciousMerchant(),
-                new TrueRocket()
+                new DoesPokeBallHaveEye(), new DoesPokeBallHaveEye(), new DoesPokeBallHaveEye(), new DoesPokeBallHaveEye(), new DoesPokeBallHaveEye(),
+                new FightGiovanni(), new FightGiovanni(), new FightGiovanni(), new FightGiovanni(), new FightGiovanni(),
+                new GoldenMagikarp(), new GoldenMagikarp(), new GoldenMagikarp(), new GoldenMagikarp(), new GoldenMagikarp(), new GoldenMagikarp(),
+                new ItemReset(), new ItemReset(), new ItemReset(), new ItemReset(), new ItemReset(), new ItemReset(),
+                new LegendaryInArea(), new LegendaryInArea(), new LegendaryInArea(), new LegendaryInArea(), new LegendaryInArea(), new LegendaryInArea(),
+                new Mother(), new Mother(), new Mother(), new Mother(), new Mother(), new Mother(),
+                new NuggetBridgeChallenge(), new NuggetBridgeChallenge(), new NuggetBridgeChallenge(), new NuggetBridgeChallenge(), new NuggetBridgeChallenge(), new NuggetBridgeChallenge(),
+                new StopThisIsPolice(), new StopThisIsPolice(), new StopThisIsPolice(), new StopThisIsPolice(), new StopThisIsPolice(), new StopThisIsPolice(),
+                new SuspiciousMerchant(), new SuspiciousMerchant(), new SuspiciousMerchant(), new SuspiciousMerchant(), new SuspiciousMerchant(),
+                new SuspiciousMerchant(), new TrueRocket(), new TrueRocket(), new TrueRocket(), new TrueRocket(), new TrueRocket(), new TrueRocket()
         }));
 
         // Blue Deck

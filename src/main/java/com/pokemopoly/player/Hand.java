@@ -23,6 +23,10 @@ public class Hand {
         return true;
     }
 
+    public void setItem(int idx, ItemCard card) {
+        items.set(idx, card);
+    }
+
     public boolean remove(ItemCard card) {
         return items.remove(card);
     }

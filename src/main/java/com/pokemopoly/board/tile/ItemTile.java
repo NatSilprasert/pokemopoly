@@ -3,66 +3,139 @@ package com.pokemopoly.board.tile;
 import com.pokemopoly.Game;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.ItemCard;
+import com.pokemopoly.ui.cards.ItemCardUI;
 import com.pokemopoly.player.Hand;
 import com.pokemopoly.player.Player;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class ItemTile extends Tile {
 
-    public ItemTile(String name, int index) {
+    private final StackPane rootPane;
+    private final Consumer<Void> endTurnCallback; // callback ให้จบ turn
+
+    public ItemTile(String name, int index, StackPane rootPane, Consumer<Void> endTurnCallback) {
         super(name, index);
+        this.rootPane = rootPane;
+        this.endTurnCallback = endTurnCallback;
     }
 
     public void onLand(Player player, Game game) {
-        System.out.println(player.getName() + " landed on " + name + "!");
-        ItemCard itemCard = game.getDeckManager().drawItem();
-
-        System.out.println(player.getName() + " has drawn an item!");
-        System.out.println("Item Card Details: ");
-        System.out.println("Name: " + itemCard.getName());
-        System.out.println("Description: " + itemCard.getDescription());
-
+        ItemCard newItem = game.getDeckManager().drawItem();
         Hand hand = player.getHand();
-        if (hand.isFull()) {
-            System.out.println("Your hand is full!");
-            System.out.println("Do you want to:");
-            System.out.println("1. Replace an existing item");
-            System.out.println("2. Discard the new card");
 
-            Scanner scanner = new Scanner(System.in);
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+        // Overlay แรก: แสดงไอเทมที่ได้
+        VBox overlay = new VBox(10);
+        overlay.setAlignment(Pos.CENTER);
+        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.75); -fx-padding: 20;");
+        overlay.setMaxWidth(800);
 
-            if (choice == 1) {
-                System.out.println("Your current items:");
-                for (int i = 0; i < hand.getItems().size(); i++) {
-                    ItemCard c = hand.getItems().get(i);
-                    System.out.println((i + 1) + ". " + c.getName() + " - " + c.getDescription());
-                }
+        javafx.scene.control.Label label = new javafx.scene.control.Label("You got a new item!");
+        label.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
 
-                while (true) {
-                    System.out.print("Select the item to replace (1-" + hand.getItems().size() + "): ");
-                    int index = scanner.nextInt() - 1;
+        ItemCardUI newItemUI = new ItemCardUI(newItem); // ขนาดปกติ
+        overlay.getChildren().addAll(label, newItemUI);
 
-                    if (index >= 0 && index < hand.getItems().size()) {
-                        ItemCard removed = hand.getItems().remove(index);
-                        System.out.println("Removed: " + removed.getName());
-                        hand.add(itemCard);
-                        System.out.println("Added: " + itemCard.getName());
-                        break;
-                    } else {
-                        System.out.println("Invalid selection. Please try again!");
-                    }
-                }
-            } else if (choice == 2) {
-                System.out.println("You discarded the new item card: " + itemCard.getName());
-                game.getDeckManager().getItemDeck().discard(itemCard);
+        Button keepBtn = new Button("Keep");
+        keepBtn.setOnAction(e -> {
+            if (!hand.isFull()) {
+                hand.add(newItem);
+                System.out.println(newItem.getName() + " has been added to the hand!");
+                rootPane.getChildren().remove(overlay);
+                if (endTurnCallback != null) endTurnCallback.accept(null);
+            } else {
+                // hand เต็ม → overlay ใหม่
+                rootPane.getChildren().remove(overlay);
+                showFullHandOverlay(player, newItem);
             }
+        });
 
-        } else {
-            hand.add(itemCard);
-            System.out.println(itemCard.getName() + " has been added to your hand!");
-        }
+        overlay.getChildren().add(keepBtn);
+        StackPane.setAlignment(overlay, Pos.CENTER);
+        rootPane.getChildren().add(overlay);
     }
+
+    // Overlay ใหม่เมื่อ hand เต็ม
+    private void showFullHandOverlay(Player player, ItemCard newItem) {
+        Hand hand = player.getHand();
+        VBox overlay = new VBox(10);
+        overlay.setAlignment(Pos.CENTER);
+        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.75); -fx-padding: 20;");
+        overlay.setMaxWidth(800);
+
+        javafx.scene.control.Label fullLabel = new javafx.scene.control.Label("Your hand is full! Choose action:");
+        fullLabel.setStyle("-fx-text-fill: yellow; -fx-font-size: 14px;");
+        overlay.getChildren().add(fullLabel);
+
+        int capacity = hand.getCapacity();
+        GridPane handGrid = new GridPane();
+        handGrid.setHgap(10);
+        handGrid.setVgap(10);
+        handGrid.setAlignment(Pos.CENTER);
+
+        int cols = capacity == 6 ? 3 : capacity; // 3 columns if 6 cards, else all in 1 row
+        int rows = capacity == 6 ? 2 : 1;
+
+        List<ItemCardUI> cardUIs = new ArrayList<>();
+        for (int i = 0; i < capacity; i++) {
+            ItemCardUI cardUI = new ItemCardUI(hand.getItems().get(i));
+            cardUI.setSize(2); // ขนาดเล็กลง
+
+            int idx = i;
+            cardUI.setOnMouseClicked(e -> {
+                handGrid.getChildren().forEach(node -> node.setStyle(""));
+                cardUI.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+                overlay.setUserData(idx);
+            });
+
+            int row = i / cols;
+            int col = i % cols;
+            handGrid.add(cardUI, col, row);
+            cardUIs.add(cardUI);
+        }
+
+        overlay.getChildren().add(handGrid);
+
+        HBox btnBox = new HBox(10);
+        btnBox.setAlignment(Pos.CENTER);
+
+        Button discardBtn = new Button("Discard New Item");
+        discardBtn.setOnAction(e -> {
+            rootPane.getChildren().remove(overlay);
+
+            System.out.println(newItem.getName() + " has been discarded!");
+            if (endTurnCallback != null) endTurnCallback.accept(null);
+        });
+
+        Button swapBtn = new Button("Swap with Selected");
+        swapBtn.setOnAction(e -> {
+            Object selectedIdxObj = overlay.getUserData();
+            if (selectedIdxObj != null) {
+                int selectedIdx = (int) selectedIdxObj;
+
+                System.out.println(player.getHand().getItems().get(selectedIdx) + " has been discarded!");
+                System.out.println(newItem.getName() + " has been added to the hand!");
+
+                hand.setItem(selectedIdx, newItem);
+                rootPane.getChildren().remove(overlay);
+
+                if (endTurnCallback != null) endTurnCallback.accept(null);
+            }
+        });
+
+        btnBox.getChildren().addAll(discardBtn, swapBtn);
+        overlay.getChildren().add(btnBox);
+
+        rootPane.getChildren().add(overlay);
+        StackPane.setAlignment(overlay, Pos.CENTER);
+    }
+
 }

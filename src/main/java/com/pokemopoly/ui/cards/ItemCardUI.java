@@ -15,8 +15,8 @@ import javafx.scene.text.Font;
 public class ItemCardUI extends VBox {
 
     // Configuration
-    private static final int CARD_WIDTH = 300;
-    private static final int CARD_HEIGHT = 450;
+    private int CARD_WIDTH = 300;
+    private int CARD_HEIGHT = 450;
 
     private static final Color BG_COLOR = Color.rgb(230, 230, 227);
     private static final Color IMG_PLACEHOLDER_COLOR = Color.rgb(110, 110, 110);
@@ -89,7 +89,6 @@ public class ItemCardUI extends VBox {
 
         // โหลดจาก resource ภายใน jar/classpath
         String resPath = "/item/" + card.getId() + ".png";
-        System.out.println("Loading image: " + resPath);
 
         var stream = getClass().getResourceAsStream(resPath);
 
@@ -161,5 +160,57 @@ public class ItemCardUI extends VBox {
                 imageRegion,
                 descPanel
         );
+    }
+
+    public void setSize(int ratio) {
+        if (ratio <= 0) return;
+
+        // ปรับขนาดการ์ด
+        CARD_WIDTH = CARD_WIDTH / ratio;
+        CARD_HEIGHT = CARD_HEIGHT / ratio;
+        setPrefSize(CARD_WIDTH, CARD_HEIGHT);
+        setMaxSize(CARD_WIDTH, CARD_HEIGHT);
+
+        // ปรับ padding และ spacing ของ VBox
+        Insets currentPadding = getPadding();
+        setPadding(new Insets(
+                currentPadding.getTop() / ratio,
+                currentPadding.getRight() / ratio,
+                currentPadding.getBottom() / ratio,
+                currentPadding.getLeft() / ratio
+        ));
+        setSpacing(getSpacing() / ratio);
+
+        // ปรับทุก Node ภายใน (tag, title, image, desc)
+        for (Node node : getChildren()) {
+            if (node instanceof Label label) {
+                label.setFont(Font.font(label.getFont().getName(), label.getFont().getSize() / ratio));
+                label.setPrefWidth(label.getPrefWidth() / ratio);
+                label.setPrefHeight(label.getPrefHeight() / ratio);
+            } else if (node instanceof StackPane sp) {
+                sp.setPadding(new Insets(
+                        sp.getPadding().getTop() / ratio,
+                        sp.getPadding().getRight() / ratio,
+                        sp.getPadding().getBottom() / ratio,
+                        sp.getPadding().getLeft() / ratio
+                ));
+                sp.setPrefWidth(sp.getPrefWidth() / ratio);
+                sp.setPrefHeight(sp.getPrefHeight() / ratio);
+            } else if (node instanceof ImageView iv) {
+                iv.setFitWidth(iv.getFitWidth() / ratio);
+                iv.setFitHeight(iv.getFitHeight() / ratio);
+            } else if (node instanceof Pane pane) {
+                pane.setPrefWidth(pane.getPrefWidth() / ratio);
+                pane.setPrefHeight(pane.getPrefHeight() / ratio);
+            }
+        }
+
+        // TextArea อยู่ใน StackPane แล้ว adjust ผ่าน StackPane ข้างบน
+        // ถ้าต้องการปรับ font ของ TextArea เพิ่มเติม
+        for (Node node : lookupAll(".text-area")) {
+            if (node instanceof TextArea ta) {
+                ta.setFont(Font.font(ta.getFont().getName(), ta.getFont().getSize() / ratio));
+            }
+        }
     }
 }

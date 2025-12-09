@@ -20,7 +20,7 @@ public class Board {
         int newPos = (player.getPosition() + steps) % tiles.size();
         player.setPosition(newPos);
         Tile tile = getTileAt(newPos);
-        // tile.moveIn(player, game);
+        tile.moveIn(player, game);
     }
 
     public int getSize() {

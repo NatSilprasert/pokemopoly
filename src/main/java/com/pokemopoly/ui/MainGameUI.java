@@ -2,6 +2,9 @@ package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.board.Board;
+import com.pokemopoly.board.GrassColor;
+import com.pokemopoly.board.Tile;
+import com.pokemopoly.board.tile.*;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.player.ProfessionType;
 import javafx.animation.KeyFrame;
@@ -22,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainGameUI {
@@ -115,9 +119,6 @@ public class MainGameUI {
         StackPane boardLayer = new StackPane(boardView);
         boardLayer.setAlignment(Pos.CENTER);
 
-        // Setup basic requirement
-        initBoardPositions();
-        initPlayerIcons();
 
         // create overlay
         VBox turnOverlay = createTurnOverlay();
@@ -145,6 +146,11 @@ public class MainGameUI {
                     getClass().getResource("/global.css").toExternalForm()
             );
         }
+
+        // Setup basic requirement
+        setUpBoard();
+        initBoardPositions();
+        initPlayerIcons();
 
         Platform.runLater(() -> playIntroFade(blackOverlay, turnOverlay));
     }
@@ -279,28 +285,25 @@ public class MainGameUI {
 
         diceUIHolder[0] = new RollDiceUI((n) -> {
 
+            n = 8;
+
             root.getChildren().remove(diceUIHolder[0].getView());
 
             Player currentPlayer = game.getCurrentPlayer();
             Board board = game.getBoard();
 
-            if (!currentPlayer.isDoNothing()) {
-                currentPlayer.setLastRoll(n);
-                game.checkAdditionalConditions(currentPlayer, n);
-                board.movePlayer(currentPlayer, n, game);
-            }
+            // move player icon
+            movePlayerIcon(currentPlayer, n, board);
 
-            currentPlayer.setDoNothing(false);
-
-            movePlayerIcon(currentPlayer, currentPlayer.getPosition());
         });
 
         root.getChildren().add(diceUIHolder[0].getView());
         StackPane.setAlignment(diceUIHolder[0].getView(), Pos.CENTER);
     }
 
-    public void movePlayerIcon(Player p, int tileIndex) {
-        int idx = game.getPlayers().indexOf(p);
+    public void movePlayerIcon(Player currentPlayer, int n, Board board) {
+        int tileIndex = (currentPlayer.getPosition() + n) % 40;
+        int idx = game.getPlayers().indexOf(currentPlayer);
         StackPane wrapper = (StackPane) playerLayer.getChildren().get(idx);
 
         double targetX = boardPositions[tileIndex][0];
@@ -328,7 +331,13 @@ public class MainGameUI {
 
         timeline.setOnFinished(e -> {
             System.out.println("Moved to: " + wrapper.getLayoutX() + ", " + wrapper.getLayoutY());
-            nextTurn();
+            if (!currentPlayer.isDoNothing()) {
+                currentPlayer.setLastRoll(n);
+                game.checkAdditionalConditions(currentPlayer, n);
+                board.movePlayer(currentPlayer, n, game);
+            }
+
+            currentPlayer.setDoNothing(false);
         });
     }
 
@@ -363,5 +372,52 @@ public class MainGameUI {
         });
 
         delay.play();
+    }
+
+    public void setUpBoard() {
+        List<Tile> tiles = new ArrayList<>(Arrays.asList(
+                new StartTile("Start Tile", 0),
+                new GrassTile("Green Grass Tile", 1, GrassColor.GREEN),
+                new EventTile("Event Tile", 2),
+                new GrassTile("Green Grass Tile", 3, GrassColor.GREEN),
+                new GrassTile("Green Grass Tile", 4, GrassColor.GREEN),
+                new CityTile("City Tile", 5),
+                new GrassTile("Green Grass Tile", 6, GrassColor.GREEN),
+                new GrassTile("Green Grass Tile", 7, GrassColor.GREEN),
+                new ItemTile("Item Tile", 8, root, v -> nextTurn()),
+                new GrassTile("Green Grass Tile", 9, GrassColor.GREEN),
+                new BattleTile("Gym 1", 10),
+                new GrassTile("Green Grass Tile", 11, GrassColor.BLUE),
+                new CaveTile("Cave Tile", 12),
+                new GrassTile("Green Grass Tile", 13, GrassColor.BLUE),
+                new GrassTile("Green Grass Tile", 14, GrassColor.BLUE),
+                new CityTile("City Tile", 15),
+                new GrassTile("Green Grass Tile", 16, GrassColor.BLUE),
+                new GrassTile("Green Grass Tile", 17, GrassColor.BLUE),
+                new DaycareTile("Daycare Tile", 18),
+                new GrassTile("Green Grass Tile", 19, GrassColor.BLUE),
+                new BattleTile("Villain", 20),
+                new GrassTile("Purple Grass Tile", 21, GrassColor.PURPLE),
+                new EventTile("Event Tile", 22),
+                new GrassTile("Purple Grass Tile", 23, GrassColor.PURPLE),
+                new GrassTile("Purple Grass Tile", 24, GrassColor.PURPLE),
+                new CityTile("City Tile", 25),
+                new GrassTile("Purple Grass Tile", 26, GrassColor.PURPLE),
+                new GrassTile("Purple Grass Tile", 27, GrassColor.PURPLE),
+                new ItemTile("Item Tile", 28, root, v -> nextTurn()),
+                new GrassTile("Purple Grass Tile", 29, GrassColor.PURPLE),
+                new BattleTile("Gym 2", 30),
+                new GrassTile("Red Grass Tile", 31, GrassColor.RED),
+                new CaveTile("Cave Tile", 32),
+                new GrassTile("Red Grass Tile", 33, GrassColor.RED),
+                new GrassTile("Red Grass Tile", 34, GrassColor.RED),
+                new CityTile("City Tile", 35),
+                new GrassTile("Red Grass Tile", 36, GrassColor.RED),
+                new GrassTile("Red Grass Tile", 37, GrassColor.RED),
+                new GrassTile("Red Grass Tile", 38, GrassColor.RED),
+                new GrassTile("Crown Grass Tile", 39, GrassColor.CROWN)
+        ));
+
+        game.setUpBoard(tiles);
     }
 }

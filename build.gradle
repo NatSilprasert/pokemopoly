@@ -34,7 +34,7 @@ javafx {
 }
 
 application {
-    mainClass = 'com.pokemopoly.ui.RunCardPreview' // path to your main class
+    mainClass = 'com.pokemopoly.Main' // path to your main class
 }
 
 run {
