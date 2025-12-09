@@ -14,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class GrassTile extends Tile {
@@ -31,12 +29,6 @@ public class GrassTile extends Tile {
         this.catchRate = color.getCatchRate();
         this.rootPane = rootPane;
         this.endTurnCallback = endTurnCallback;
-    }
-
-    @Override
-    public void moveIn(Player player, Game game) {
-        onLand(player, game);
-        playersOnLand.add(player);
     }
 
     public void onLand(Player player, Game game) {

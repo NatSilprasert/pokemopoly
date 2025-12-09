@@ -7,7 +7,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 import java.util.List;
 
-public class Zapdos extends PokemonCard implements BattleAbility {
+public class Zapdos extends PokemonCard {
     public Zapdos() {
         super("P145",
                 "Zapdos",
@@ -18,18 +18,18 @@ public class Zapdos extends PokemonCard implements BattleAbility {
                 List.of(PokemonType.ELECTRIC,PokemonType.FLYING));
     }
 
-    @Override
-    public void useBattlePassive(Battle battle) {
-        PokemonCard enemy = battle.getOpponentPokemon(this);
-
-        if (enemy == null || !enemy.isAlive()) return;
-
-        // ถ้าอีกฝั่งไม่ถูก Burn อยู่แล้ว
-        if (!enemy.isParalyzed()) {
-            enemy.setParalyzed(true);
-            System.out.println("⚡ Static! " + enemy.getName() + " is paralyzed!");
-        } else {
-            System.out.println("⚡ Static triggered, but " + enemy.getName() + " is already paralyzed.");
-        }
-    }
+//    @Override
+//    public void useBattlePassive(Battle battle) {
+//        PokemonCard enemy = battle.getOpponentPokemon(this);
+//
+//        if (enemy == null || !enemy.isAlive()) return;
+//
+//        // ถ้าอีกฝั่งไม่ถูก Burn อยู่แล้ว
+//        if (!enemy.isParalyzed()) {
+//            enemy.setParalyzed(true);
+//            System.out.println("⚡ Static! " + enemy.getName() + " is paralyzed!");
+//        } else {
+//            System.out.println("⚡ Static triggered, but " + enemy.getName() + " is already paralyzed.");
+//        }
+//    }
 }

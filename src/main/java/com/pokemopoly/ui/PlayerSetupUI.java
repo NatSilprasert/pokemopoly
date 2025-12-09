@@ -125,25 +125,25 @@ public class PlayerSetupUI {
         VBox trainer = createProfessionCard(
                 ProfessionType.TRAINER,
                 "/prof/trainer.png",
-                "- Pikachu \n +2 base damage \n +2 item slots"
+                "- Pikachu"
         );
 
         VBox fisher = createProfessionCard(
                 ProfessionType.FISHER,
                 "/prof/fisher.png",
-                "- Magikarp \n +3 HP (water) \n +3 damage (water)"
+                "- Magikarp"
         );
 
         VBox scientist = createProfessionCard(
                 ProfessionType.SCIENTIST,
                 "/prof/scientist.png",
-                "- Ditto \n +1 base damage \n +1 base HP"
+                "- Ditto"
         );
 
         VBox rocket = createProfessionCard(
                 ProfessionType.ROCKET,
                 "/prof/rocket.png",
-                "- Rattata \n - steal Pokémon \n (Battle/Daycare)"
+                "- Rattata"
         );
 
         HBox row = new HBox(25, trainer, fisher, scientist, rocket);

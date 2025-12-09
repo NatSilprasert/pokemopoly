@@ -186,7 +186,7 @@ public class MainGameUI {
 
             // set players position
             iconWrapper.setLayoutX(startX);
-            iconWrapper.setLayoutY(startY - (i * 20));
+            iconWrapper.setLayoutY(startY);
 
             playerLayer.getChildren().add(iconWrapper);
             playerIcons.add(iv);
@@ -384,7 +384,7 @@ public class MainGameUI {
                 new GrassTile("Green Grass Tile", 7, GrassColor.GREEN, root, v -> nextTurn()),
                 new ItemTile("Item Tile", 8, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 9, GrassColor.GREEN, root, v -> nextTurn()),
-                new BattleTile("Gym 1", 10),
+                new BattleTile("Gym 1", 10, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 11, GrassColor.BLUE, root, v -> nextTurn()),
                 new CaveTile("Cave Tile", 12),
                 new GrassTile("Green Grass Tile", 13, GrassColor.BLUE, root, v -> nextTurn()),
@@ -394,7 +394,7 @@ public class MainGameUI {
                 new GrassTile("Green Grass Tile", 17, GrassColor.BLUE, root, v -> nextTurn()),
                 new DaycareTile("Daycare Tile", 18),
                 new GrassTile("Green Grass Tile", 19, GrassColor.BLUE, root, v -> nextTurn()),
-                new BattleTile("Villain", 20),
+                new BattleTile("Villain", 20, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 21, GrassColor.PURPLE, root, v -> nextTurn()),
                 new EventTile("Event Tile", 22, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 23, GrassColor.PURPLE, root, v -> nextTurn()),
@@ -404,7 +404,7 @@ public class MainGameUI {
                 new GrassTile("Purple Grass Tile", 27, GrassColor.PURPLE, root, v -> nextTurn()),
                 new ItemTile("Item Tile", 28, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 29, GrassColor.PURPLE, root, v -> nextTurn()),
-                new BattleTile("Gym 2", 30),
+                new BattleTile("Gym 2", 30, root, v -> nextTurn()),
                 new GrassTile("Red Grass Tile", 31, GrassColor.RED, root, v -> nextTurn()),
                 new CaveTile("Cave Tile", 32),
                 new GrassTile("Red Grass Tile", 33, GrassColor.RED, root, v -> nextTurn()),

@@ -7,7 +7,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 import java.util.List;
 
-public class MrMime extends PokemonCard implements BattleAbility {
+public class MrMime extends PokemonCard {
 
     public MrMime() {
         super("P122",
@@ -19,22 +19,22 @@ public class MrMime extends PokemonCard implements BattleAbility {
                 List.of(PokemonType.PSYCHIC));
     }
 
-    @Override
-    public void useBattlePassive(Battle battle) {
-        // Mimic : Copy opponent's attack power if it's higher
-        PokemonCard opponent = battle.getOpponentPokemon(this);
-
-        if (opponent == null) return;
-
-        int myPower = this.getPower();
-        int opponentPower = opponent.getPower();
-
-        if (opponentPower > myPower) {
-            System.out.println("✨ Mr. Mime uses Mimic! Copying opponent's attack power ("
-                    + opponentPower + ")!");
-
-            // ก็อปพลังโจมตี
-            this.setPower(Math.max(opponentPower,getPower()));
-        }
-    }
+//    @Override
+//    public void useBattlePassive(Battle battle) {
+//        // Mimic : Copy opponent's attack power if it's higher
+//        PokemonCard opponent = battle.getOpponentPokemon(this);
+//
+//        if (opponent == null) return;
+//
+//        int myPower = this.getPower();
+//        int opponentPower = opponent.getPower();
+//
+//        if (opponentPower > myPower) {
+//            System.out.println("✨ Mr. Mime uses Mimic! Copying opponent's attack power ("
+//                    + opponentPower + ")!");
+//
+//            // ก็อปพลังโจมตี
+//            this.setPower(Math.max(opponentPower,getPower()));
+//        }
+//    }
 }

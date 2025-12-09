@@ -124,7 +124,7 @@ public class PokemonCardUI extends StackPane {
         HBox.setHgrow(leftStats, Priority.ALWAYS); // ให้ขยายเต็มพื้นที่ที่เหลือ
 
         // ใช้ TextFlow เพื่อทำตัวอักษรสีแดงผสมดำ
-        Text txtDmg = new Text("damage ");
+        Text txtDmg = new Text("atk ");
         txtDmg.setFont(Font.font(PIXEL_FONT, FontWeight.BOLD, 12));
 
         Text valDmg = new Text(String.valueOf(card.getPower()));
