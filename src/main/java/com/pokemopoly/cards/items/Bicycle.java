@@ -7,7 +7,7 @@ import com.pokemopoly.player.Player;
 public class Bicycle extends ItemCard {
 
     public Bicycle() {
-        super("ITM_BICYCLE", "Bicycle",
+        super("bicycle", "Bicycle",
                 "Roll Twice.");
     }
 

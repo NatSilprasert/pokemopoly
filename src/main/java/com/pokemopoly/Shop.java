@@ -136,17 +136,17 @@ public class Shop extends HBox {
         addItemToGrid(itemGrid, new ShopItemData("ultraball", "UltraBall", 3, "BALL", "Catch rate 2x"), 2, 0, "/shop/ultraball.png");
 
         // --- ROW 2: POTIONS ---
-        addItemToGrid(itemGrid, new ShopItemData("potion", "Potion", 1, "ITEM", "Restores 20 HP"), 0, 1, "/item/potion.png");
-        addItemToGrid(itemGrid, new ShopItemData("superpotion", "Super Potion", 2, "ITEM", "Restores 50 HP"), 1, 1, "/item/superpotion.png");
-        addItemToGrid(itemGrid, new ShopItemData("repel", "Repel", 1, "ITEM", "Prevents weak wild Pokemon"), 2, 1, "/item/repel.png");
+        addItemToGrid(itemGrid, new ShopItemData("potion", "Potion", 1, "ITEM", "Restore 3 HP to one Pokémon in your team."), 0, 1, "/item/potion.png");
+        addItemToGrid(itemGrid, new ShopItemData("superpotion", "Super Potion", 2, "ITEM", "Restore 5 HP to one Pokémon in your team."), 1, 1, "/item/superpotion.png");
+        addItemToGrid(itemGrid, new ShopItemData("repel", "Repel", 1, "ITEM", "Move forward 2 tiles. You cannot roll dice or catch Pokémon this turn."), 2, 1, "/item/repel.png");
 
         // --- ROW 3: UTILITY ---
-        addItemToGrid(itemGrid, new ShopItemData("superrepel", "Super Repel", 2, "ITEM", "Lasts longer than Repel"), 0, 2, "/item/superrepel.png");
-        addItemToGrid(itemGrid, new ShopItemData("fullheal", "Full Heal", 2, "ITEM", "Heals all status problems"), 1, 2, "/item/fullheal.png");
-        addItemToGrid(itemGrid, new ShopItemData("rarecandy", "Rare Candy", 5, "ITEM", "Level up a Pokemon"), 2, 2, "/item/rarecandy.png");
+        addItemToGrid(itemGrid, new ShopItemData("superrepel", "Super Repel", 2, "ITEM", "Move forward 4 tiles. You cannot roll dice or catch Pokémon this turn."), 0, 2, "/item/superrepel.png");
+        addItemToGrid(itemGrid, new ShopItemData("fullheal", "Full Heal", 2, "ITEM", "Cures all abnormal status conditions from one Pokémon in your team."), 1, 2, "/item/fullheal.png");
+        addItemToGrid(itemGrid, new ShopItemData("rarecandy", "Rare Candy", 5, "ITEM", "Choose 1 Pokémon to evolve!"), 2, 2, "/item/rarecandy.png");
 
         // --- ROW 4: BICYCLE ---
-        addItemToGrid(itemGrid, new ShopItemData("bicycle", "Bicycle", 5, "ITEM", "Move faster on map"), 0, 3, "/item/bicycle.png");
+        addItemToGrid(itemGrid, new ShopItemData("bicycle", "Bicycle", 5, "ITEM", "Roll Twice."), 0, 3, "/item/bicycle.png");
 
         scrollPane.setContent(itemGrid);
         HBox.setHgrow(scrollPane, Priority.ALWAYS);

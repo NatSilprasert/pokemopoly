@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class RareCandy extends ItemCard {
     public RareCandy() {
-        super("ITM_RARE_CANDY",
+        super("rarecandy",
                 "Rare Candy",
                 "Choose 1 Pokémon to evolve!");
     }

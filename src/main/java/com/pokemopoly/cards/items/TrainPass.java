@@ -8,7 +8,7 @@ import com.pokemopoly.player.Player;
 
 public class TrainPass extends ItemCard {
     public TrainPass() {
-        super("ITM_TRAIN_PASS", "Train Pass",
+        super("trainpass", "Train Pass",
                 "Teleport to the nearest City tile ahead.");
     }
 

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class HM02Fly extends ItemCard {
     public HM02Fly() {
-        super("ITM_HM02_FLY", "HM02 Fly",
+        super("hm02fly", "HM02 Fly",
                 "Move to any tile up to 10 spaces ahead.");
     }
 

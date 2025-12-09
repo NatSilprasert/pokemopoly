@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class MaxPotion extends ItemCard {
     public MaxPotion() {
-        super("ITM_MAX_POTION", "Max Potion", "Restore 15 HP to one Pokémon in your team.");
+        super("maxpotion", "Max Potion", "Restore 15 HP to one Pokémon in your team.");
     }
 
     @Override

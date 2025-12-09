@@ -7,7 +7,7 @@ import com.pokemopoly.player.Player;
 public class MaxRepel extends ItemCard {
 
     public MaxRepel() {
-        super("ITM_MAX_REPEL", "Max Repel",
+        super("maxrepel", "Max Repel",
                 "Move forward 6 tiles. You cannot roll dice or catch Pokémon this turn.");
     }
 
