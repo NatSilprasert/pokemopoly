@@ -38,9 +38,9 @@ public class Player {
             addPokemon(new Pikachu());
             addPokemon(new Magikarp());
             addPokemon(new Rattata());
-            addPokemon(new Ditto());
-            addPokemon(new Fearow());
-            addPokemon(new Mewtwo());
+            addPokemon(new Diglett());
+            addPokemon(new Ekans());
+            addPokemon(new Abra());
 
             hand.add(new Bicycle());
             hand.add(new Bicycle());

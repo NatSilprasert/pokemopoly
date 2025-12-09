@@ -147,16 +147,16 @@ public class Game {
 
     public void checkAdditionalConditions(Player currentPlayer, int n) {
         // Check if walk pass daycare
-        if (currentPlayer.getPosition() < 18 && currentPlayer.getPosition() + n >= 18) {
-            DaycareTile daycareTile = (DaycareTile) board.getTileAt(18);
-            daycareTile.walkPass(currentPlayer, this);
-        }
-
-        // Check if walk pass start tile
-        if (currentPlayer.getPosition() + n >= 40) {
-            StartTile startTile = (StartTile) board.getTileAt(0);
-            startTile.walkPass(currentPlayer, this);
-        }
+//        if (currentPlayer.getPosition() < 18 && currentPlayer.getPosition() + n >= 18) {
+//            DaycareTile daycareTile = (DaycareTile) board.getTileAt(18);
+//            daycareTile.walkPass(currentPlayer, this);
+//        }
+//
+//        // Check if walk pass start tile
+//        if (currentPlayer.getPosition() + n >= 40) {
+//            StartTile startTile = (StartTile) board.getTileAt(0);
+//            startTile.walkPass(currentPlayer, this);
+//        }
     }
 
     private void setUpDeckManager() {

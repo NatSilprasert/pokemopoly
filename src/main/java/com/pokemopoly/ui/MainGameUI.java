@@ -292,6 +292,8 @@ public class MainGameUI {
 
         diceUIHolder[0] = new RollDiceUI((n) -> {
 
+            n = 18;
+
             root.getChildren().remove(diceUIHolder[0].getView());
 
             Player currentPlayer = game.getCurrentPlayer();
@@ -415,7 +417,7 @@ public class MainGameUI {
                 new CityTile("City Tile", 15, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 16, GrassColor.BLUE, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 17, GrassColor.BLUE, root, v -> nextTurn()),
-                new DaycareTile("Daycare Tile", 18),
+                new DaycareTile("Daycare Tile", 18, root, this::nextTurn),
                 new GrassTile("Green Grass Tile", 19, GrassColor.BLUE, root, v -> nextTurn()),
                 new BattleTile("Villain", 20, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 21, GrassColor.PURPLE, root, v -> nextTurn()),
