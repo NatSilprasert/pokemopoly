@@ -4,6 +4,9 @@ import com.pokemopoly.Game;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.player.ProfessionType;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,7 +16,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PlayerSetupUI {
 
@@ -27,18 +33,18 @@ public class PlayerSetupUI {
     private ProfessionType selectedProfession = null;
     private boolean hasName = false;
 
-    // UI Components
     private final java.util.List<VBox> professionCards = new java.util.ArrayList<>();
     private final Label stepLabel;
     private final TextField nameField;
     private final Button confirmButton;
+
+    private final StackPane rootContainer;
 
     public PlayerSetupUI(Game game, Stage stage, int totalPlayers) {
         this.game = game;
         this.stage = stage;
         this.totalPlayers = totalPlayers;
 
-        // Title: "Player 1 - Enter your name"
         stepLabel = new Label("Player 1 - Enter your name");
         stepLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
@@ -48,21 +54,16 @@ public class PlayerSetupUI {
 
         nameField.textProperty().addListener((obs, oldVal, newVal) -> {
             hasName = !newVal.trim().isEmpty();
-
-            // เปิดหรือปิดการเลือกอาชีพ
             for (VBox card : professionCards) {
                 card.setDisable(!hasName);
                 card.setOpacity(hasName ? 1.0 : 0.4);
             }
-
-            // ถ้าลบชื่อจนว่าง ต้องล้างการเลือก profession
             if (!hasName) {
                 selectedProfession = null;
                 for (VBox card : professionCards) {
                     card.setStyle("-fx-border-color: black; -fx-border-width: 2;");
                 }
             }
-
             validateForm();
         });
 
@@ -73,11 +74,14 @@ public class PlayerSetupUI {
         confirmButton.setStyle("-fx-font-size: 18px; -fx-padding: 8 20;");
         confirmButton.setOnAction(e -> handleConfirm());
 
-        VBox root = new VBox(30, stepLabel, nameField, professionRow, confirmButton);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(0));
+        VBox setupUI = new VBox(30, stepLabel, nameField, professionRow, confirmButton);
+        setupUI.setAlignment(Pos.CENTER);
+        setupUI.setPadding(new Insets(0));
 
-        scene = new Scene(root, 800, 600);
+        // 🚀 rootContainer รองรับ overlay ได้
+        rootContainer = new StackPane(setupUI);
+
+        scene = new Scene(rootContainer, 800, 600);
         scene.getStylesheets().add(
                 getClass().getResource("/global.css").toExternalForm()
         );
@@ -88,8 +92,6 @@ public class PlayerSetupUI {
     }
 
     private VBox createProfessionCard(ProfessionType type, String imgPath, String abilityText) {
-
-        // Image
         ImageView img = new ImageView(
                 new Image(getClass().getResourceAsStream(imgPath))
         );
@@ -107,17 +109,12 @@ public class PlayerSetupUI {
         VBox card = new VBox(10, img, name, ability);
         card.setAlignment(Pos.CENTER);
         card.setPadding(new Insets(10));
-        card.setStyle(
-                "-fx-border-color: black; -fx-border-width: 2; " +
-                        "-fx-background-radius: 10;"
-        );
+        card.setStyle("-fx-border-color: black; -fx-border-width: 2;");
 
         card.setDisable(true);
 
         card.setOnMouseClicked(e -> {
-            if (!card.isDisable()) {
-                selectProfession(type, card);
-            }
+            if (!card.isDisable()) selectProfession(type, card);
         });
 
         professionCards.add(card);
@@ -125,7 +122,6 @@ public class PlayerSetupUI {
     }
 
     private HBox createProfessionSelector() {
-
         VBox trainer = createProfessionCard(
                 ProfessionType.TRAINER,
                 "/prof/trainer.png",
@@ -152,53 +148,47 @@ public class PlayerSetupUI {
 
         HBox row = new HBox(25, trainer, fisher, scientist, rocket);
         row.setAlignment(Pos.CENTER);
-
         return row;
     }
-    
+
     private void selectProfession(ProfessionType type, VBox selectedCard) {
         this.selectedProfession = type;
 
-        // Clear all highlight
         HBox row = (HBox) selectedCard.getParent();
         for (javafx.scene.Node n : row.getChildren()) {
             n.setStyle("-fx-border-color: black; -fx-border-width: 2;");
         }
-
-        // Highlight selected one
-        selectedCard.setStyle(
-                "-fx-border-color: #2196f3; -fx-border-width: 2;"
-        );
+        selectedCard.setStyle("-fx-border-color: #2196f3; -fx-border-width: 2;");
 
         validateForm();
     }
-    
+
     private void validateForm() {
-        boolean ready = !nameField.getText().trim().isEmpty() && selectedProfession != null;
-        confirmButton.setDisable(!ready);
+        confirmButton.setDisable(
+                nameField.getText().trim().isEmpty() ||
+                        selectedProfession == null
+        );
     }
-    
+
     private void handleConfirm() {
         String name = nameField.getText().trim();
-        
         game.addPlayer(new Player(name, selectedProfession));
 
         if (currentIndex < totalPlayers) {
             currentIndex++;
             resetForm();
         } else {
-            stage.setScene(new MainGameUI(game, stage).getScene());
+            startTransitionToMainUI(); // 🎬 ใช้ Transition ที่แก้แล้ว
         }
     }
 
-    // Reset UI
     private void resetForm() {
         stepLabel.setText("Player " + currentIndex + " - Enter your name");
         nameField.setText("");
         selectedProfession = null;
         confirmButton.setDisable(true);
 
-        VBox root = (VBox) scene.getRoot();
+        VBox root = (VBox) ((VBox) rootContainer.getChildren().get(0));
         HBox row = (HBox) root.getChildren().get(2);
 
         for (javafx.scene.Node n : row.getChildren()) {
@@ -209,5 +199,57 @@ public class PlayerSetupUI {
             card.setDisable(true);
             card.setOpacity(0.4);
         }
+    }
+
+    // -----------------------------------------------------------
+    // 🎬 TRANSITION ทำงานได้จริง ไม่มีตัวแปรหาย
+    // -----------------------------------------------------------
+    private void startTransitionToMainUI() {
+
+        StackPane overlay = new StackPane();
+        overlay.setStyle("-fx-background-color: black;");
+        overlay.setOpacity(0);
+
+        Text welcome = new Text("Welcome to Pokemopoly");
+        welcome.setFill(Color.WHITE);
+        welcome.setStyle("-fx-font-size: 48px; -fx-font-weight: bold;");
+        welcome.setOpacity(0);
+
+        overlay.getChildren().add(welcome);
+        StackPane.setAlignment(welcome, Pos.CENTER);
+
+        rootContainer.getChildren().add(overlay);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), overlay);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+
+        FadeTransition textFade = new FadeTransition(Duration.seconds(1), welcome);
+        textFade.setFromValue(0);
+        textFade.setToValue(1);
+
+        ScaleTransition zoom = new ScaleTransition(Duration.seconds(2), overlay);
+        zoom.setFromX(1.2);
+        zoom.setFromY(1.2);
+        zoom.setToX(1);
+        zoom.setToY(1);
+
+        FadeTransition textFadeOut = new FadeTransition(Duration.seconds(1), welcome);
+        textFadeOut.setFromValue(1);
+        textFadeOut.setToValue(0);
+
+        SequentialTransition seq = new SequentialTransition(
+                fadeIn,
+                textFade,
+                zoom,
+                textFadeOut
+        );
+
+        seq.setOnFinished(e -> {
+            MainGameUI ui = new MainGameUI(game, stage);
+            stage.setScene(ui.getScene());
+        });
+
+        seq.play();
     }
 }

@@ -6,6 +6,7 @@ import com.pokemopoly.player.Player;
 import com.pokemopoly.player.ProfessionType;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -122,21 +123,30 @@ public class MainGameUI {
         VBox turnOverlay = createTurnOverlay();
         turnOverlay.setVisible(false);
 
+        // create black intro overlay
+        Pane blackOverlay = new Pane();
+        blackOverlay.setStyle("-fx-background-color: black;");
+        blackOverlay.setOpacity(1.0);
+        blackOverlay.setMouseTransparent(true);
 
-        // set scene
-        root = new StackPane(boardLayer, playerLayer, turnOverlay);
+        // stack layers
+        root = new StackPane(boardLayer, playerLayer, turnOverlay, blackOverlay);
         root.setAlignment(Pos.CENTER);
 
+        // make sure black starts in front
+        blackOverlay.toFront();
+
+        // scene
         this.scene = new Scene(root, 800, 600);
 
-        // Import css stylesheets
+        // CSS
         if (getClass().getResource("/global.css") != null) {
             this.scene.getStylesheets().add(
                     getClass().getResource("/global.css").toExternalForm()
             );
         }
 
-        Platform.runLater(this::startGame);
+        Platform.runLater(() -> playIntroFade(blackOverlay, turnOverlay));
     }
 
     public Scene getScene() {
@@ -328,5 +338,30 @@ public class MainGameUI {
         Player next = game.getCurrentPlayer();
 
         Platform.runLater(() -> showTurnOverlay(next));
+    }
+
+    private void playIntroFade(Pane black, VBox turnOverlay) {
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
+
+        delay.setOnFinished(ev -> {
+
+            Timeline fadeOut = new Timeline(
+                    new KeyFrame(Duration.ZERO,
+                            new KeyValue(black.opacityProperty(), 1)
+                    ),
+                    new KeyFrame(Duration.seconds(1),
+                            new KeyValue(black.opacityProperty(), 0)
+                    )
+            );
+
+            fadeOut.setOnFinished(e -> {
+                root.getChildren().remove(black);
+                showTurnOverlay(game.getCurrentPlayer());
+            });
+            fadeOut.play();
+        });
+
+        delay.play();
     }
 }
