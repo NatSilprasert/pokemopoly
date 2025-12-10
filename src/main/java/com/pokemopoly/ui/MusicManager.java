@@ -1,4 +1,4 @@
-package com.pokemopoly;
+package com.pokemopoly.ui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

@@ -10,6 +10,7 @@ import com.pokemopoly.cards.event.*;
 import com.pokemopoly.cards.items.*;
 import com.pokemopoly.cards.pokemon.*;
 import com.pokemopoly.player.Player;
+import com.pokemopoly.ui.MusicManager;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

@@ -2,7 +2,7 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
+import com.pokemopoly.ui.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;

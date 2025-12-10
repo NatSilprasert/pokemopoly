@@ -1,7 +1,6 @@
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.player.ProfessionType;
 
@@ -17,7 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;

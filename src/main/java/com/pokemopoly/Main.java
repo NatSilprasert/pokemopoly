@@ -1,5 +1,6 @@
 package com.pokemopoly;
 
+import com.pokemopoly.ui.MusicManager;
 import com.pokemopoly.ui.NumberPlayerSelectUI;
 import javafx.application.Application;
 import javafx.stage.Stage;

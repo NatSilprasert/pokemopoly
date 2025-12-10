@@ -1,7 +1,7 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
+import com.pokemopoly.ui.MusicManager;
 import com.pokemopoly.ui.ShopUI;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.player.Player;

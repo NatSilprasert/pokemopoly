@@ -1,7 +1,6 @@
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Board;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.player.Player;
@@ -265,8 +264,6 @@ public class MainGameUI {
         final RollDiceUI[] diceUIHolder = new RollDiceUI[1];
 
         diceUIHolder[0] = new RollDiceUI((n) -> {
-
-            n = 10;
 
             root.getChildren().remove(diceUIHolder[0].getView());
 
