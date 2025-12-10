@@ -283,7 +283,7 @@ public class MainGameUI {
 
         diceUIHolder[0] = new RollDiceUI((n) -> {
 
-            n = 10;
+            n = 2;
 
             root.getChildren().remove(diceUIHolder[0].getView());
 

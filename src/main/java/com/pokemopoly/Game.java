@@ -45,7 +45,7 @@ public class Game {
     }
 
     public boolean isGameEnd() {
-        return turn >= 50 * playerCount;
+        return turn >= 1 * playerCount;
     }
 
     public void setUpBoard() {
