@@ -19,7 +19,6 @@ public class Caterpie extends PokemonCard implements Evolvable {
 
     @Override
     public PokemonCard evolve() {
-        return new Metapod(); //Edit 10/29/68
+        return new Metapod();
     }
-    //Create 10/23/68
 }

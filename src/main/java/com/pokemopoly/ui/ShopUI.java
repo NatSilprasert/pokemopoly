@@ -1,9 +1,8 @@
-package com.pokemopoly;
+package com.pokemopoly.ui;
 
+import com.pokemopoly.Game;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.player.Player;
-import com.pokemopoly.ui.MainGameUI;
-import com.pokemopoly.ui.cards.ItemCardUI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -21,24 +20,21 @@ import javafx.scene.text.FontWeight;
 
 import java.util.Objects;
 
-public class Shop extends HBox {
+public class ShopUI extends HBox {
 
     private final Player player;
 
-    // UI Components
     private VBox summaryBox;
     private Label playerCoinLabel;
 
-    // State
     private ShopItemData selectedItem = null;
 
-    // Inner class to hold shop item data structure
     private static class ShopItemData {
         String id;
         String name;
         int price;
-        String type; // "BALL" or "ITEM"
-        String description; // For ItemCardUI
+        String type;
+        String description;
 
         public ShopItemData(String id, String name, int price, String type, String description) {
             this.id = id;
@@ -49,7 +45,6 @@ public class Shop extends HBox {
         }
     }
 
-    // Concrete implementation of ItemCard for the Shop to use
     private static class SimpleItemCard extends ItemCard {
         public SimpleItemCard(String id, String name, String description) {
             super(id, name, description);
@@ -57,26 +52,22 @@ public class Shop extends HBox {
 
         @Override
         public void activate(Game game, MainGameUI gameUI) {
-            // Logic for item activation would go here
             System.out.println("Used " + getName());
         }
     }
 
-    public Shop(Player player) {
+    public ShopUI(Player player) {
         this.player = player;
 
-        // Root Styling
         this.setPadding(new Insets(10));
         this.setSpacing(10);
         this.setStyle("-fx-background-color: #2b2b2b;"); // Dark background like the game board
         this.setPrefSize(500, 500);
 
-        // --- LEFT SIDE ---
         VBox leftPane = new VBox(7.5);
         leftPane.setAlignment(Pos.TOP_CENTER);
         leftPane.setPrefWidth(200);
 
-        // 1. Top Left Logo
         HBox headerBox = new HBox(5);
         headerBox.setAlignment(Pos.CENTER_LEFT);
 
@@ -86,19 +77,16 @@ public class Shop extends HBox {
         shopText.setFont(Font.font("Monospaced", FontWeight.BOLD, 18));
         logoPane.getChildren().addAll(bgCircle, shopText);
 
-        // Player Coin Display (Added for UX to see current money)
         playerCoinLabel = new Label("Coins: " + player.getCoin());
         playerCoinLabel.setTextFill(Color.GOLD);
         playerCoinLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 18));
 
         headerBox.getChildren().addAll(logoPane, playerCoinLabel);
 
-        // 2. Shop Image
         ImageView shopImageView = new ImageView();
         try {
             shopImageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/shop/shop.png"))));
         } catch (Exception e) {
-            // Placeholder if image missing
             shopImageView.setImage(null);
         }
         shopImageView.setFitWidth(190);
@@ -108,19 +96,16 @@ public class Shop extends HBox {
         imageFrame.setStyle("-fx-border-color: white; -fx-border-width: 4; -fx-background-color: black;");
         imageFrame.setPadding(new Insets(2.5));
 
-        // 3. Summary / Order Box (Empty initially)
         summaryBox = new VBox(5);
         summaryBox.setPrefHeight(150);
         summaryBox.setStyle("-fx-background-color: black; -fx-border-color: white; -fx-border-width: 2;");
         summaryBox.setAlignment(Pos.CENTER);
         summaryBox.setPadding(new Insets(5));
 
-        // Initialize Empty State
         clearSummary();
 
         leftPane.getChildren().addAll(headerBox, imageFrame, summaryBox);
 
-        // --- RIGHT SIDE (Item Grid) ---
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle("-fx-background: #2b2b2b; -fx-border-color: transparent;");
@@ -131,22 +116,18 @@ public class Shop extends HBox {
         itemGrid.setPadding(new Insets(5));
         itemGrid.setStyle("-fx-background-color: #2b2b2b;");
 
-        // --- ROW 1: BALLS ---
         addItemToGrid(itemGrid, new ShopItemData("pokeball", "Pokeball", 1, "BALL", "Catch rate 1x"), 0, 0, "/shop/pokeball.png");
         addItemToGrid(itemGrid, new ShopItemData("greatball", "Greatball", 2, "BALL", "Catch rate 1.5x"), 1, 0, "/shop/greatball.png");
         addItemToGrid(itemGrid, new ShopItemData("ultraball", "UltraBall", 3, "BALL", "Catch rate 2x"), 2, 0, "/shop/ultraball.png");
 
-        // --- ROW 2: POTIONS ---
         addItemToGrid(itemGrid, new ShopItemData("potion", "Potion", 1, "ITEM", "Restore 3 HP to one Pokémon in your team."), 0, 1, "/item/potion.png");
         addItemToGrid(itemGrid, new ShopItemData("superpotion", "Super Potion", 2, "ITEM", "Restore 5 HP to one Pokémon in your team."), 1, 1, "/item/superpotion.png");
         addItemToGrid(itemGrid, new ShopItemData("repel", "Repel", 1, "ITEM", "Move forward 2 tiles. You cannot roll dice or catch Pokémon this turn."), 2, 1, "/item/repel.png");
 
-        // --- ROW 3: UTILITY ---
         addItemToGrid(itemGrid, new ShopItemData("superrepel", "Super Repel", 2, "ITEM", "Move forward 4 tiles. You cannot roll dice or catch Pokémon this turn."), 0, 2, "/item/superrepel.png");
         addItemToGrid(itemGrid, new ShopItemData("fullheal", "Full Heal", 2, "ITEM", "Cures all abnormal status conditions from one Pokémon in your team."), 1, 2, "/item/fullheal.png");
         addItemToGrid(itemGrid, new ShopItemData("rarecandy", "Rare Candy", 5, "ITEM", "Choose 1 Pokémon to evolve!"), 2, 2, "/item/rarecandy.png");
 
-        // --- ROW 4: BICYCLE ---
         addItemToGrid(itemGrid, new ShopItemData("bicycle", "Bicycle", 5, "ITEM", "Roll Twice."), 0, 3, "/item/bicycle.png");
 
         scrollPane.setContent(itemGrid);
@@ -162,7 +143,6 @@ public class Shop extends HBox {
         itemBox.setPrefSize(70, 80);
         itemBox.setCursor(Cursor.HAND);
 
-        // Hover Effect
         itemBox.setOnMouseEntered(e -> itemBox.setStyle("-fx-background-color: #222; -fx-border-color: white; -fx-border-width: 2;"));
         itemBox.setOnMouseExited(e -> {
             if (selectedItem != itemData)
@@ -171,18 +151,15 @@ public class Shop extends HBox {
                 itemBox.setStyle("-fx-background-color: #222; -fx-border-color: gold; -fx-border-width: 3;");
         });
 
-        // Image
         ImageView imgView = new ImageView();
         try {
             imgView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath))));
         } catch (Exception e) {
-            // Fallback
         }
         imgView.setFitWidth(40);
         imgView.setFitHeight(40);
         imgView.setPreserveRatio(true);
 
-        // Price Tag Area
         HBox priceBox = new HBox(2.5);
         priceBox.setAlignment(Pos.CENTER);
         Circle coin = new Circle(6, Color.GOLD);
@@ -191,18 +168,15 @@ public class Shop extends HBox {
         priceLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 16));
         priceBox.getChildren().addAll(coin, priceLabel);
 
-        // Name (Optional, but good for UX, though prompt implies image + price mainly)
         Label nameLabel = new Label(itemData.name);
         nameLabel.setTextFill(Color.LIGHTGRAY);
         nameLabel.setFont(Font.font("Monospaced", 10));
 
         itemBox.getChildren().addAll(imgView, priceBox, nameLabel);
 
-        // Click Action
         itemBox.setOnMouseClicked(e -> {
             selectedItem = itemData;
             updateSummary();
-            // Reset styles for all boxes (simple way)
             for (Node n : grid.getChildren()) {
                 n.setStyle("-fx-background-color: black; -fx-border-color: #555; -fx-border-width: 2;");
             }
@@ -229,18 +203,14 @@ public class Shop extends HBox {
             return;
         }
 
-        // Construct a temporary ItemCard for display purposes
         SimpleItemCard displayCard = new SimpleItemCard(selectedItem.id, selectedItem.name, selectedItem.description);
 
         Node previewNode;
         String imagePath;
 
-        // 1. กำหนด Path รูปภาพตามประเภทสินค้า
         if ("ITEM".equals(selectedItem.type)) {
-            // *** ส่วนที่แก้ไข: Item ใช้ Path /item/[id].png ***
             imagePath = "/item/" + selectedItem.id + ".png";
 
-            // Simple preview for items
             VBox itemPreview = new VBox(5);
             itemPreview.setAlignment(Pos.CENTER);
 
@@ -257,7 +227,6 @@ public class Shop extends HBox {
             name.setTextFill(Color.WHITE);
             name.setFont(Font.font("Monospaced", FontWeight.BOLD, 16));
 
-            // ⭐ NEW: Description with white border + center text
             Label desc = new Label(displayCard.getDescription());
             desc.setTextFill(Color.WHITE);
             desc.setFont(Font.font("Monospaced", FontWeight.NORMAL, 12));
@@ -266,7 +235,6 @@ public class Shop extends HBox {
             desc.setStyle("-fx-text-alignment: center;");
             desc.setAlignment(Pos.CENTER);
 
-            // ห่อด้วยกล่องกรอบขาว
             VBox descriptionBox = new VBox(desc);
             descriptionBox.setStyle(
                     "-fx-border-color: white;" +
@@ -279,10 +247,9 @@ public class Shop extends HBox {
             itemPreview.getChildren().addAll(img, name, descriptionBox);
             previewNode = itemPreview;
         } else {
-            // Ball ยังคงใช้ Path เดิม: /shop/[id].png
+
             imagePath = "/shop/" + selectedItem.id + ".png";
 
-            // Simple preview for balls
             VBox ballPreview = new VBox(5);
             ballPreview.setAlignment(Pos.CENTER);
 
@@ -303,7 +270,6 @@ public class Shop extends HBox {
             previewNode = ballPreview;
         }
 
-        // 2. Pricing and Controls (ส่วนนี้ไม่มีการเปลี่ยนแปลง)
         HBox controlBox = new HBox(10);
         controlBox.setAlignment(Pos.CENTER);
 
@@ -319,14 +285,11 @@ public class Shop extends HBox {
 
         controlBox.getChildren().addAll(buyBtn, clearBtn);
 
-        // 3. Status Message
         Label statusLabel = new Label();
         statusLabel.setFont(Font.font("Monospaced", 12));
         statusLabel.setWrapText(true);
 
-        // Button Actions
         buyBtn.setOnAction(e -> {
-            // ... (Logic การซื้อเดิม) ...
             if (player.getCoin() >= selectedItem.price) {
                 boolean success = performPurchase(selectedItem);
                 if (success) {
@@ -350,7 +313,6 @@ public class Shop extends HBox {
 
         clearBtn.setOnAction(e -> clearSummary());
 
-        // Check initial affordability
         if (player.getCoin() < selectedItem.price) {
             buyBtn.setDisable(true);
             buyBtn.setStyle("-fx-background-color: gray; -fx-text-fill: white;");
@@ -358,7 +320,6 @@ public class Shop extends HBox {
             statusLabel.setText("Insufficient Funds");
         }
 
-        // Add everything to summary
         VBox container = new VBox(5);
         container.setAlignment(Pos.CENTER);
         container.getChildren().addAll(previewNode, costLabel, controlBox, statusLabel);
@@ -374,13 +335,11 @@ public class Shop extends HBox {
     }
 
     private boolean performPurchase(ShopItemData item) {
-        // Double check funds logic
         if (player.getCoin() < item.price) return false;
 
         boolean purchased = false;
 
         if ("BALL".equals(item.type)) {
-            // Handle Balls (Stored as int counters in Player)
             switch (item.id) {
                 case "pokeball":
                     player.setRedBall(player.getRedBall() + 1);
@@ -396,10 +355,8 @@ public class Shop extends HBox {
                     break;
             }
         } else {
-            // Handle Items (Stored in Hand)
-            // Create a new instance of the item card
             SimpleItemCard newCard = new SimpleItemCard(item.id, item.name, item.description);
-            purchased = player.getHand().add(newCard); // Returns false if hand is full
+            purchased = player.getHand().add(newCard);
         }
 
         if (purchased) {

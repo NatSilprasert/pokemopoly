@@ -2,7 +2,6 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.player.Player;
@@ -18,7 +17,6 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class StartTile extends Tile {
 
@@ -36,10 +34,6 @@ public class StartTile extends Tile {
         showSellPokemonUI(player, game, null);
     }
 
-    /**
-     * เรียกเมื่อเดินผ่าน StartTile
-     * @param callback จะถูกเรียกหลัง UI ปิด
-     */
     public void walkPass(Player player, Game game, Runnable callback) {
         showSellPokemonUI(player, game, callback);
     }
@@ -65,7 +59,7 @@ public class StartTile extends Tile {
         grid.setAlignment(Pos.CENTER);
 
         int pokemonCount = team.size();
-        int columns = (pokemonCount <= 3) ? pokemonCount : (pokemonCount + 1) / 2; // 1 row for 1-3, 2 row for 4-6
+        int columns = (pokemonCount <= 3) ? pokemonCount : (pokemonCount + 1) / 2;
         int rows = (pokemonCount <= 3) ? 1 : 2;
 
         grid.setHgap(20);
@@ -77,7 +71,7 @@ public class StartTile extends Tile {
 
         Button confirm = new Button("Confirm Sale");
         confirm.setStyle("-fx-font-family: 'Pixelify Sans'; -fx-font-size: 18px; -fx-padding: 8 20;");
-        confirm.setDisable(true); // ปิดก่อนมีตัวเลือก
+        confirm.setDisable(true);
         confirm.setOnAction(e -> {
             int totalCoins = selected.stream().mapToInt(PokemonCard::getPrice).sum();
             selected.forEach(p -> player.getTeam().remove(p));

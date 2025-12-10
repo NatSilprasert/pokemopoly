@@ -26,12 +26,10 @@ public class RollDiceUI {
         void onResult(int diceValue);
     }
 
-    /** Player ใช้ */
     public RollDiceUI(DiceResultCallback callback) {
         this(callback, false);
     }
 
-    /** รองรับ bot: isBot = true จะไม่มีปุ่ม */
     public RollDiceUI(DiceResultCallback callback, boolean isBot) {
         this.callback = callback;
         this.isBot = isBot;
@@ -58,7 +56,6 @@ public class RollDiceUI {
         root.getChildren().add(diceView);
 
         if (!isBot) {
-            // PLAYER MODE
             Button rollButton = new Button("ROLL!");
             rollButton.setOnAction(e -> {
                 diceAnimation.stop();
@@ -74,7 +71,6 @@ public class RollDiceUI {
             root.getChildren().addAll(resultLabel, rollButton);
 
         } else {
-            // BOT MODE
             root.getChildren().add(resultLabel);
             autoRoll(resultLabel);
         }
@@ -88,14 +84,13 @@ public class RollDiceUI {
             if (currentFace > 6) currentFace = 1;
             diceView.setImage(loadDice(currentFace));
         }));
-        autoTimeline.setCycleCount(10); // หมุน 10 ครั้ง
+        autoTimeline.setCycleCount(10);
 
         autoTimeline.setOnFinished(e -> {
             int result = new Random().nextInt(6) + 1;
             diceView.setImage(loadDice(result));
             resultLabel.setText("Rolled " + result + "!");
 
-            // 👉 ค้างหน้าจอไว้ 0.5 วิ ก่อนส่ง callback
             PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
             pause.setOnFinished(ev -> callback.onResult(result));
             pause.play();

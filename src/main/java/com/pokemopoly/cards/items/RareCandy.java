@@ -2,13 +2,8 @@ package com.pokemopoly.cards.items;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.ItemCard;
-import com.pokemopoly.cards.PokemonCard;
-import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.MainGameUI;
-
-import java.util.List;
-import java.util.Scanner;
 
 public class RareCandy extends ItemCard {
     public RareCandy() {
@@ -23,7 +18,7 @@ public class RareCandy extends ItemCard {
         System.out.println("✨ " + player.getName() + " used Rare Candy!");
 
         int currentPos = player.getPosition();
-        int targetPos = 18; // Daycare tile index
+        int targetPos = 18;
         int moveSteps = (targetPos - currentPos + 40) % 40;
 
         System.out.println("Moving " + player.getName() + " to Daycare (tile " + targetPos + ")");

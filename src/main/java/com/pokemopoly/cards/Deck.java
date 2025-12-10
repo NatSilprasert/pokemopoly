@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck<T extends Card> {
+public class Deck<T> {
     private List<T> cards;
 
     public Deck() {
@@ -25,10 +25,6 @@ public class Deck<T extends Card> {
             return null;
         }
         return cards.removeFirst();
-    }
-
-    public void discard(T card) {
-        cards.add(card);
     }
 
     public boolean isEmpty() {

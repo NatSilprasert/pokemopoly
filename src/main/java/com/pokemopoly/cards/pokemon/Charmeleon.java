@@ -20,5 +20,4 @@ public class Charmeleon extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Charizard();
     }
-    //Create 10/23/68
 }

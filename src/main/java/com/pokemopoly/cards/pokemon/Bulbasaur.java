@@ -22,7 +22,6 @@ public class Bulbasaur extends PokemonCard implements Evolvable {
 
     @Override
     public PokemonCard evolve() {
-        return new Ivysaur(); //Edit 10/29/68
+        return new Ivysaur();
     }
-    //Create 10/23/68
 }

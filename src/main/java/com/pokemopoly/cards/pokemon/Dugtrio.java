@@ -1,14 +1,11 @@
 package com.pokemopoly.cards.pokemon;
 
-import com.pokemopoly.Game;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
-import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
-import com.pokemopoly.player.Player;
 
 import java.util.List;
 
-public class Dugtrio extends PokemonCard implements PreRollAbility {
+public class Dugtrio extends PokemonCard{
     public Dugtrio() {
         super("P051",
                 "Dugtrio",
@@ -18,11 +15,4 @@ public class Dugtrio extends PokemonCard implements PreRollAbility {
                 6,
                 List.of(PokemonType.GROUND));
     }
-
-    @Override
-    public void usePreRollPassive(Game game) {
-        // Too hard to do Bulldoze
-        // The space where the player is standing cannot be used until one full round has been completed.
-    }
-    //Create 11/2/68
 }

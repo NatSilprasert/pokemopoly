@@ -14,7 +14,6 @@ import javafx.scene.text.Font;
 
 public class EventCardUI extends VBox {
 
-    // Configuration
     private static final int CARD_WIDTH = 300;
     private static final int CARD_HEIGHT = 450;
 
@@ -52,9 +51,6 @@ public class EventCardUI extends VBox {
 
     private void initComponents() {
 
-        // =========================
-        // 1. EVENT TAG
-        // =========================
         Label eventTag = new Label("EVENT");
         eventTag.setFont(Font.font(PIXEL_FONT, 16));
         eventTag.setTextFill(Color.WHITE);
@@ -67,9 +63,6 @@ public class EventCardUI extends VBox {
         StackPane tagWrapper = new StackPane(eventTag);
         tagWrapper.setPadding(new Insets(10, 0, 0, 0));
 
-        // =========================
-        // 2. EVENT TITLE
-        // =========================
         Label titleLabel = new Label(card.getName());
         titleLabel.setFont(Font.font(PIXEL_FONT, 20));
         titleLabel.setAlignment(Pos.CENTER);
@@ -82,12 +75,8 @@ public class EventCardUI extends VBox {
                 new BorderWidths(BORDER_THICKNESS)
         )));
 
-        // =========================
-        // 3. IMAGE AREA (FIXED)
-        // =========================
         Node imageRegion;
 
-        // โหลดจาก resource ภายใน jar/classpath
         String resPath = "/event/" + card.getId() + ".png";
         System.out.println("Loading image: " + resPath);
 
@@ -113,18 +102,12 @@ public class EventCardUI extends VBox {
             imageRegion = placeholder;
         }
 
-
-        // =========================
-        // 4. DESCRIPTION
-        // =========================
-        // DESCRIPTION AREA
         TextArea descArea = new TextArea(card.getDescription());
         descArea.setWrapText(true);
         descArea.setEditable(false);
         descArea.setFont(Font.font(PIXEL_FONT, 12));
         descArea.setPrefSize(260, 100);
 
-        // ตั้งพื้นหลังของ TextArea ให้เป็นสีเดียวกับพื้นหลังการ์ด
         String bg = String.format("rgb(%d,%d,%d);",
                 (int)(BG_COLOR.getRed() * 255),
                 (int)(BG_COLOR.getGreen() * 255),
@@ -144,7 +127,6 @@ public class EventCardUI extends VBox {
         descPanel.setPadding(new Insets(10));
         descPanel.setPrefSize(260, 100);
 
-        // กรอบดำรอบนอก
         descPanel.setBorder(new Border(new BorderStroke(
                 BORDER_COLOR,
                 BorderStrokeStyle.SOLID,
@@ -152,9 +134,6 @@ public class EventCardUI extends VBox {
                 new BorderWidths(BORDER_THICKNESS)
         )));
 
-        // =========================
-        // ADD ALL TO ROOT
-        // =========================
         getChildren().addAll(
                 tagWrapper,
                 titleLabel,

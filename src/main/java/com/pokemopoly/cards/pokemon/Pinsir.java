@@ -3,7 +3,6 @@ package com.pokemopoly.cards.pokemon;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
 
-import java.net.PortUnreachableException;
 import java.util.List;
 
 public class Pinsir extends PokemonCard {

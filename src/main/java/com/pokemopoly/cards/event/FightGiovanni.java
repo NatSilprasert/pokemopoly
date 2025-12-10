@@ -5,7 +5,6 @@ import com.pokemopoly.cards.EventCard;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.player.Player;
 
-import java.util.List;
 import java.util.Random;
 
 public class FightGiovanni extends EventCard {

@@ -2,10 +2,7 @@ package com.pokemopoly.cards.event;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.EventCard;
-import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.player.Player;
-
-import java.util.List;
 
 public class DoesPokeBallHaveEye extends EventCard {
     public DoesPokeBallHaveEye() {
@@ -22,6 +19,6 @@ public class DoesPokeBallHaveEye extends EventCard {
         int n = Math.max(0, before - 2);
         p.setRedBall(n);
 
-        System.out.println("[EVENT] Does a Poke Ball have an eye?" + p.getName() + " lost Poké Balls! (" + before + " → " + p.getRedBall() + ")");
+        System.out.println("[EVENT] Does a Poke Ball have an eye? " + p.getName() + " lost Poké Balls! (" + before + " → " + p.getRedBall() + ")");
     }
 }

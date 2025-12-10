@@ -15,5 +15,4 @@ public class Nidoking extends PokemonCard {
                 6,
                 List.of(PokemonType.POISON,PokemonType.GROUND));
     }
-    //Create 10/29/68
 }

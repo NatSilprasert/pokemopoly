@@ -1,13 +1,11 @@
 package com.pokemopoly.cards.pokemon;
 
-import com.pokemopoly.Battle;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
-import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 import java.util.List;
 
-public class Blastoise extends PokemonCard implements BattleAbility {
+public class Blastoise extends PokemonCard {
 
     public Blastoise() {
         super("P009","Blastoise",
@@ -17,11 +15,4 @@ public class Blastoise extends PokemonCard implements BattleAbility {
                 8,
                 List.of(PokemonType.WATER));
     }
-
-    @Override
-    public void useBattlePassive(Battle battle) {
-        //Aqua Jet
-        //Waiting Battle Class
-    }
-    //Create 10/23/68
 }

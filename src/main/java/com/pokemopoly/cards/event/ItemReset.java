@@ -2,12 +2,7 @@ package com.pokemopoly.cards.event;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.EventCard;
-import com.pokemopoly.cards.ItemCard;
-import com.pokemopoly.cards.items.Bicycle;
-import com.pokemopoly.player.Hand;
 import com.pokemopoly.player.Player;
-
-import java.util.Scanner;
 
 public class ItemReset extends EventCard {
     public ItemReset() {
@@ -21,6 +16,6 @@ public class ItemReset extends EventCard {
 
         p.getHand().clearItems();
 
-        System.out.println("[EVENT] Item Reset!" + p.getName() + " lose all items!");
+        System.out.println("[EVENT] Item Reset! " + p.getName() + " lose all items!");
     }
 }

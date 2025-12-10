@@ -7,7 +7,6 @@ import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 import com.pokemopoly.ui.MainGameUI;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class EXPShare extends ItemCard {
     public EXPShare() {

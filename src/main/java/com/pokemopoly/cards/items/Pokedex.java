@@ -4,9 +4,6 @@ import com.pokemopoly.Game;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.MainGameUI;
-import com.pokemopoly.board.Board;
-
-import java.util.List;
 
 public class Pokedex extends ItemCard {
     public Pokedex() {

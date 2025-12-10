@@ -31,7 +31,6 @@ public class CaveTile extends Tile {
 
         musicManager.fadeOutCurrent(1, () -> musicManager.playMusicForScene("cave"));
 
-        // ------------------ Overlay UI ------------------
         VBox overlay = new VBox(15);
         overlay.setAlignment(Pos.CENTER);
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.85); -fx-padding: 30; -fx-background-radius: 12;");
@@ -50,7 +49,6 @@ public class CaveTile extends Tile {
         ok.setOnAction(e -> {
             rootPane.getChildren().remove(overlay);
 
-            // Reset player opacity หรือ effect ถ้าต้องการ
             if (endTurnCallback != null) endTurnCallback.run();
             musicManager.fadeOutCurrent(1, () -> musicManager.playWithFade("palletTown", true, 1.0));
         });

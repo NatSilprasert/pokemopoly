@@ -2,12 +2,10 @@ package com.pokemopoly.cards.items;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.ItemCard;
-import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.MainGameUI;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Snowball extends ItemCard {
 

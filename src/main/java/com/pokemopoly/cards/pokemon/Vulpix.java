@@ -21,5 +21,4 @@ public class Vulpix extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Ninetales();
     }
-    //Create 10/29/68
 }

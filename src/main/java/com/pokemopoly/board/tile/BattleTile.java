@@ -56,7 +56,6 @@ public class BattleTile extends Tile {
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.75); -fx-padding: 25;");
         overlay.setMaxWidth(800);
 
-        // fade out เพลงปัจจุบัน แล้วเล่นเพลง Battle
         musicManager.fadeOutCurrent(1, () -> musicManager.playMusicForScene("battle"));
 
         Label title = new Label("You have entered the Gym!");
@@ -71,42 +70,34 @@ public class BattleTile extends Tile {
         Button skipBtn = new Button("Skip");
         skipBtn.setStyle("-fx-font-size: 16px; -fx-padding: 10 25;");
 
-// 🔴 ข้อความแจ้งเตือนสีแดง
         Label errorLabel = new Label("");
         errorLabel.setStyle("-fx-text-fill: #ff4c4c; -fx-font-size: 14px; -fx-font-weight: bold;");
 
-// ปุ่ม Fight
         fightBtn.setOnAction(e -> {
             var team = player.getTeam();
 
-            // ❌ ไม่มีโปเกมอนเลย
             if (team.isEmpty()) {
                 errorLabel.setText("You have no Pokémon to battle!");
                 return;
             }
 
-            // 🔍 ตรวจว่ามีตัวไหนยังมี HP > 0
             boolean hasAlive = team.stream().anyMatch(p -> p.isAlive() && p.getHp() > 0);
 
-            // ❌ ทุกตัว HP = 0
             if (!hasAlive) {
                 errorLabel.setText("All your Pokémon have fainted!");
                 return;
             }
 
-            // ✅ มีตัวที่สู้ได้ → เริ่มสู้
             rootPane.getChildren().remove(overlay);
             startBattleWithFade(player, game);
         });
 
-// ปุ่ม Skip
         skipBtn.setOnAction(e -> {
             rootPane.getChildren().remove(overlay);
             if (endTurnCallback != null) endTurnCallback.accept(null);
             musicManager.fadeOutCurrent(1, () -> musicManager.playWithFade("palletTown", true, 1.0));
         });
 
-// เพิ่มลง overlay
         overlay.getChildren().addAll(title, ask, fightBtn, skipBtn, errorLabel);
         rootPane.getChildren().add(overlay);
         StackPane.setAlignment(overlay, Pos.CENTER);
@@ -132,7 +123,6 @@ public class BattleTile extends Tile {
 
         fadeIn.setOnFinished(ev -> {
 
-            // สุ่มโปเกมอนให้ Boss
             DeckManager deckManager = game.getDeckManager();
 
             if (boss.getTeam().isEmpty()) {
@@ -142,13 +132,11 @@ public class BattleTile extends Tile {
                 boss.setPokemon(0, deckManager.drawPurplePokemon());
             }
 
-            // ✔ เรียก GUI BattleUI แทน battle.start()
             new BattleUI(game, rootPane, player, boss, () -> {
                 endTurnCallback.accept(null);
                 musicManager.fadeOutCurrent(1, () -> musicManager.playWithFade("palletTown", true, 1.0));
             }).start();
 
-            // ลบหน้าดำทิ้ง (BattleUI มี fade-in ของตัวเอง)
             rootPane.getChildren().remove(black);
         });
 

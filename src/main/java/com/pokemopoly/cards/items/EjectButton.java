@@ -5,9 +5,6 @@ import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.MainGameUI;
 
-import java.util.List;
-import java.util.Scanner;
-
 public class EjectButton extends ItemCard {
     public EjectButton() {
         super("eject_button", "Eject Button",

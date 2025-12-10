@@ -1,9 +1,7 @@
 package com.pokemopoly.cards.pokemon;
 
-import com.pokemopoly.Game;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
-import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
 
 import java.util.List;
 
@@ -17,5 +15,4 @@ public class Clefable extends PokemonCard {
                 4,
                 List.of(PokemonType.NORMAL));
     }
-    //Create 10/29/68
 }

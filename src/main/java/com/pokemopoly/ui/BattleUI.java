@@ -80,7 +80,6 @@ public class BattleUI {
         HBox topRow = new HBox(40);
         topRow.setAlignment(Pos.CENTER);
 
-        // ---------------------- ENEMY ----------------------
         enemyBox = new VBox(6);
         enemyBox.setAlignment(Pos.CENTER);
         enemyBox.setStyle(
@@ -146,7 +145,6 @@ public class BattleUI {
 
         playerBox.getChildren().addAll(playerName, playerPokemonName, playerType, playerImg, playerStats);
 
-        // VS
         Label vs = makeLabel("VS", 38, Color.WHITE);
 
         topRow.getChildren().addAll(playerBox, vs, enemyBox);
@@ -196,7 +194,6 @@ public class BattleUI {
 
     private void startBotRoll(Label msg, Button rollBtn, int playerRoll) {
 
-        // ดีเลย์ 1 วินาทีเหมือน Bot คิด
         PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
         delay.setOnFinished(ev -> {
 
@@ -212,14 +209,9 @@ public class BattleUI {
                 wait.setOnFinished(e2 -> resolveTurn(playerRoll, botRoll, msg, rollBtn));
                 wait.play();
 
-            }, true); // 👉 Bot mode
-
-            // เพิ่ม dice UI ของ Bot ลงบนจอ
+            }, true);
             rootPane.getChildren().add(diceHolder[0].getView());
             StackPane.setAlignment(diceHolder[0].getView(), Pos.CENTER);
-
-            // ❌ ไม่ต้องเรียก autoRoll() อีกแล้ว
-            // เพราะ RollDiceUI(isBot=true) จะ auto-roll ให้เอง
         });
 
         delay.play();
@@ -312,10 +304,6 @@ public class BattleUI {
             if (badgeName != null) {
                 VBox badgeBox = new VBox(5);
                 badgeBox.setAlignment(Pos.CENTER);
-//                ImageView badgeImg = new ImageView(new Image(getClass().getResourceAsStream(
-//                        "/badges/" + badgeName.toLowerCase() + ".png")));
-//                badgeImg.setFitHeight(60);
-//                badgeImg.setPreserveRatio(true);
                 Label badgeLbl = makeLabel("+ " + badgeName, 20, Color.YELLOW);
                 badgeBox.getChildren().addAll(badgeLbl);
                 rewardsBox.getChildren().add(badgeBox);
@@ -328,7 +316,6 @@ public class BattleUI {
                 coinBox.getChildren().addAll(coinLbl);
                 rewardsBox.getChildren().add(coinBox);
 
-                // เพิ่ม coin ให้ player
                 player.setCoin(player.getCoin() + coins);
                 System.out.println(player.getName() + " receive " + coins + " coins!");
                 System.out.println(player.getName() + " has " + player.getCoin() + " coins");
@@ -476,10 +463,9 @@ public class BattleUI {
 
         box.getChildren().addAll(name, type, img, stats);
 
-        // -------------------- ถ้า HP = 0 --------------------
         if (card.getHp() <= 0) {
-            box.setOpacity(0.5); // ทำให้สีจางลง
-            box.setDisable(true); // ไม่สามารถคลิกได้
+            box.setOpacity(0.5);
+            box.setDisable(true);
         }
 
         return box;

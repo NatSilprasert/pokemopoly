@@ -1,9 +1,7 @@
 package com.pokemopoly.cards.pokemon;
 
-import com.pokemopoly.Battle;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
-import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 
 import java.util.List;
@@ -22,5 +20,4 @@ public class Wartortle extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Blastoise();
     }
-    //Create 10/23/68
 }

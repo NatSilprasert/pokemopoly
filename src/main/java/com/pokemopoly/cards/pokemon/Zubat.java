@@ -4,7 +4,6 @@ import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 
-import java.net.PortUnreachableException;
 import java.util.List;
 
 public class Zubat extends PokemonCard implements Evolvable {
@@ -22,5 +21,4 @@ public class Zubat extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Golbat();
     }
-    //Create 11/2/68
 }

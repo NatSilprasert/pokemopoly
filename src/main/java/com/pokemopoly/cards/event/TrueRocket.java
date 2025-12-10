@@ -2,10 +2,7 @@ package com.pokemopoly.cards.event;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.EventCard;
-import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.player.Player;
-
-import java.util.List;
 
 public class TrueRocket extends EventCard {
     public TrueRocket() {
@@ -18,6 +15,6 @@ public class TrueRocket extends EventCard {
         Player p = game.getCurrentPlayer();
         p.setCoin(Math.max(0, p.getCoin() - 3));
 
-        System.out.println("[EVENT] True Rocket" + p.getName() + " lost 3 coins!");
+        System.out.println("[EVENT] True Rocket " + p.getName() + " lost 3 coins!");
     }
 }

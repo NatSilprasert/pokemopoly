@@ -37,21 +37,17 @@ public class MainGameUI {
     private final Stage stage;
     private final Scene scene;
 
-    // Player icons layer
     private final StackPane root;
     private final Pane playerLayer = new Pane();
 
-    // Border color
     private final Color[] playerColors = {
             Color.RED, Color.DODGERBLUE, Color.GOLD, Color.LIMEGREEN
     };
 
-    // Tile Position
     private final double[][] boardPositions = new double[40][2];
 
     private void initBoardPositions() {
-        // bottom row (0 → 9)
-        boardPositions[0] = new double[]{615, 515};  // Start
+        boardPositions[0] = new double[]{615, 515};
         boardPositions[1] = new double[]{562, 515};
         boardPositions[2] = new double[]{518, 515};
         boardPositions[3] = new double[]{475, 515};
@@ -62,7 +58,6 @@ public class MainGameUI {
         boardPositions[8] = new double[]{253, 515};
         boardPositions[9] = new double[]{211, 515};
 
-        // left column (10 → 19)
         boardPositions[10] = new double[]{156, 515};
         boardPositions[11] = new double[]{156, 460};
         boardPositions[12] = new double[]{156, 418};
@@ -74,7 +69,6 @@ public class MainGameUI {
         boardPositions[18] = new double[]{156, 154};
         boardPositions[19] = new double[]{156, 110};
 
-        // top row (20 → 29)
         boardPositions[20] = new double[]{156, 52};
         boardPositions[21] = new double[]{211, 52};
         boardPositions[22] = new double[]{253, 52};
@@ -86,7 +80,6 @@ public class MainGameUI {
         boardPositions[28] = new double[]{518, 52};
         boardPositions[29] = new double[]{562, 52};
 
-        // right column (30 → 39)
         boardPositions[30] = new double[]{615, 52};
         boardPositions[31] = new double[]{615, 110};
         boardPositions[32] = new double[]{615, 154};
@@ -116,34 +109,27 @@ public class MainGameUI {
         boardLayer.setAlignment(Pos.CENTER);
 
 
-        // create overlay
         VBox turnOverlay = createTurnOverlay();
         turnOverlay.setVisible(false);
 
-        // create black intro overlay
         Pane blackOverlay = new Pane();
         blackOverlay.setStyle("-fx-background-color: black;");
         blackOverlay.setOpacity(1.0);
         blackOverlay.setMouseTransparent(true);
 
-        // stack layers
         root = new StackPane(boardLayer, playerLayer, turnOverlay, blackOverlay);
         root.setAlignment(Pos.CENTER);
 
-        // make sure black starts in front
         blackOverlay.toFront();
 
-        // scene
         this.scene = new Scene(root, 800, 600);
 
-        // CSS
         if (getClass().getResource("/global.css") != null) {
             this.scene.getStylesheets().add(
                     getClass().getResource("/global.css").toExternalForm()
             );
         }
 
-        // Setup basic requirement
         game.setUpGame(root, this::nextTurn);
         initBoardPositions();
         initPlayerIcons();
@@ -162,7 +148,6 @@ public class MainGameUI {
             iv.setFitWidth(24);
             iv.setFitHeight(24);
 
-            // create wrapper for border
             StackPane iconWrapper = new StackPane(iv);
             iconWrapper.setPrefSize(14, 14);
 
@@ -176,7 +161,6 @@ public class MainGameUI {
             double startX = boardPositions[0][0];
             double startY = boardPositions[0][1];
 
-            // set players position
             iconWrapper.setLayoutX(startX);
             iconWrapper.setLayoutY(startY);
 
@@ -248,7 +232,6 @@ public class MainGameUI {
         Text txt = (Text) overlay.getChildren().get(0);
         txt.setText(p.getName() + "'s Turn!");
 
-        // change color for each player
         int idx = game.getPlayers().indexOf(p);
         Color c = playerColors[idx];
 
@@ -290,7 +273,6 @@ public class MainGameUI {
             Player currentPlayer = game.getCurrentPlayer();
             Board board = game.getBoard();
 
-            // move player icon
             movePlayerIcon(currentPlayer, n, board);
 
         });
@@ -310,7 +292,6 @@ public class MainGameUI {
         double startX = wrapper.getLayoutX();
         double startY = wrapper.getLayoutY();
 
-        // move animation 500ms
         Duration duration = Duration.millis(500);
 
         Timeline timeline = new Timeline(
@@ -330,7 +311,6 @@ public class MainGameUI {
         timeline.setOnFinished(e -> {
             System.out.println("Moved to: " + wrapper.getLayoutX() + ", " + wrapper.getLayoutY());
 
-            currentPlayer.setLastRoll(n);
             board.movePlayer(currentPlayer, n, game);
 
             if (currentPlayer.isDoNothing()) {
@@ -423,7 +403,7 @@ public class MainGameUI {
 
             Label nameLabel = new Label(p.getName());
             nameLabel.setFont(Font.font("Pixelify Sans", 32));
-            nameLabel.setTextFill(rank == 1 ? Color.LIME : Color.WHITE); // Highlight winner
+            nameLabel.setTextFill(rank == 1 ? Color.LIME : Color.WHITE);
 
             Label coinLabel = new Label(p.getAllCoin() + " Coins");
             coinLabel.setFont(Font.font("Pixelify Sans", 32));
@@ -501,16 +481,16 @@ public class MainGameUI {
             showTurnOverlay(player);
         });
 
-        final int[] selectedIdx = {-1}; // ตัวแปรเก็บไอเทมที่เลือก
+        final int[] selectedIdx = {-1};
         List<ItemCardUI> cardUIs = new ArrayList<>();
 
         Button useBtn = new Button("Use Selected Item");
-        useBtn.setDisable(true); // เริ่มต้นปิดปุ่ม
+        useBtn.setDisable(true);
         useBtn.setOnAction(e -> {
             if (selectedIdx[0] != -1) {
                 ItemCard selectedItem = items.get(selectedIdx[0]);
 
-                player.removeItem(selectedItem);
+                player.getHand().remove(selectedItem);
                 System.out.println(player.getName() + " used " + selectedItem.getName());
 
                 root.getChildren().remove(overlay);
@@ -531,10 +511,10 @@ public class MainGameUI {
 
             int idx = i;
             cardUI.setOnMouseClicked(e -> {
-                grid.getChildren().forEach(node -> node.setStyle("")); // reset border
+                grid.getChildren().forEach(node -> node.setStyle(""));
                 cardUI.setStyle("-fx-border-color: red; -fx-border-width: 2;");
                 selectedIdx[0] = idx;
-                useBtn.setDisable(false); // enable ปุ่ม
+                useBtn.setDisable(false);
             });
 
             grid.add(cardUI, i % 4, i / 4);

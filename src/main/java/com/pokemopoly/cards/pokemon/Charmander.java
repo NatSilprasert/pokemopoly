@@ -20,5 +20,4 @@ public class Charmander extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Charmeleon();
     }
-    //Create 10/23/68
 }

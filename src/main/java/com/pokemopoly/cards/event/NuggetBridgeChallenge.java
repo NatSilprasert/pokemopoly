@@ -14,6 +14,6 @@ public class NuggetBridgeChallenge extends EventCard {
     public void activate(Game game) {
         Player p = game.getCurrentPlayer();
         p.setCoin(p.getCoin() + 3);
-        System.out.println("[EVENT] Nugget Bridge Challenge" + p.getName() + " found a Nugget and earned 3 coins!");
+        System.out.println("[EVENT] Nugget Bridge Challenge " + p.getName() + " found a Nugget and earned 3 coins!");
     }
 }

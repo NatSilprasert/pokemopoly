@@ -2,7 +2,7 @@ package com.pokemopoly.cards;
 
 import com.pokemopoly.Game;
 
-public abstract class EventCard implements Card {
+public abstract class EventCard {
     private String id;
     private String name;
     private String description;

@@ -2,12 +2,8 @@ package com.pokemopoly.cards.event;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.EventCard;
-import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.cards.PokemonCard;
-import com.pokemopoly.player.Hand;
 import com.pokemopoly.player.Player;
-
-import java.util.Scanner;
 
 public class Mother extends EventCard {
     public Mother() {

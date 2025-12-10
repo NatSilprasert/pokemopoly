@@ -1,14 +1,11 @@
 package com.pokemopoly.cards.pokemon;
 
-import com.pokemopoly.Game;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
-import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
-import com.pokemopoly.player.Player;
 
 import java.util.List;
 
-public class Fearow extends PokemonCard implements PreRollAbility {
+public class Fearow extends PokemonCard {
     public Fearow() {
         super("P022",
                 "Fearow",
@@ -18,28 +15,4 @@ public class Fearow extends PokemonCard implements PreRollAbility {
                 6,
                 List.of(PokemonType.NORMAL,PokemonType.FLYING));
     }
-
-    @Override
-    public void usePreRollPassive(Game game) {
-        Player owner = getOwner();
-        if (owner == null) {
-            System.out.println("⚠️ This Fearow has no owner assigned!");
-            return;
-        }
-
-        System.out.println("🌬️ " + owner.getName() + "'s Fearow used Tailwind!");
-        System.out.println(owner.getName() + " will move +1 extra spaces this turn!");
-
-        // Roll dice first to determine base move
-        int roll = game.rollDice();
-        int totalMove = roll + 1;
-
-        System.out.println(owner.getName() + " rolled a " + roll + ", but Tailwind adds +1!");
-        System.out.println("➡️ Total movement: " + totalMove + " spaces!");
-
-        // Move player on board
-        game.getBoard().movePlayer(owner, totalMove, game);
-        game.getCurrentPlayer().setDoNothing(true);
-    }
-    // Tailwind but +1 move
 }

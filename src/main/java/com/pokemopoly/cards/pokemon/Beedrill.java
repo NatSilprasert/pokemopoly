@@ -15,5 +15,4 @@ public class Beedrill extends PokemonCard {
                 6,
                 List.of(PokemonType.BUG,PokemonType.FLYING));
     }
-    //Create 10/23/68
 }

@@ -16,7 +16,6 @@ public class MusicManager {
     private final Map<String, Media> mediaLibrary = new HashMap<>();
 
     public MusicManager() {
-        // โหลดเพลงจาก resources ล่วงหน้า (ตัวอย่าง)
         addMusic("title", "/sound/Title Screen.mp3");
         addMusic("palletTown", "/sound/Pallet Town.mp3");
         addMusic("pokemoncenter", "/sound/Pokemon Center.mp3");
@@ -50,7 +49,6 @@ public class MusicManager {
         }
     }
 
-    /** Fade out เพลงปัจจุบัน แล้วเรียก callback หลัง fade เสร็จ */
     public void fadeOutCurrent(double seconds, Runnable afterFade) {
         if (currentPlayer == null) {
             if (afterFade != null) afterFade.run();
@@ -72,7 +70,6 @@ public class MusicManager {
         fade.play();
     }
 
-    /** Fade in เพลงใหม่ */
     public void playWithFade(String key, boolean loop, double fadeInSeconds) {
         Media media = mediaLibrary.get(key);
         if (media == null) return;
@@ -102,7 +99,6 @@ public class MusicManager {
             case "battle" -> play("battle", true);
             case "cave" -> play("cave", true);
             case "daycare" -> play("daycare", true);
-            // เพิ่มเพลงอื่น ๆ ตามต้องการ
             default -> stopCurrent();
         }
     }

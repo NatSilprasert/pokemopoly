@@ -21,5 +21,4 @@ public class Ekans extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Arbok();
     }
-    //Create 10/29/68
 }

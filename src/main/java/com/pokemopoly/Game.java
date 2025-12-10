@@ -23,11 +23,9 @@ public class Game {
     private int playerCount;
     private int turn = 0;
 
-    // JavaFX
     private StackPane root;
     private Runnable nextTurnCallback;
 
-    // Music
     private final MusicManager musicManager;
 
     public Game(MusicManager musicManager) {
@@ -93,10 +91,6 @@ public class Game {
         ));
 
         this.board = new Board(tiles);
-    }
-
-    public int rollDice() {
-        return (int) (Math.random() * 6) + 1;
     }
 
     public DeckManager getDeckManager() {
@@ -182,7 +176,6 @@ public class Game {
                 new SuspiciousMerchant(), new TrueRocket(), new TrueRocket(), new TrueRocket(), new TrueRocket(), new TrueRocket(), new TrueRocket()
         }));
 
-        // Blue Deck
         Deck<PokemonCard> bluePokemonDeck = new Deck<>();
         List<PokemonCard> blueCards = List.of(
                 new Abra(), new Bulbasaur(), new Charmander(), new Clefable(), new Cubone(),
@@ -199,7 +192,6 @@ public class Game {
         blueCards.forEach(card -> card.setDeckColor(PokemonDeckColor.BLUE));
         bluePokemonDeck.addCard(blueCards);
 
-        // Green Deck
         Deck<PokemonCard> greenPokemonDeck = new Deck<>();
         List<PokemonCard> greenCards = List.of(
                 new Magikarp(), new Bellsprout(), new Caterpie(), new Clefairy(), new Diglett(),
@@ -213,7 +205,6 @@ public class Game {
         greenCards.forEach(card -> card.setDeckColor(PokemonDeckColor.GREEN));
         greenPokemonDeck.addCard(greenCards);
 
-        // Purple Deck
         Deck<PokemonCard> purplePokemonDeck = new Deck<>();
         List<PokemonCard> purpleCards = List.of(
                 new Aerodactyl(), new Arbok(), new Beedrill(), new Butterfree(), new Charmeleon(),
@@ -230,7 +221,6 @@ public class Game {
         purpleCards.forEach(card -> card.setDeckColor(PokemonDeckColor.PURPLE));
         purplePokemonDeck.addCard(purpleCards);
 
-        // Red Deck
         Deck<PokemonCard> redPokemonDeck = new Deck<>();
         List<PokemonCard> redCards = List.of(
                 new Alakazam(), new Arcanine(), new Articuno(), new Blastoise(), new Charizard(),
@@ -241,7 +231,6 @@ public class Game {
         redCards.forEach(card -> card.setDeckColor(PokemonDeckColor.RED));
         redPokemonDeck.addCard(redCards);
 
-        // Crown Deck
         Deck<PokemonCard> crownPokemonDeck = new Deck<>();
         List<PokemonCard> crownCards = List.of(new Mewtwo());
         crownCards.forEach(card -> card.setDeckColor(PokemonDeckColor.CROWN));

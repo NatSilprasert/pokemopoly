@@ -15,5 +15,4 @@ public class Wigglytuff extends PokemonCard {
                 4,
                 List.of(PokemonType.NORMAL));
     }
-    //Create 10/29/68
 }

@@ -21,5 +21,4 @@ public class NidoranMale extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Nidorino();
     }
-    //Create 10/29/68
 }

@@ -1,7 +1,6 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.ui.cards.ItemCardUI;
@@ -21,7 +20,7 @@ import java.util.function.Consumer;
 public class ItemTile extends Tile {
 
     private final StackPane rootPane;
-    private final Consumer<Void> endTurnCallback; // callback ให้จบ turn
+    private final Consumer<Void> endTurnCallback;
 
     public ItemTile(String name, int index, StackPane rootPane, Consumer<Void> endTurnCallback) {
         super(name, index);
@@ -33,7 +32,6 @@ public class ItemTile extends Tile {
         ItemCard newItem = game.getDeckManager().drawItem();
         Hand hand = player.getHand();
 
-        // Overlay แรก: แสดงไอเทมที่ได้
         VBox overlay = new VBox(10);
         overlay.setAlignment(Pos.CENTER);
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.75); -fx-padding: 20;");
@@ -42,7 +40,7 @@ public class ItemTile extends Tile {
         javafx.scene.control.Label label = new javafx.scene.control.Label("You got a new item!");
         label.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
 
-        ItemCardUI newItemUI = new ItemCardUI(newItem); // ขนาดปกติ
+        ItemCardUI newItemUI = new ItemCardUI(newItem);
         overlay.getChildren().addAll(label, newItemUI);
 
         Button keepBtn = new Button("Keep");
@@ -53,7 +51,6 @@ public class ItemTile extends Tile {
                 rootPane.getChildren().remove(overlay);
                 if (endTurnCallback != null) endTurnCallback.accept(null);
             } else {
-                // hand เต็ม → overlay ใหม่
                 rootPane.getChildren().remove(overlay);
                 showFullHandOverlay(player, newItem);
             }
@@ -64,7 +61,6 @@ public class ItemTile extends Tile {
         rootPane.getChildren().add(overlay);
     }
 
-    // Overlay ใหม่เมื่อ hand เต็ม
     private void showFullHandOverlay(Player player, ItemCard newItem) {
         Hand hand = player.getHand();
         VBox overlay = new VBox(10);
@@ -82,13 +78,13 @@ public class ItemTile extends Tile {
         handGrid.setVgap(10);
         handGrid.setAlignment(Pos.CENTER);
 
-        int cols = capacity == 6 ? 3 : capacity; // 3 columns if 6 cards, else all in 1 row
+        int cols = capacity == 6 ? 3 : capacity;
         int rows = capacity == 6 ? 2 : 1;
 
         List<ItemCardUI> cardUIs = new ArrayList<>();
         for (int i = 0; i < capacity; i++) {
             ItemCardUI cardUI = new ItemCardUI(hand.getItems().get(i));
-            cardUI.setSize(2); // ขนาดเล็กลง
+            cardUI.setSize(2);
 
             int idx = i;
             cardUI.setOnMouseClicked(e -> {

@@ -2,18 +2,14 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.EventCard;
-import com.pokemopoly.player.Hand;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.cards.EventCardUI;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class EventTile extends Tile {

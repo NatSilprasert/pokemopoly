@@ -2,7 +2,6 @@ package com.pokemopoly.cards.items;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.ItemCard;
-import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.MainGameUI;
 
 public class Repel extends ItemCard {
@@ -13,7 +12,6 @@ public class Repel extends ItemCard {
 
     @Override
     public void activate(Game game, MainGameUI gameUI) {
-        // move 6
         gameUI.movePlayerIcon(game.getCurrentPlayer(), 2, game.getBoard());
     }
 

@@ -2,7 +2,6 @@ package com.pokemopoly.cards.event;
 
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.EventCard;
-import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.pokemon.Magikarp;
 import com.pokemopoly.player.Player;
 
@@ -19,7 +18,7 @@ public class SuspiciousMerchant extends EventCard {
         Player p = game.getCurrentPlayer();
 
         if (p.getCoin() < 5 || p.isTeamFull()) {
-            System.out.println("[EVENT] " + p.getName() + " can't afford the merchant. Nothing happens.");
+            System.out.println("[EVENT] Suspicious Merchant " + p.getName() + " can't afford the merchant. Nothing happens.");
             return;
         }
 
@@ -27,6 +26,6 @@ public class SuspiciousMerchant extends EventCard {
 
         p.addPokemon(new Magikarp());
 
-        System.out.println("[EVENT] Suspicious Merchant" + p.getName() + " bought a mysterious item for 5 coins (Bicycle).");
+        System.out.println("[EVENT] Suspicious Merchant " + p.getName() + " bought a mysterious item for 5 coins (Bicycle).");
     }
 }

@@ -15,5 +15,4 @@ public class Venomoth extends PokemonCard {
                 4,
                 List.of(PokemonType.BUG,PokemonType.POISON));
     }
-    //Create 11/2/68
 }

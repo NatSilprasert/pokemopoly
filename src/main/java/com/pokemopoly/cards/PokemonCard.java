@@ -1,11 +1,10 @@
-
 package com.pokemopoly.cards;
 
 import com.pokemopoly.player.Player;
 
 import java.util.List;
 
-public abstract class PokemonCard implements Card {
+public abstract class PokemonCard {
     private final String id;
     private final String name;
     private final String description;
@@ -87,20 +86,8 @@ public abstract class PokemonCard implements Card {
         isAlive = alive;
     }
 
-    public Player getOwner() {
-        return owner;
-    }
-
     public void setOwner(Player owner) {
         this.owner = owner;
-    }
-
-    public boolean isBurned() {
-        return burned;
-    }
-
-    public void setBurned(boolean burned) {
-        this.burned = burned;
     }
 
     public void setHp(int hp) {
@@ -108,19 +95,6 @@ public abstract class PokemonCard implements Card {
         if (this.hp == 0) {
             this.isAlive = false;
             System.out.println(name + " has fainted!");
-        }
-    }
-
-    public boolean isParalyzed() {
-        return paralyzed;
-    }
-
-    public void setParalyzed(boolean paralyzed) {
-        this.paralyzed = paralyzed;
-        if (paralyzed) {
-            System.out.println(name + " is paralyzed! It may not move next turn ⚡");
-        } else {
-            System.out.println(name + " is no longer paralyzed.");
         }
     }
 

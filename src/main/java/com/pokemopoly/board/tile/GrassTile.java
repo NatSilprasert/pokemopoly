@@ -1,7 +1,6 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.MusicManager;
 import com.pokemopoly.ui.RollDiceUI;
 import com.pokemopoly.board.GrassColor;
 import com.pokemopoly.board.Tile;
@@ -39,7 +38,7 @@ public class GrassTile extends Tile {
         }
 
         DeckManager deckManager = game.getDeckManager();
-        PokemonCard pokemonCard = null;
+        PokemonCard pokemonCard;
 
         switch (catchRate) {
             case 3 -> {
@@ -84,10 +83,10 @@ public class GrassTile extends Tile {
             }
         }
 
-        showCatchOverlay(player, pokemonCard, game);
+        showCatchOverlay(player, pokemonCard);
     }
 
-    private void showCatchOverlay(Player player, PokemonCard pokemonCard, Game game) {
+    private void showCatchOverlay(Player player, PokemonCard pokemonCard) {
         VBox overlay = new VBox(10);
         overlay.setAlignment(Pos.CENTER);
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.85); -fx-padding: 20;");
@@ -123,7 +122,7 @@ public class GrassTile extends Tile {
     }
 
     private void showBallSelectionOverlay(Player player, PokemonCard pokemonCard, int baseCatchRate) {
-        VBox overlay = new VBox(20); // spacing เพิ่ม
+        VBox overlay = new VBox(20);
         overlay.setAlignment(Pos.CENTER);
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.85); -fx-padding: 30;");
         overlay.setMaxWidth(900);
@@ -134,14 +133,13 @@ public class GrassTile extends Tile {
         Label catchRateLabel = new Label("Catch rate needed: " + baseCatchRate);
         catchRateLabel.setStyle("-fx-text-fill: yellow; -fx-font-size: 18px;");
 
-        HBox ballBox = new HBox(30); // spacing เพิ่ม
+        HBox ballBox = new HBox(30);
         ballBox.setAlignment(Pos.CENTER);
 
         final int[] effectiveCatchRate = {baseCatchRate};
-        final int[] selectedBallType = {-1}; // 0=Red,1=Great,2=Hyper
-        final Button[] selectedBtn = {null}; // เก็บปุ่มที่เลือก
+        final int[] selectedBallType = {-1};
+        final Button[] selectedBtn = {null};
 
-        // ปุ่มลูกบอล
         Button redBallBtn = createBallSelectionButton(player, "pokeball.png", 0, ballBox, catchRateLabel, effectiveCatchRate, selectedBallType, selectedBtn, baseCatchRate);
         Button greatBallBtn = createBallSelectionButton(player, "greatball.png", 1, ballBox, catchRateLabel, effectiveCatchRate, selectedBallType, selectedBtn, baseCatchRate);
         Button hyperBallBtn = createBallSelectionButton(player, "ultraball.png", 2, ballBox, catchRateLabel, effectiveCatchRate, selectedBallType, selectedBtn, baseCatchRate);
@@ -156,7 +154,6 @@ public class GrassTile extends Tile {
                 return;
             }
 
-            // ลดจำนวนบอลลง 1
             switch (selectedBallType[0]) {
                 case 0 -> player.setRedBall(player.getRedBall() - 1);
                 case 1 -> player.setGreatBall(player.getGreatBall() - 1);
@@ -169,7 +166,7 @@ public class GrassTile extends Tile {
 
             diceUIHolder[0] = new RollDiceUI((dice) -> {
 
-                RollDiceUI diceUI = diceUIHolder[0]; // ดึง instance
+                RollDiceUI diceUI = diceUIHolder[0];
 
                 System.out.println("Rolled: " + dice + ", Needed: " + effectiveCatchRate[0]);
 
@@ -182,7 +179,6 @@ public class GrassTile extends Tile {
 
                     rootPane.getChildren().remove(diceUI.getView());
 
-                    // ❗ แทนที่จะกลับไปเลือกบอลทันที → ให้ขึ้นตัวเลือกใหม่
                     showBreakFreeOverlay(player, pokemonCard, baseCatchRate);
                 }
             });
@@ -192,7 +188,6 @@ public class GrassTile extends Tile {
 
         overlay.getChildren().addAll(title, catchRateLabel, ballBox, confirmBtn);
 
-        // กรณีไม่มีบอล
         if (player.getRedBall() + player.getGreatBall() + player.getHyperBall() <= 0) {
             Label noBallLabel = new Label("No Pokéballs available!");
             noBallLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
@@ -237,13 +232,10 @@ public class GrassTile extends Tile {
         btn.setDisable(ballCount <= 0);
 
         btn.setOnAction(e -> {
-            // ยกเลิก highlight เดิม
             if (selectedBtn[0] != null) selectedBtn[0].setStyle("");
-            // highlight ปุ่มที่เลือก
             btn.setStyle("-fx-border-color: red; -fx-border-width: 3;");
             selectedBtn[0] = btn;
 
-            // คำนวณ catchRate ใหม่
             effectiveCatchRate[0] = Math.max(0, baseCatchRate - typeModifier);
             catchRateLabel.setText("Catch rate after ball modifier: " + effectiveCatchRate[0]);
 
@@ -271,7 +263,6 @@ public class GrassTile extends Tile {
         confirmBtn.setOnAction(e -> {
             rootPane.getChildren().remove(overlay);
 
-            // ถ้าทีมไม่เต็ม → เพิ่มเข้าทีมทันที
             if (player.getTeam().size() < player.getMaxPokemon()) {
                 System.out.println(pokemonCard.getName() + " is add to " + player.getName() + " team!");
                 player.addPokemon(pokemonCard);
@@ -295,7 +286,6 @@ public class GrassTile extends Tile {
         Label title = new Label("The Pokémon broke free!");
         title.setStyle("-fx-text-fill: orange; -fx-font-size: 22px; -fx-font-weight: bold;");
 
-        // แสดงการ์ดโปเกมอน
         PokemonCardUI cardUI = new PokemonCardUI(pokemonCard);
 
         HBox buttonBox = new HBox(20);
@@ -307,13 +297,11 @@ public class GrassTile extends Tile {
         Button releaseBtn = new Button("Let It Go");
         releaseBtn.setStyle("-fx-font-size: 16px; -fx-padding: 10 20;");
 
-        // Try again → กลับไปเลือกบอลใหม่
         retryBtn.setOnAction(e -> {
             rootPane.getChildren().remove(overlay);
             showBallSelectionOverlay(player, pokemonCard, baseCatchRate);
         });
 
-        // ปล่อย → จบเทิร์นทันที
         releaseBtn.setOnAction(e -> {
             rootPane.getChildren().remove(overlay);
             if (endTurnCallback != null) endTurnCallback.accept(null);

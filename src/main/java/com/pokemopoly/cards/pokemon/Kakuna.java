@@ -1,14 +1,12 @@
 package com.pokemopoly.cards.pokemon;
 
-import com.pokemopoly.Battle;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
-import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 
 import java.util.List;
 
-public class Kakuna extends PokemonCard implements Evolvable, BattleAbility {
+public class Kakuna extends PokemonCard implements Evolvable {
     public Kakuna() {
         super("P014",
                 "Kakuna",
@@ -20,14 +18,7 @@ public class Kakuna extends PokemonCard implements Evolvable, BattleAbility {
     }
 
     @Override
-    public void useBattlePassive(Battle battle) {
-        //Wait Battle Class
-        //Harden
-    }
-
-    @Override
     public PokemonCard evolve() {
-        return new Beedrill(); //Edit 10/29/68
+        return new Beedrill();
     }
-    //Create 10/23/68
 }

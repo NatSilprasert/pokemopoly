@@ -21,6 +21,5 @@ public class Weedle extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Kakuna();
     }
-    //Create 10/23/68
 
 }

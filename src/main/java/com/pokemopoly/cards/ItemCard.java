@@ -3,7 +3,7 @@ package com.pokemopoly.cards;
 import com.pokemopoly.Game;
 import com.pokemopoly.ui.MainGameUI;
 
-public abstract class ItemCard implements Card {
+public abstract class ItemCard {
     private final String id;
     private final String name;
     private final String description;

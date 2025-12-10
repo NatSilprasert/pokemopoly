@@ -15,5 +15,4 @@ public class Sandslash extends PokemonCard {
                 5,
                 List.of(PokemonType.GROUND));
     }
-    //Create 10/29/68
 }

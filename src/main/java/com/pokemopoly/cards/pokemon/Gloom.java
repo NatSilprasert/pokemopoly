@@ -21,5 +21,4 @@ public class Gloom extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Vileplume();
     }
-    //Create 11/2/68
 }

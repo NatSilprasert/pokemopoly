@@ -3,7 +3,6 @@ package com.pokemopoly.cards.event;
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.EventCard;
 import com.pokemopoly.cards.PokemonCard;
-import com.pokemopoly.cards.pokemon.Mew;
 import com.pokemopoly.cards.pokemon.Mewtwo;
 import com.pokemopoly.player.Player;
 
@@ -23,8 +22,8 @@ public class LegendaryInArea extends EventCard {
             return;
         }
 
-        PokemonCard mewtwo = new Mewtwo(); // ต้องมี class MewTwo
+        PokemonCard mewtwo = new Mewtwo();
         p.addPokemon(mewtwo);
-        System.out.println("[EVENT] Legendary in Area" + p.getName() + " obtained MewTwo! ⭐ Legendary Pokémon!");
+        System.out.println("[EVENT] Legendary in Area " + p.getName() + " obtained MewTwo! ⭐ Legendary Pokémon!");
     }
 }

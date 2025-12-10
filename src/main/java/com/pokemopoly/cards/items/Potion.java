@@ -7,7 +7,6 @@ import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.MainGameUI;
 
 import java.util.List;
-import java.util.Scanner;
 
 import static java.lang.Math.min;
 

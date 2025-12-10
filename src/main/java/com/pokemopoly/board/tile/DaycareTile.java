@@ -43,7 +43,6 @@ public class DaycareTile extends Tile {
                 .toList();
 
         if (evolvables.isEmpty()) {
-            // ไม่มี Evolvable เลย ข้าม turn
             if (endTurnCallback != null) endTurnCallback.run();
             return;
         }
@@ -94,13 +93,11 @@ public class DaycareTile extends Tile {
             PokemonCard evo = ((Evolvable) oldCard).evolve();
             int oldIdx = player.getTeam().indexOf(oldCard);
 
-            // อัปเดตทีมผู้เล่น
             player.setPokemon(oldIdx, evo);
             System.out.println(player.getName() + " evolved " + oldCard.getName() + " into " + evo.getName());
 
             overlay.getChildren().clear();
 
-            // แสดงข้อความสำเร็จ
             Label success = makeLabel("Evolution Successful!", 28, Color.LIGHTGREEN);
 
             HBox evoBox = new HBox(40);
@@ -114,7 +111,6 @@ public class DaycareTile extends Tile {
             newBox.setAlignment(Pos.CENTER);
             newBox.getChildren().addAll(buildPokemonCard(evo, false).getChildren());
 
-            // ลูกศรคั่นกลาง
             Label arrow = new Label("→");
             arrow.setFont(Font.font("Pixelify Sans", 36));
             arrow.setTextFill(Color.LIGHTGRAY);

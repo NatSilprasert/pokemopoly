@@ -7,7 +7,6 @@ import com.pokemopoly.player.Player;
 import com.pokemopoly.ui.MainGameUI;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Revive extends ItemCard {
 
@@ -30,7 +29,7 @@ public class Revive extends ItemCard {
 
         for (PokemonCard card : team) {
             if (card.getHp() <= 0) {
-                card.setHp(card.getMaxHp());   // revive
+                card.setHp(card.getMaxHp());
                 card.setAlive(true);
                 revived = true;
                 System.out.println("✨ Revived " + card.getName() + " to full health!");

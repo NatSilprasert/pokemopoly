@@ -21,5 +21,4 @@ public class Pikachu extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Raichu();
     }
-    //Create 10/29/68
 }

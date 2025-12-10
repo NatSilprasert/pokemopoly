@@ -4,8 +4,6 @@ import com.pokemopoly.Game;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.ui.MainGameUI;
 
-import java.util.Scanner;
-
 public class HM02Fly extends ItemCard {
     public HM02Fly() {
         super("hm02fly", "HM02 Fly",
@@ -14,7 +12,6 @@ public class HM02Fly extends ItemCard {
 
     @Override
     public void activate(Game game, MainGameUI gameUI) {
-        // move 10
         gameUI.movePlayerIcon(game.getCurrentPlayer(), 10, game.getBoard());
     }
 

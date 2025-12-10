@@ -82,7 +82,6 @@ public class PlayerSetupUI {
         setupUI.setAlignment(Pos.CENTER);
         setupUI.setPadding(new Insets(0));
 
-        // 🚀 rootContainer รองรับ overlay ได้
         rootContainer = new StackPane(setupUI);
 
         scene = new Scene(rootContainer, 800, 600);
@@ -182,7 +181,7 @@ public class PlayerSetupUI {
             currentIndex++;
             resetForm();
         } else {
-            startTransitionToMainUI(); // 🎬 ใช้ Transition ที่แก้แล้ว
+            startTransitionToMainUI();
         }
     }
 
@@ -192,7 +191,7 @@ public class PlayerSetupUI {
         selectedProfession = null;
         confirmButton.setDisable(true);
 
-        VBox root = (VBox) ((VBox) rootContainer.getChildren().get(0));
+        VBox root = (VBox) rootContainer.getChildren().get(0);
         HBox row = (HBox) root.getChildren().get(2);
 
         for (javafx.scene.Node n : row.getChildren()) {
@@ -205,9 +204,6 @@ public class PlayerSetupUI {
         }
     }
 
-    // -----------------------------------------------------------
-    // 🎬 TRANSITION ทำงานได้จริง ไม่มีตัวแปรหาย
-    // -----------------------------------------------------------
     private void startTransitionToMainUI() {
 
         StackPane overlay = new StackPane();

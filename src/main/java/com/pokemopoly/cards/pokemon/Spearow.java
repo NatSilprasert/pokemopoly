@@ -21,5 +21,4 @@ public class Spearow extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return null;
     }
-    //Create 10/29/68
 }

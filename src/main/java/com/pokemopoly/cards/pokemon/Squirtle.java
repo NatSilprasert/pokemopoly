@@ -20,5 +20,4 @@ public class Squirtle extends PokemonCard implements Evolvable {
     public PokemonCard evolve() {
         return new Wartortle();
     }
-    //Create 10/23/68
 }

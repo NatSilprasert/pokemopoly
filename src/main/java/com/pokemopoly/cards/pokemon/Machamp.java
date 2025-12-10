@@ -1,11 +1,8 @@
 package com.pokemopoly.cards.pokemon;
 
-import com.pokemopoly.Game;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.PokemonType;
-import com.pokemopoly.cards.pokemon.interfaces.PreRollAbility;
 
-import java.net.PortUnreachableException;
 import java.util.List;
 
 public class Machamp extends PokemonCard{

@@ -19,7 +19,6 @@ public class Pidgey extends PokemonCard implements Evolvable {
 
     @Override
     public PokemonCard evolve() {
-        return new Pidgeot(); //Edit 10/29/68
+        return new Pidgeot();
     }
-    //Create 10/24/2025
 }
