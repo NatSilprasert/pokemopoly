@@ -12,11 +12,9 @@ public class StopThisIsPolice extends EventCard {
 
     @Override
     public void activate(Game game) {
-        Player current = game.getCurrentPlayer();
+        Player p = game.getCurrentPlayer();
+        p.setSkipTurn(true);
 
-        System.out.println("🚓 STOP! THIS IS POLICE! 🚓");
-        System.out.println(current.getName() + " must skip the next turn!");
-
-        current.setSkipTurn(true);
+        System.out.println("[EVENT] Stop! This is Police!" + p.getName() + " was stopped by police. Next turn skipped!");
     }
 }

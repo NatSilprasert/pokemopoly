@@ -16,21 +16,17 @@ public class SuspiciousMerchant extends EventCard {
 
     @Override
     public void activate(Game game) {
-        Player player = game.getCurrentPlayer();
-        System.out.println("🧥 A Suspicious Merchant appears...");
+        Player p = game.getCurrentPlayer();
 
-        // Check if the player can pay
-        if (player.getCoin() >= 5) {
-            System.out.println(player.getName() + " must pay 5 coins to buy a Coin King.");
-            player.setCoin(player.getCoin() - 5);
-
-            // Add Coin King item to player (you can adjust based on your item system)
-            PokemonCard magikarp = new Magikarp();
-            player.addPokemon(magikarp);
-
-            System.out.println("💰 " + player.getName() + " bought a Magikarp!");
-        } else {
-            System.out.println("❌ " + player.getName() + " does not have enough coins. Nothing happens.");
+        if (p.getCoin() < 5 || p.isTeamFull()) {
+            System.out.println("[EVENT] " + p.getName() + " can't afford the merchant. Nothing happens.");
+            return;
         }
+
+        p.setCoin(p.getCoin() - 5);
+
+        p.addPokemon(new Magikarp());
+
+        System.out.println("[EVENT] Suspicious Merchant" + p.getName() + " bought a mysterious item for 5 coins (Bicycle).");
     }
 }

@@ -33,7 +33,6 @@ public class Game {
     public Game(MusicManager musicManager) {
         this.musicManager = musicManager;
         this.players = new ArrayList<>();
-        setUpDeckManager();
     }
 
     public void setUpGame(StackPane root, Runnable nextTurnCallback) {
@@ -42,6 +41,7 @@ public class Game {
 
         setUpBoard();
         setUpDeckManager();
+        setUpPlayerItems();
     }
 
     public boolean isGameEnd() {
@@ -249,6 +249,15 @@ public class Game {
 
         deckManager = new DeckManager(itemDeck, eventDeck, bluePokemonDeck, greenPokemonDeck, purplePokemonDeck, redPokemonDeck, crownPokemonDeck);
         deckManager.shuffleAll();
+    }
+
+    public void setUpPlayerItems() {
+        for (Player player : players) {
+            for (int i = 0; i < 2; i++) {
+                ItemCard itemCard = deckManager.drawItem();
+                player.getHand().add(itemCard);
+            }
+        }
     }
 
     public int getTurn() {

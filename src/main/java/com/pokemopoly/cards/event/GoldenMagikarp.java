@@ -13,16 +13,9 @@ public class GoldenMagikarp extends EventCard {
 
     @Override
     public void activate(Game game) {
-        Player player = game.getCurrentPlayer();
-        if (player == null) {
-            System.out.println("Error: No current player found.");
-            return;
-        }
+        Player p = game.getCurrentPlayer();
+        p.setCoin(p.getCoin() + 5);
 
-        // Add coins
-        player.setCoin(player.getCoin() + 5);
-
-        System.out.println("✨ " + player.getName()
-                + " found a Golden Magikarp and gained +5 coins!");
+        System.out.println("[EVENT] Golden Magikarp! " + p.getName() + " gains +5 coins.");
     }
 }

@@ -197,34 +197,31 @@ public class BattleUI {
     private void startBotRoll(Label msg, Button rollBtn, int playerRoll) {
 
         // ดีเลย์ 1 วินาทีเหมือน Bot คิด
-        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
         delay.setOnFinished(ev -> {
-            // สร้าง RollDiceUI สำหรับ Bot แต่ไม่ต้องมีปุ่มกด
 
             final RollDiceUI[] diceHolder = new RollDiceUI[1];
+            diceHolder[0] = new RollDiceUI(botRoll -> {
 
-            diceHolder[0] = new RollDiceUI(result -> {
-                int botRoll = result;
-
-                // อัปเดตข้อความบนหน้าจอ
                 Platform.runLater(() -> {
                     rootPane.getChildren().remove(diceHolder[0].getView());
                     msg.setText("You: " + playerRoll + "   |   Enemy: " + botRoll);
                 });
 
-                // หลังจากแสดงผลสัก 0.5 วินาที resolve turn
                 PauseTransition wait = new PauseTransition(Duration.seconds(0.2));
                 wait.setOnFinished(e2 -> resolveTurn(playerRoll, botRoll, msg, rollBtn));
                 wait.play();
-            });
 
-            // เพิ่ม dice UI ของ Bot ลงใน rootPane
+            }, true); // 👉 Bot mode
+
+            // เพิ่ม dice UI ของ Bot ลงบนจอ
             rootPane.getChildren().add(diceHolder[0].getView());
             StackPane.setAlignment(diceHolder[0].getView(), Pos.CENTER);
 
-            // เริ่ม roll อัตโนมัติ
-            diceHolder[0].autoRoll();
+            // ❌ ไม่ต้องเรียก autoRoll() อีกแล้ว
+            // เพราะ RollDiceUI(isBot=true) จะ auto-roll ให้เอง
         });
+
         delay.play();
     }
 
@@ -298,7 +295,7 @@ public class BattleUI {
                     badgeName = "Badge1";
                     System.out.println(player.getName() + " receive Gym 1's Badge");
                 } else {
-                    coins = 10;
+                    coins = 5;
                 }
             } else if (opponentName.equals("Gym 2's Leader")) {
                 if (!player.getBadges2()) {
@@ -306,10 +303,10 @@ public class BattleUI {
                     badgeName = "Badge2";
                     System.out.println(player.getName() + " receive Gym 2's Badge");
                 } else {
-                    coins = 10;
+                    coins = 5;
                 }
             } else if (opponentName.equals("Villain")) {
-                coins = 20;
+                coins = 10;
             }
 
             if (badgeName != null) {

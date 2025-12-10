@@ -20,10 +20,10 @@ public class Player {
 
     private final int MAX_POKEMON = 6;
     private int position = 0;
-    private int coin = 0;
-    private int redBall = 4;
-    private int greatBall = 4;
-    private int hyperBall = 4;
+    private int coin = 10;
+    private int redBall = 5;
+    private int greatBall = 0;
+    private int hyperBall = 0;
     private boolean badge1 = false;
     private boolean badge2 = false;
     private boolean skipTurn = false;
@@ -36,40 +36,16 @@ public class Player {
         hand = new Hand(4);
 
         if (profession == ProfessionType.TRAINER) {
-
-            addPokemon(new Magikarp());
             addPokemon(new Pikachu());
-
-            hand.add(new RareCandy());
-            hand.add(new EjectButton());
-            hand.add(new EXPShare());
-            hand.add(new FullHeal());
         }
         else if (profession == ProfessionType.FISHER) {
             addPokemon(new Magikarp());
-            addPokemon(new Pikachu());
-            addPokemon(new Pikachu());
-
-
-            hand.add(new RareCandy());
-            hand.add(new MaxRepel());
-            hand.add(new Pokedex());
-            hand.add(new Potion());
         }
         else if (profession == ProfessionType.ROCKET) {
             addPokemon(new Rattata());
-
-            hand.add(new RareCandy());
-            hand.add(new Repel());
-            hand.add(new Revive());
-            hand.add(new Snowball());
         }
         else if (profession == ProfessionType.SCIENTIST) {
             addPokemon(new Ditto());
-
-            hand.add(new SuperPotion());
-            hand.add(new SuperRepel());
-            hand.add(new TrainPass());
         }
     }
 

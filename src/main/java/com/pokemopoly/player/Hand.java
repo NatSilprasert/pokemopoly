@@ -27,6 +27,10 @@ public class Hand {
         items.set(idx, card);
     }
 
+    public void clearItems() {
+        items.clear();
+    }
+
     public boolean remove(ItemCard card) {
         return items.remove(card);
     }

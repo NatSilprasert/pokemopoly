@@ -111,8 +111,8 @@ public class Battle {
                 player.setBadges1();
                 reward.setBadge("badge1", true);
             } else {
-                player.setCoin(player.getCoin() + 10);
-                reward.setCoins(10);
+                player.setCoin(player.getCoin() + 5);
+                reward.setCoins(5);
             }
         }
         else if (opponent.getName().equals("Gym 2's Leader")) {
@@ -120,13 +120,13 @@ public class Battle {
                 player.setBadges2();
                 reward.setBadge("badge2", true);
             } else {
-                player.setCoin(player.getCoin() + 10);
-                reward.setCoins(10);
+                player.setCoin(player.getCoin() + 5);
+                reward.setCoins(5);
             }
         }
         else if (opponent.getName().equals("Villain")) {
-            player.setCoin(player.getCoin() + 20);
-            reward.setCoins(20);
+            player.setCoin(player.getCoin() + 10);
+            reward.setCoins(10);
         }
 
         return reward;

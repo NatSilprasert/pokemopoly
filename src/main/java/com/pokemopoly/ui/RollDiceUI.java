@@ -1,7 +1,7 @@
-
 package com.pokemopoly.ui;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,22 +18,29 @@ public class RollDiceUI {
     private VBox root;
     private Timeline diceAnimation;
     private int currentFace = 1;
-    private ImageView diceView;       // ⬅️ ย้ายไปเป็น field
-    private DiceResultCallback callback;  // ⬅️ ย้ายไปเป็น field
+    private ImageView diceView;
+    private DiceResultCallback callback;
+    private boolean isBot;
 
     public interface DiceResultCallback {
         void onResult(int diceValue);
     }
 
+    /** Player ใช้ */
     public RollDiceUI(DiceResultCallback callback) {
+        this(callback, false);
+    }
+
+    /** รองรับ bot: isBot = true จะไม่มีปุ่ม */
+    public RollDiceUI(DiceResultCallback callback, boolean isBot) {
         this.callback = callback;
+        this.isBot = isBot;
 
         diceView = new ImageView();
         diceView.setFitWidth(150);
         diceView.setFitHeight(150);
         diceView.setImage(loadDice(1));
 
-        // หมุนลูกเต๋า
         diceAnimation = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             currentFace++;
             if (currentFace > 6) currentFace = 1;
@@ -45,38 +52,55 @@ public class RollDiceUI {
         Label resultLabel = new Label("");
         resultLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Button rollButton = new Button("ROLL!");
-        rollButton.setOnAction(e -> {
-            diceAnimation.stop();
-
-            int result = new Random().nextInt(6) + 1;
-            diceView.setImage(loadDice(result));
-            resultLabel.setText("You rolled " + result + "!");
-
-            rollButton.setText("OK");
-            rollButton.setOnAction(ev -> callback.onResult(result));
-        });
-
-        root = new VBox(20, diceView, resultLabel, rollButton);
+        root = new VBox(20);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: rgba(0,0,0,0.4); -fx-padding: 40;");
+        root.getChildren().add(diceView);
+
+        if (!isBot) {
+            // PLAYER MODE
+            Button rollButton = new Button("ROLL!");
+            rollButton.setOnAction(e -> {
+                diceAnimation.stop();
+
+                int result = new Random().nextInt(6) + 1;
+                diceView.setImage(loadDice(result));
+                resultLabel.setText("You rolled " + result + "!");
+
+                rollButton.setText("OK");
+                rollButton.setOnAction(ev -> callback.onResult(result));
+            });
+
+            root.getChildren().addAll(resultLabel, rollButton);
+
+        } else {
+            // BOT MODE
+            root.getChildren().add(resultLabel);
+            autoRoll(resultLabel);
+        }
     }
 
-    /** ใช้สำหรับให้ Bot roll อัตโนมัติ */
-    public void autoRoll() {
-        // หยุด timeline หลังจาก random สุ่มครั้งเดียว
+    private void autoRoll(Label resultLabel) {
+        diceAnimation.stop();
+
         Timeline autoTimeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             currentFace++;
             if (currentFace > 6) currentFace = 1;
             diceView.setImage(loadDice(currentFace));
         }));
         autoTimeline.setCycleCount(10); // หมุน 10 ครั้ง
+
         autoTimeline.setOnFinished(e -> {
-            autoTimeline.stop();
             int result = new Random().nextInt(6) + 1;
             diceView.setImage(loadDice(result));
-            callback.onResult(result);
+            resultLabel.setText("Rolled " + result + "!");
+
+            // 👉 ค้างหน้าจอไว้ 0.5 วิ ก่อนส่ง callback
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
+            pause.setOnFinished(ev -> callback.onResult(result));
+            pause.play();
         });
+
         autoTimeline.play();
     }
 

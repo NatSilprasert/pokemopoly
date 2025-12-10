@@ -43,9 +43,9 @@ public class EventTile extends Tile {
         EventCardUI ui = new EventCardUI(eventCard);
         overlay.getChildren().addAll(label, ui);
 
-        Button keepBtn = new Button("Keep");
+        Button keepBtn = new Button("OK");
         keepBtn.setOnAction(e -> {
-            // eventCard.activate(player, game);
+            eventCard.activate(game);
             rootPane.getChildren().remove(overlay);
             if (endTurnCallback != null) endTurnCallback.accept(null);
         });
