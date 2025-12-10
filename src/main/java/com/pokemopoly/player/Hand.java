@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private List<ItemCard> items;
-    private int capacity;
+    private final List<ItemCard> items;
+    private final int capacity;
 
     public Hand(int capacity) {
         this.capacity = capacity;
@@ -47,7 +47,4 @@ public class Hand {
         return items.size() >= capacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
 }

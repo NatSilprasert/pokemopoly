@@ -60,10 +60,6 @@ public class Player {
         else System.out.println("You have reached the maximum amount of pokemons");
     }
 
-    public void removePokemon(PokemonCard pokemon) {
-        team.remove(pokemon);
-    }
-
     public void setPokemon(int idx, PokemonCard card) {
         team.set(idx, card);
     }
@@ -126,7 +122,7 @@ public class Player {
     }
 
     public boolean getBadges2() {
-        return badge1;
+        return badge2;
     }
 
     public void setBadges2() {

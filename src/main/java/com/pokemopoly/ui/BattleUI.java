@@ -1,8 +1,9 @@
 package com.pokemopoly.ui;
 
-import com.pokemopoly.Battle;
 import com.pokemopoly.Game;
 import com.pokemopoly.cards.PokemonCard;
+import com.pokemopoly.cards.PokemonType;
+import com.pokemopoly.cards.TypeEffectiveness;
 import com.pokemopoly.player.Player;
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -35,8 +36,6 @@ public class BattleUI {
     private VBox playerBox;
     private VBox enemyBox;
 
-    private Battle battle;
-
     private PokemonCard playerPokemon;
     private PokemonCard botPokemon;
 
@@ -63,8 +62,6 @@ public class BattleUI {
         }
 
         botPokemon = bot.getTeam().get(0);
-        battle = new Battle(game, player, bot, true);
-
         showPokemonSelection();
     }
 
@@ -221,7 +218,7 @@ public class BattleUI {
 
         if (pRoll > bRoll) {
 
-            boolean win = battle.attack(player, bot, playerPokemon, botPokemon);
+            boolean win = attack(player, bot, playerPokemon, botPokemon);
             updateHPLabels();
 
             playShake(enemyBox);
@@ -233,7 +230,7 @@ public class BattleUI {
 
         } else if (bRoll > pRoll) {
 
-            boolean lose = battle.attack(bot, player, botPokemon, playerPokemon);
+            boolean lose = attack(bot, player, botPokemon, playerPokemon);
             updateHPLabels();
 
             playShake(playerBox);
@@ -500,5 +497,21 @@ public class BattleUI {
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
+    }
+
+    public boolean attack(Player attacker, Player defender, PokemonCard atkPoke, PokemonCard defPoke) {
+
+        int damage = atkPoke.getPower();
+
+        for (PokemonType atkType : atkPoke.getTypes()) {
+            for (PokemonType defType : defPoke.getTypes()) {
+                if (TypeEffectiveness.getSuperEffective(atkType).contains(defType)) damage += 2;
+                if (TypeEffectiveness.getNotEffective(atkType).contains(defType)) damage -= 2;
+            }
+        }
+
+        defPoke.setHp(defPoke.getHp() - damage);
+
+        return defPoke.getHp() <= 0;
     }
 }
