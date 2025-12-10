@@ -1,6 +1,8 @@
+
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
+import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Board;
 import com.pokemopoly.board.GrassColor;
 import com.pokemopoly.board.Tile;
@@ -18,6 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -47,6 +51,8 @@ public class MainGameUI {
 
     // Tile Position
     private final double[][] boardPositions = new double[40][2];
+
+    private final MusicManager musicManager;
 
     private void initBoardPositions() {
         // bottom row (0 → 9)
@@ -103,9 +109,10 @@ public class MainGameUI {
         showTurnOverlay(first);
     }
 
-    public MainGameUI(Game game, Stage stage) {
+    public MainGameUI(Game game, Stage stage, MusicManager musicManager) {
         this.game = game;
         this.stage = stage;
+        this.musicManager = musicManager;
 
         Image boardImage = new Image(
                 getClass().getResource("/main_board.png").toExternalForm()
@@ -186,7 +193,7 @@ public class MainGameUI {
 
             // set players position
             iconWrapper.setLayoutX(startX);
-            iconWrapper.setLayoutY(startY - (i * 20));
+            iconWrapper.setLayoutY(startY);
 
             playerLayer.getChildren().add(iconWrapper);
             playerIcons.add(iv);
@@ -256,6 +263,12 @@ public class MainGameUI {
 
 
     public void showTurnOverlay(Player p) {
+        if (p.isSkipTurn()) {
+            nextTurn();
+            p.setSkipTurn(false);
+            return;
+        }
+
         VBox overlay = (VBox) ((StackPane) scene.getRoot()).getChildren().get(2);
 
         Text txt = (Text) overlay.getChildren().get(0);
@@ -273,6 +286,7 @@ public class MainGameUI {
         );
 
         overlay.setVisible(true);
+        updatePlayerColors();
     }
 
     private void hideTurnOverlay(VBox overlay) {
@@ -344,7 +358,10 @@ public class MainGameUI {
 
         Player next = game.getCurrentPlayer();
 
-        Platform.runLater(() -> showTurnOverlay(next));
+        Platform.runLater(() -> {
+            showTurnOverlay(next);
+            updatePlayerColors(); // <-- อัปเดตสีผู้เล่นตาม skipTurn
+        });
     }
 
     private void playIntroFade(Pane black, VBox turnOverlay) {
@@ -372,44 +389,57 @@ public class MainGameUI {
         delay.play();
     }
 
+    private void updatePlayerColors() {
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            Player p = game.getPlayers().get(i);
+            StackPane wrapper = (StackPane) playerLayer.getChildren().get(i);
+
+            if (p.isSkipTurn()) {
+                wrapper.setOpacity(0.5); // ตัวเทา
+            } else {
+                wrapper.setOpacity(1.0); // สีปกติ
+            }
+        }
+    }
+
     public void setUpBoard() {
         List<Tile> tiles = new ArrayList<>(Arrays.asList(
-                new StartTile("Start Tile", 0),
+                new StartTile("Start Tile", 0, root, this::nextTurn),
                 new GrassTile("Green Grass Tile", 1, GrassColor.GREEN, root, v -> nextTurn()),
-                new EventTile("Event Tile", 2),
+                new EventTile("Event Tile", 2, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 3, GrassColor.GREEN, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 4, GrassColor.GREEN, root, v -> nextTurn()),
-                new CityTile("City Tile", 5, root, v -> nextTurn()`),
+                new CityTile("City Tile", 5, root, v -> nextTurn(), musicManager),
                 new GrassTile("Green Grass Tile", 6, GrassColor.GREEN, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 7, GrassColor.GREEN, root, v -> nextTurn()),
                 new ItemTile("Item Tile", 8, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 9, GrassColor.GREEN, root, v -> nextTurn()),
-                new BattleTile("Gym 1", 10),
+                new BattleTile("Gym 1", 10, root, v -> nextTurn(), musicManager),
                 new GrassTile("Green Grass Tile", 11, GrassColor.BLUE, root, v -> nextTurn()),
-                new CaveTile("Cave Tile", 12),
+                new CaveTile("Cave Tile", 12, root, this::nextTurn, musicManager),
                 new GrassTile("Green Grass Tile", 13, GrassColor.BLUE, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 14, GrassColor.BLUE, root, v -> nextTurn()),
-                new CityTile("City Tile", 15, root, v -> nextTurn()),
+                new CityTile("City Tile", 15, root, v -> nextTurn(), musicManager),
                 new GrassTile("Green Grass Tile", 16, GrassColor.BLUE, root, v -> nextTurn()),
                 new GrassTile("Green Grass Tile", 17, GrassColor.BLUE, root, v -> nextTurn()),
-                new DaycareTile("Daycare Tile", 18),
+                new DaycareTile("Daycare Tile", 18, root, this::nextTurn, musicManager),
                 new GrassTile("Green Grass Tile", 19, GrassColor.BLUE, root, v -> nextTurn()),
-                new BattleTile("Villain", 20),
+                new BattleTile("Villain", 20, root, v -> nextTurn(),musicManager),
                 new GrassTile("Purple Grass Tile", 21, GrassColor.PURPLE, root, v -> nextTurn()),
-                new EventTile("Event Tile", 22),
+                new EventTile("Event Tile", 22, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 23, GrassColor.PURPLE, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 24, GrassColor.PURPLE, root, v -> nextTurn()),
-                new CityTile("City Tile", 25, root, v -> nextTurn()),
+                new CityTile("City Tile", 25, root, v -> nextTurn(), musicManager),
                 new GrassTile("Purple Grass Tile", 26, GrassColor.PURPLE, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 27, GrassColor.PURPLE, root, v -> nextTurn()),
                 new ItemTile("Item Tile", 28, root, v -> nextTurn()),
                 new GrassTile("Purple Grass Tile", 29, GrassColor.PURPLE, root, v -> nextTurn()),
-                new BattleTile("Gym 2", 30),
+                new BattleTile("Gym 2", 30, root, v -> nextTurn(),musicManager),
                 new GrassTile("Red Grass Tile", 31, GrassColor.RED, root, v -> nextTurn()),
-                new CaveTile("Cave Tile", 32),
+                new CaveTile("Cave Tile", 32, root, this::nextTurn, musicManager),
                 new GrassTile("Red Grass Tile", 33, GrassColor.RED, root, v -> nextTurn()),
                 new GrassTile("Red Grass Tile", 34, GrassColor.RED, root, v -> nextTurn()),
-                new CityTile("City Tile", 35, root, v -> nextTurn()),
+                new CityTile("City Tile", 35, root, v -> nextTurn(), musicManager),
                 new GrassTile("Red Grass Tile", 36, GrassColor.RED, root, v -> nextTurn()),
                 new GrassTile("Red Grass Tile", 37, GrassColor.RED, root, v -> nextTurn()),
                 new GrassTile("Red Grass Tile", 38, GrassColor.RED, root, v -> nextTurn()),

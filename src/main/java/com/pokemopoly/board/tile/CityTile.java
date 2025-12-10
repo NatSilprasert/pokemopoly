@@ -1,6 +1,7 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
+import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.player.Hand;
@@ -19,11 +20,13 @@ public class CityTile extends Tile {
 
     private final StackPane rootPane;
     private final Consumer<Void> endTurnCallback;
+    private final MusicManager musicManager;
 
-    public CityTile(String name, int index, StackPane rootPane, Consumer<Void> endTurnCallback) {
+    public CityTile(String name, int index, StackPane rootPane, Consumer<Void> endTurnCallback, MusicManager musicManager) {
         super(name, index);
         this.rootPane = rootPane;
         this.endTurnCallback = endTurnCallback;
+        this.musicManager = musicManager;
     }
 
     @Override
@@ -38,6 +41,7 @@ public class CityTile extends Tile {
         // ---------------------
         // 2. Open SHOP overlay
         // ---------------------
+        musicManager.fadeOutCurrent(1, () -> musicManager.playMusicForScene("pokemoncenter"));
         showShopOverlay(player, game);
     }
 
@@ -77,6 +81,7 @@ public class CityTile extends Tile {
             rootPane.getChildren().remove(overlay);
             System.out.println("Exited Shop.");
             if (endTurnCallback != null) endTurnCallback.accept(null);
+            musicManager.fadeOutCurrent(1, () -> musicManager.playWithFade("palletTown", true, 1.0));
         });
 
         overlay.getChildren().addAll(label, shopUI, exitBtn);

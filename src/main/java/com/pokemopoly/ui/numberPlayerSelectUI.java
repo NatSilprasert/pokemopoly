@@ -1,6 +1,8 @@
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
+import com.pokemopoly.Main;
+import com.pokemopoly.MusicManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,14 +10,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class NumberPlayerSelectUI {
 
     private Scene scene;
     private int selectedPlayers = 0;
+    private final MusicManager musicManager;
 
-    public NumberPlayerSelectUI(Game game, Stage stage) {
+    public NumberPlayerSelectUI(Game game, Stage stage, MusicManager musicManager) {
+        this.musicManager = musicManager;
 
         Label title = new Label("Choose number of players");
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
@@ -37,8 +42,8 @@ public class NumberPlayerSelectUI {
 
         confirmBtn.setOnAction(e -> {
             game.setPlayerCount(selectedPlayers);
-
-            PlayerSetupUI nextUI = new PlayerSetupUI(game, stage, selectedPlayers);
+            musicManager.fadeOutCurrent(0.5, () -> musicManager.playMusicForScene("opening"));
+            PlayerSetupUI nextUI = new PlayerSetupUI(game, stage, selectedPlayers, musicManager);
             stage.setScene(nextUI.getScene());
         });
 

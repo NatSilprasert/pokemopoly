@@ -1,6 +1,7 @@
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
+import com.pokemopoly.MusicManager;
 import com.pokemopoly.player.Player;
 import com.pokemopoly.player.ProfessionType;
 
@@ -16,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -28,6 +30,7 @@ public class PlayerSetupUI {
     private final Stage stage;
 
     private final int totalPlayers;
+    private final MusicManager musicManager;
     private int currentIndex = 1;
 
     private ProfessionType selectedProfession = null;
@@ -40,10 +43,11 @@ public class PlayerSetupUI {
 
     private final StackPane rootContainer;
 
-    public PlayerSetupUI(Game game, Stage stage, int totalPlayers) {
+    public PlayerSetupUI(Game game, Stage stage, int totalPlayers, MusicManager musicManager) {
         this.game = game;
         this.stage = stage;
         this.totalPlayers = totalPlayers;
+        this.musicManager = musicManager;
 
         stepLabel = new Label("Player 1 - Enter your name");
         stepLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
@@ -244,9 +248,9 @@ public class PlayerSetupUI {
                 zoom,
                 textFadeOut
         );
-
         seq.setOnFinished(e -> {
-            MainGameUI ui = new MainGameUI(game, stage);
+            musicManager.fadeOutCurrent(2, () -> musicManager.playMusicForScene("palletTown"));
+            MainGameUI ui = new MainGameUI(game, stage, musicManager);
             stage.setScene(ui.getScene());
         });
 

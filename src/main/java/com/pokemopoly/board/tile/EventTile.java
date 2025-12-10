@@ -1,19 +1,57 @@
+
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
+import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.EventCard;
+import com.pokemopoly.player.Hand;
 import com.pokemopoly.player.Player;
+import com.pokemopoly.ui.cards.EventCardUI;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class EventTile extends Tile {
 
-    public EventTile(String name, int index) {
+    private final StackPane rootPane;
+    private final Consumer<Void> endTurnCallback;
+
+    public EventTile(String name, int index, StackPane rootPane, Consumer<Void> endTurnCallback) {
         super(name, index);
+        this.rootPane = rootPane;
+        this.endTurnCallback = endTurnCallback;
     }
 
+    @Override
     public void onLand(Player player, Game game) {
-        System.out.println(player.getName() + " landed on " + name + "!");
+
         EventCard eventCard = game.getDeckManager().drawEvent();
-        // todo
+
+        VBox overlay = new VBox(10);
+        overlay.setAlignment(Pos.CENTER);
+        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.75); -fx-padding: 20;");
+        overlay.setMaxWidth(800);
+
+        javafx.scene.control.Label label = new javafx.scene.control.Label("You found an Event Card!");
+        label.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
+
+        EventCardUI ui = new EventCardUI(eventCard);
+        overlay.getChildren().addAll(label, ui);
+
+        Button keepBtn = new Button("Keep");
+        keepBtn.setOnAction(e -> {
+            // eventCard.activate(player, game);
+            rootPane.getChildren().remove(overlay);
+            if (endTurnCallback != null) endTurnCallback.accept(null);
+        });
+
+        overlay.getChildren().add(keepBtn);
+        rootPane.getChildren().add(overlay);
+        StackPane.setAlignment(overlay, Pos.CENTER);
     }
 }

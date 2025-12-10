@@ -1,151 +1,178 @@
+
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
+import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.cards.pokemon.interfaces.Evolvable;
 import com.pokemopoly.player.Player;
-import com.pokemopoly.player.ProfessionType;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class DaycareTile extends Tile {
-    private Map<Player, PokemonCard> hatch = new HashMap<Player, PokemonCard>();
 
-    public DaycareTile(String name, int index) {
+    private final StackPane rootPane;
+    private final Runnable endTurnCallback;
+    private final MusicManager musicManager;
+
+    public DaycareTile(String name, int index, StackPane rootPane, Runnable endTurnCallback, MusicManager musicManager) {
         super(name, index);
+        this.rootPane = rootPane;
+        this.endTurnCallback = endTurnCallback;
+        this.musicManager = musicManager;
     }
 
+    @Override
     public void onLand(Player player, Game game) {
-        System.out.println(player.getName() + " landed on " + name + "!");
 
-        Scanner scanner = new Scanner(System.in);
 
-        if (player.getProfession() == ProfessionType.ROCKET && !hatch.isEmpty() && !player.isTeamFull()) {
-            Map<Integer, Player> indexToPlayer = new HashMap<>();
-            int i = 1;
-            for (Map.Entry<Player, PokemonCard> entry : hatch.entrySet()) {
-                System.out.println(i + ": " + entry.getValue().getName());
-                indexToPlayer.put(i, entry.getKey());
-                i++;
-            }
-
-            System.out.print("Enter ID: ");
-
-            int choice = scanner.nextInt();
-
-            if (!indexToPlayer.containsKey(choice)) {
-                System.out.println("Invalid choice!");
-            }
-            else {
-                Player keyPlayer = indexToPlayer.get(choice);
-                PokemonCard stolen = hatch.get(keyPlayer);
-
-                player.addPokemon(stolen);
-                hatch.remove(keyPlayer);
-
-                System.out.println("You stole " + stolen.getName() + "!");
-            }
-        }
-
-        List<PokemonCard> evolvablePokemons = player.getTeam().stream()
+        List<PokemonCard> evolvables = player.getTeam().stream()
                 .filter(p -> p instanceof Evolvable)
                 .toList();
 
-        if (!evolvablePokemons.isEmpty()) {
-            System.out.println("Choose pokemon to evolve!");
-            for (int i = 0; i < evolvablePokemons.size(); i++) {
-                System.out.println((i + 1) + ". " + evolvablePokemons.get(i).getName());
-            }
+        if (evolvables.isEmpty()) {
+            // ไม่มี Evolvable เลย ข้าม turn
+            if (endTurnCallback != null) endTurnCallback.run();
+            return;
         }
 
-        int choice = -1;
+        musicManager.fadeOutCurrent(1, () -> musicManager.playMusicForScene("daycare"));
 
-        while (true) {
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-                if (choice >= 1 && choice <= evolvablePokemons.size()) {
-                    break;
-                } else {
-                    System.out.println("❌ Invalid number. Please select between 1 and " + evolvablePokemons.size() + "!");
-                }
-            } else {
-                System.out.println("❌ Please enter a valid number!");
-                scanner.next();
-            }
+        VBox overlay = new VBox(25);
+        overlay.setAlignment(Pos.CENTER);
+        overlay.setStyle("-fx-background-color: rgba(0,0,0,0.85); -fx-padding: 30;");
+        overlay.setMaxWidth(1100);
+
+        Label title = makeLabel("Select a Pokémon to Evolve", 28, Color.WHITE);
+
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        boolean shrink = evolvables.size() > 3;
+        grid.setHgap(shrink ? 20 : 40);
+        grid.setVgap(shrink ? 10 : 20);
+
+        final PokemonCard[] selected = {null};
+        int index = 0;
+
+        for (PokemonCard card : evolvables) {
+            VBox cardUI = buildPokemonCard(card, shrink);
+            int col = index % 3; // 2 columns ถ้า shrink
+            int row = shrink ? index / 3 : index;
+            grid.add(cardUI, col, row);
+            index++;
+
+            cardUI.setOnMouseClicked(e -> {
+                grid.getChildren().forEach(n -> n.setStyle(baseCardStyle(shrink)));
+                cardUI.setStyle(baseCardStyle(shrink) + "-fx-border-color: yellow; -fx-border-width: 3;");
+                selected[0] = card;
+            });
         }
 
-        PokemonCard selected = evolvablePokemons.get(choice - 1);
-        System.out.println("You chose " + selected.getName() + " to evolve!");
+        overlay.getChildren().addAll(title, grid);
+        rootPane.getChildren().add(overlay);
 
-        Evolvable evolvable = (Evolvable) selected;
-        PokemonCard evolvedPokemon = evolvable.evolve();
+        Button confirm = new Button("Confirm Evolution");
+        confirm.setStyle("-fx-font-family: 'Pixelify Sans'; -fx-font-size: 20px; -fx-padding: 12 30;");
+        overlay.getChildren().add(confirm);
 
-        player.getTeam().remove(selected);
-        hatch.put(player, evolvedPokemon);
+        confirm.setOnAction(e -> {
+            if (selected[0] == null) return;
 
-        System.out.println("Come back next round to retrieve your Pokémon!");
+            PokemonCard oldCard = selected[0];
+            PokemonCard evo = ((Evolvable) oldCard).evolve();
+            int oldIdx = player.getTeam().indexOf(oldCard);
+
+            // อัปเดตทีมผู้เล่น
+            player.setPokemon(oldIdx, evo);
+            System.out.println(player.getName() + " evolved " + oldCard.getName() + " into " + evo.getName());
+
+            overlay.getChildren().clear();
+
+            // แสดงข้อความสำเร็จ
+            Label success = makeLabel("Evolution Successful!", 28, Color.LIGHTGREEN);
+
+            HBox evoBox = new HBox(40);
+            evoBox.setAlignment(Pos.CENTER);
+
+            VBox oldBox = new VBox(5);
+            oldBox.setAlignment(Pos.CENTER);
+            oldBox.getChildren().addAll(buildPokemonCard(oldCard, false).getChildren());
+
+            VBox newBox = new VBox(5);
+            newBox.setAlignment(Pos.CENTER);
+            newBox.getChildren().addAll(buildPokemonCard(evo, false).getChildren());
+
+            // ลูกศรคั่นกลาง
+            Label arrow = new Label("→");
+            arrow.setFont(Font.font("Pixelify Sans", 36));
+            arrow.setTextFill(Color.LIGHTGRAY);
+            arrow.setAlignment(Pos.CENTER);
+
+            evoBox.getChildren().addAll(oldBox, arrow, newBox);
+
+            Button ok = new Button("OK");
+            ok.setStyle("-fx-font-family: 'Pixelify Sans'; -fx-font-size: 20px; -fx-padding: 12 30;");
+            ok.setOnAction(ev -> {
+                rootPane.getChildren().remove(overlay);
+                if (endTurnCallback != null) endTurnCallback.run();
+                musicManager.fadeOutCurrent(1, () -> musicManager.playWithFade("palletTown", true, 1.0));
+            });
+
+            overlay.getChildren().addAll(success, evoBox, ok);
+        });
     }
 
-    public void walkPass(Player player, Game game) {
-        if (hatch.containsKey(player)) {
-            PokemonCard evolvedPokemon = hatch.get(player);
+    private VBox buildPokemonCard(PokemonCard card, boolean shrink) {
+        VBox box = new VBox(shrink ? 5 : 10);
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(shrink ? 5 : 10));
+        box.setStyle(baseCardStyle(shrink));
 
-            System.out.println(player.getName() + " has an evolved Pokémon ready to pick up!");
+        Label name = makeLabel(card.getName(), 20, Color.WHITE);
+        String typeText = card.getTypes().stream().map(Enum::name).collect(Collectors.joining(" / "));
+        Label type = makeLabel("Type: " + typeText, 14, Color.LIGHTGRAY);
 
-            if (player.getTeam().size() >= player.getMaxPokemon()) {
-                System.out.println("Your team is full!");
-                System.out.println("Do you want to replace a Pokémon or release the new one?");
-                System.out.println("1. Replace a Pokémon in your team");
-                System.out.println("2. Release the evolved Pokémon");
+        ImageView img = new ImageView(getImage(card));
+        img.setFitHeight(shrink ? 80 : 120);
+        img.setPreserveRatio(true);
 
-                Scanner sc = new Scanner(System.in);
-                int choice = -1;
+        Label stats = makeLabel("ATK " + card.getPower() + "   HP " + card.getHp() + "/" + card.getMaxHp(), 16, Color.WHITE);
 
-                while (choice != 1 && choice != 2) {
-                    System.out.print("Enter your choice: ");
-                    try {
-                        choice = Integer.parseInt(sc.nextLine());
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid input. Please enter 1 or 2.");
-                    }
-                }
+        box.getChildren().addAll(name, type, img, stats);
+        return box;
+    }
 
-                if (choice == 1) {
-                    System.out.println("Choose a Pokémon to replace:");
-                    for (int i = 0; i < player.getTeam().size(); i++) {
-                        System.out.println((i + 1) + ". " + player.getTeam().get(i).getName());
-                    }
+    private String baseCardStyle(boolean shrink) {
+        return "-fx-background-color: #1e1e1e;" +
+                "-fx-border-color: white;" +
+                (shrink ? "-fx-border-width: 1;" : "-fx-border-width: 2;") +
+                "-fx-background-radius: 12;";
+    }
 
-                    int replaceIndex = -1;
-                    while (replaceIndex < 1 || replaceIndex > player.getTeam().size()) {
-                        System.out.print("Enter number of Pokémon to replace: ");
-                        try {
-                            replaceIndex = Integer.parseInt(sc.nextLine());
-                        } catch (NumberFormatException e) {
-                            System.out.println("Invalid input. Please enter a valid number.");
-                        }
-                    }
+    private Label makeLabel(String text, int size, Color color) {
+        Label lb = new Label(text);
+        lb.setFont(Font.font("Pixelify Sans", size));
+        lb.setTextFill(color);
+        return lb;
+    }
 
-                    PokemonCard removed = player.getTeam().remove(replaceIndex - 1);
-                    System.out.println(removed.getName() + " was released!");
-                    player.getTeam().add(evolvedPokemon);
-                    System.out.println("You received " + evolvedPokemon.getName() + "!");
-
-                }
-                else {
-                    System.out.println("You decided to release " + evolvedPokemon.getName() + ".");
-                }
-
-            } else {
-                player.getTeam().add(evolvedPokemon);
-                System.out.println("You received " + evolvedPokemon.getName() + "!");
-            }
-
-            hatch.remove(player);
+    private Image getImage(PokemonCard card) {
+        try {
+            return new Image(getClass().getResourceAsStream("/sprites/" + card.getName().toLowerCase() + ".png"));
+        } catch (Exception e) {
+            return new Image(getClass().getResourceAsStream("/sprites/placeholder.png"));
         }
     }
 }

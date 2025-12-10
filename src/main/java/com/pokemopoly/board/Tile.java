@@ -2,6 +2,8 @@ package com.pokemopoly.board;
 
 import com.pokemopoly.Battle;
 import com.pokemopoly.Game;
+import com.pokemopoly.MusicManager;
+import com.pokemopoly.cards.PokemonCard;
 import com.pokemopoly.player.Player;
 
 import java.util.ArrayList;

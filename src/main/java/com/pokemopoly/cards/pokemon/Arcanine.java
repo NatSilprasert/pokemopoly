@@ -7,7 +7,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 import java.util.List;
 
-public class Arcanine extends PokemonCard implements BattleAbility {
+public class Arcanine extends PokemonCard {
     public Arcanine() {
         super("P059",
                 "Arcanine",
@@ -18,9 +18,9 @@ public class Arcanine extends PokemonCard implements BattleAbility {
                 List.of(PokemonType.FIRE));
     }
 
-    @Override
-    public void useBattlePassive(Battle battle) {
-        PokemonCard opponentPokemon = battle.getOpponentPokemon(this);
-        opponentPokemon.setPower(opponentPokemon.getPower() - 2);
-    }
+    //@Override
+    //public void useBattlePassive(Battle battle) {
+     //   PokemonCard opponentPokemon = battle.getOpponentPokemon(this);
+       // opponentPokemon.setPower(opponentPokemon.getPower() - 2);
+    //}
 }

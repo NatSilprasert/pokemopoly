@@ -1,6 +1,7 @@
 package com.pokemopoly.board.tile;
 
 import com.pokemopoly.Game;
+import com.pokemopoly.MusicManager;
 import com.pokemopoly.board.Tile;
 import com.pokemopoly.cards.ItemCard;
 import com.pokemopoly.ui.cards.ItemCardUI;

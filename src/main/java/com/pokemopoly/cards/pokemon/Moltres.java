@@ -7,7 +7,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 import java.util.List;
 
-public class Moltres extends PokemonCard implements BattleAbility {
+public class Moltres extends PokemonCard {
 
     public Moltres() {
         super("P146",
@@ -19,16 +19,16 @@ public class Moltres extends PokemonCard implements BattleAbility {
                 List.of(PokemonType.FIRE,PokemonType.FLYING));
     }
 
-    @Override
-    public void useBattlePassive(Battle battle) {
-        PokemonCard enemy = battle.getOpponentPokemon(this);
-
-        if (enemy == null || !enemy.isAlive()) return;
-
-        // ถ้าอีกฝั่งไม่ถูก Burn อยู่แล้ว
-        if (!enemy.isBurned()) {
-            enemy.setBurned(true);
-            System.out.println("🔥 Heat Wave! " + enemy.getName() + " is burned!");
-        }
-    }
+//    @Override
+//    public void useBattlePassive(Battle battle) {
+//        PokemonCard enemy = battle.getOpponentPokemon(this);
+//
+//        if (enemy == null || !enemy.isAlive()) return;
+//
+//        // ถ้าอีกฝั่งไม่ถูก Burn อยู่แล้ว
+//        if (!enemy.isBurned()) {
+//            enemy.setBurned(true);
+//            System.out.println("🔥 Heat Wave! " + enemy.getName() + " is burned!");
+//        }
+//    }
 }

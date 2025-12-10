@@ -1,3 +1,4 @@
+
 package com.pokemopoly.cards;
 
 import com.pokemopoly.player.Player;
@@ -11,8 +12,8 @@ public abstract class PokemonCard implements Card {
     private final List<PokemonType> types;
     private Player owner;
 
-    private final int maxHp;
-    private final int maxPower;
+    private int maxHp;
+    private int maxPower;
     private final int price;
     private PokemonDeckColor deckColor;
     private int hp;
@@ -54,6 +55,10 @@ public abstract class PokemonCard implements Card {
         return maxHp;
     }
 
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
     public int getPower() {
         return power;
     }
@@ -64,6 +69,10 @@ public abstract class PokemonCard implements Card {
 
     public int getMaxPower() {
         return maxPower;
+    }
+
+    public void setMaxPower(int maxPower) {
+        this.maxPower = maxPower;
     }
 
     public int getPrice() {

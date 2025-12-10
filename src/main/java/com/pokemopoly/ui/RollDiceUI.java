@@ -1,3 +1,4 @@
+
 package com.pokemopoly.ui;
 
 import javafx.animation.KeyFrame;
@@ -17,14 +18,17 @@ public class RollDiceUI {
     private VBox root;
     private Timeline diceAnimation;
     private int currentFace = 1;
+    private ImageView diceView;       // ⬅️ ย้ายไปเป็น field
+    private DiceResultCallback callback;  // ⬅️ ย้ายไปเป็น field
 
     public interface DiceResultCallback {
         void onResult(int diceValue);
     }
 
     public RollDiceUI(DiceResultCallback callback) {
+        this.callback = callback;
 
-        ImageView diceView = new ImageView();
+        diceView = new ImageView();
         diceView.setFitWidth(150);
         diceView.setFitHeight(150);
         diceView.setImage(loadDice(1));
@@ -56,6 +60,24 @@ public class RollDiceUI {
         root = new VBox(20, diceView, resultLabel, rollButton);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: rgba(0,0,0,0.4); -fx-padding: 40;");
+    }
+
+    /** ใช้สำหรับให้ Bot roll อัตโนมัติ */
+    public void autoRoll() {
+        // หยุด timeline หลังจาก random สุ่มครั้งเดียว
+        Timeline autoTimeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            currentFace++;
+            if (currentFace > 6) currentFace = 1;
+            diceView.setImage(loadDice(currentFace));
+        }));
+        autoTimeline.setCycleCount(10); // หมุน 10 ครั้ง
+        autoTimeline.setOnFinished(e -> {
+            autoTimeline.stop();
+            int result = new Random().nextInt(6) + 1;
+            diceView.setImage(loadDice(result));
+            callback.onResult(result);
+        });
+        autoTimeline.play();
     }
 
     public VBox getView() {

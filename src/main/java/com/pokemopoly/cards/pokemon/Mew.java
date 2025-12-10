@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Mew extends PokemonCard {
     public Mew() {
-        super("P150",
+        super("P151",
                 "Mew",
                 "Mew is a Psychic type Pokémon introduced in Generation 1.",
                 15,

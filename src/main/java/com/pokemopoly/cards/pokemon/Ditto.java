@@ -7,7 +7,7 @@ import com.pokemopoly.cards.pokemon.interfaces.BattleAbility;
 
 import java.util.List;
 
-public class Ditto extends PokemonCard implements BattleAbility {
+public class Ditto extends PokemonCard {
 
     public Ditto() {
         super("P132",
@@ -19,11 +19,11 @@ public class Ditto extends PokemonCard implements BattleAbility {
                 List.of(PokemonType.NORMAL));
     }
 
-    @Override
-    public void useBattlePassive(Battle battle) {
-        PokemonCard opponentPokemon = battle.getOpponentPokemon(this);
-        setHp(opponentPokemon.getHp());
-        setPower(opponentPokemon.getPower());
-        System.out.println("Ditto is copy!");
-    }
+//    @Override
+//    public void useBattlePassive(Battle battle) {
+//        PokemonCard opponentPokemon = battle.getOpponentPokemon(this);
+//        setHp(opponentPokemon.getHp());
+//        setPower(opponentPokemon.getPower());
+//        System.out.println("Ditto is copy!");
+//    }
 }
