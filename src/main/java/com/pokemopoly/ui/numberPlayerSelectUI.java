@@ -1,7 +1,6 @@
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
-import com.pokemopoly.Main;
 import com.pokemopoly.MusicManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class NumberPlayerSelectUI {

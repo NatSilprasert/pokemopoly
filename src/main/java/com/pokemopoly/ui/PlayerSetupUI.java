@@ -250,7 +250,7 @@ public class PlayerSetupUI {
         );
         seq.setOnFinished(e -> {
             musicManager.fadeOutCurrent(2, () -> musicManager.playMusicForScene("palletTown"));
-            MainGameUI ui = new MainGameUI(game, stage, musicManager);
+            MainGameUI ui = new MainGameUI(game, stage);
             stage.setScene(ui.getScene());
         });
 

@@ -456,7 +456,6 @@ public class BattleUI {
         box.setPadding(shrink ? new Insets(5) : new Insets(15));
         box.setStyle(baseSelectStyle(shrink));
 
-        // ⬆️ ปรับ scale เมื่อเกิน 3 ตัว
         double scale = shrink ? 0.75 : 1.0;
         box.setScaleX(scale);
         box.setScaleY(scale);

@@ -1,4 +1,3 @@
-
 package com.pokemopoly.ui;
 
 import com.pokemopoly.Game;
@@ -20,8 +19,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -49,8 +46,6 @@ public class MainGameUI {
 
     // Tile Position
     private final double[][] boardPositions = new double[40][2];
-
-    private final MusicManager musicManager;
 
     private void initBoardPositions() {
         // bottom row (0 → 9)
@@ -105,7 +100,6 @@ public class MainGameUI {
     public MainGameUI(Game game, Stage stage) {
         this.game = game;
         this.stage = stage;
-        this.musicManager = musicManager;
 
         Image boardImage = new Image(
                 getClass().getResource("/main_board.png").toExternalForm()
@@ -396,7 +390,6 @@ public class MainGameUI {
 
     public void showGameEndOverlay() {
         List<Player> players = new ArrayList<>(game.getPlayers());
-        // เรียงจากเหรียญมากไปน้อย
         players.sort(Comparator.comparingInt(Player::getAllCoin).reversed());
 
         VBox overlay = new VBox(20);
@@ -452,8 +445,11 @@ public class MainGameUI {
         newGameBtn.setOnAction(e -> {
             root.getChildren().remove(overlay);
 
-            Game newGame = new Game();
-            NumberPlayerSelectUI setupUI = new NumberPlayerSelectUI(newGame, stage);
+            MusicManager musicManager = new MusicManager();
+            musicManager.playMusicForScene("title");
+
+            Game newGame = new Game(musicManager);
+            NumberPlayerSelectUI setupUI = new NumberPlayerSelectUI(newGame, stage, musicManager);
             stage.setScene(setupUI.getScene());
         });
 

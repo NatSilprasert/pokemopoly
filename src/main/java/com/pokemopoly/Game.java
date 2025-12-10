@@ -27,7 +27,11 @@ public class Game {
     private StackPane root;
     private Runnable nextTurnCallback;
 
-    public Game() {
+    // Music
+    private final MusicManager musicManager;
+
+    public Game(MusicManager musicManager) {
+        this.musicManager = musicManager;
         this.players = new ArrayList<>();
         setUpDeckManager();
     }
@@ -51,37 +55,37 @@ public class Game {
                 new EventTile("Event Tile", 2, root, v -> nextTurnCallback.run()),
                 new GrassTile("Green Grass Tile", 3, GrassColor.GREEN, root, v -> nextTurnCallback.run()),
                 new GrassTile("Green Grass Tile", 4, GrassColor.GREEN, root, v -> nextTurnCallback.run()),
-                new CityTile("City Tile", 5, root, v -> nextTurnCallback.run()),
+                new CityTile("City Tile", 5, root, v -> nextTurnCallback.run(), musicManager),
                 new GrassTile("Green Grass Tile", 6, GrassColor.GREEN, root, v -> nextTurnCallback.run()),
                 new GrassTile("Green Grass Tile", 7, GrassColor.GREEN, root, v -> nextTurnCallback.run()),
                 new ItemTile("Item Tile", 8, root, v -> nextTurnCallback.run()),
                 new GrassTile("Green Grass Tile", 9, GrassColor.GREEN, root, v -> nextTurnCallback.run()),
-                new BattleTile("Gym 1", 10, root, v -> nextTurnCallback.run()),
+                new BattleTile("Gym 1", 10, root, v -> nextTurnCallback.run(), musicManager),
                 new GrassTile("Green Grass Tile", 11, GrassColor.BLUE, root, v -> nextTurnCallback.run()),
-                new CaveTile("Cave Tile", 12, root, nextTurnCallback),
+                new CaveTile("Cave Tile", 12, root, nextTurnCallback, musicManager),
                 new GrassTile("Green Grass Tile", 13, GrassColor.BLUE, root, v -> nextTurnCallback.run()),
                 new GrassTile("Green Grass Tile", 14, GrassColor.BLUE, root, v -> nextTurnCallback.run()),
-                new CityTile("City Tile", 15, root, v -> nextTurnCallback.run()),
+                new CityTile("City Tile", 15, root, v -> nextTurnCallback.run(), musicManager),
                 new GrassTile("Green Grass Tile", 16, GrassColor.BLUE, root, v -> nextTurnCallback.run()),
                 new GrassTile("Green Grass Tile", 17, GrassColor.BLUE, root, v -> nextTurnCallback.run()),
-                new DaycareTile("Daycare Tile", 18, root, nextTurnCallback),
+                new DaycareTile("Daycare Tile", 18, root, nextTurnCallback, musicManager),
                 new GrassTile("Green Grass Tile", 19, GrassColor.BLUE, root, v -> nextTurnCallback.run()),
-                new BattleTile("Villain", 20, root, v -> nextTurnCallback.run()),
+                new BattleTile("Villain", 20, root, v -> nextTurnCallback.run(), musicManager),
                 new GrassTile("Purple Grass Tile", 21, GrassColor.PURPLE, root, v -> nextTurnCallback.run()),
                 new EventTile("Event Tile", 22, root, v -> nextTurnCallback.run()),
                 new GrassTile("Purple Grass Tile", 23, GrassColor.PURPLE, root, v -> nextTurnCallback.run()),
                 new GrassTile("Purple Grass Tile", 24, GrassColor.PURPLE, root, v -> nextTurnCallback.run()),
-                new CityTile("City Tile", 25, root, v -> nextTurnCallback.run()),
+                new CityTile("City Tile", 25, root, v -> nextTurnCallback.run(), musicManager),
                 new GrassTile("Purple Grass Tile", 26, GrassColor.PURPLE, root, v -> nextTurnCallback.run()),
                 new GrassTile("Purple Grass Tile", 27, GrassColor.PURPLE, root, v -> nextTurnCallback.run()),
                 new ItemTile("Item Tile", 28, root, v -> nextTurnCallback.run()),
                 new GrassTile("Purple Grass Tile", 29, GrassColor.PURPLE, root, v -> nextTurnCallback.run()),
-                new BattleTile("Gym 2", 30, root, v -> nextTurnCallback.run()),
+                new BattleTile("Gym 2", 30, root, v -> nextTurnCallback.run(), musicManager),
                 new GrassTile("Red Grass Tile", 31, GrassColor.RED, root, v -> nextTurnCallback.run()),
-                new CaveTile("Cave Tile", 32, root, nextTurnCallback),
+                new CaveTile("Cave Tile", 32, root, nextTurnCallback, musicManager),
                 new GrassTile("Red Grass Tile", 33, GrassColor.RED, root, v -> nextTurnCallback.run()),
                 new GrassTile("Red Grass Tile", 34, GrassColor.RED, root, v -> nextTurnCallback.run()),
-                new CityTile("City Tile", 35, root, v -> nextTurnCallback.run()),
+                new CityTile("City Tile", 35, root, v -> nextTurnCallback.run(), musicManager),
                 new GrassTile("Red Grass Tile", 36, GrassColor.RED, root, v -> nextTurnCallback.run()),
                 new GrassTile("Red Grass Tile", 37, GrassColor.RED, root, v -> nextTurnCallback.run()),
                 new GrassTile("Red Grass Tile", 38, GrassColor.RED, root, v -> nextTurnCallback.run()),
