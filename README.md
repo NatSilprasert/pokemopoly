@@ -60,6 +60,7 @@ If the player choose to catch a pokemon, there are 2 steps:
 - **Red Ball:** Normal catch condition.
 - **Great Ball:** Catch difficulty decreases by 1.
 - **Hyper Ball:** Catch difficulty decreases by 2.
+
   ![App Screenshot](https://res.cloudinary.com/denjyog53/image/upload/v1765434961/Screenshot_2568-12-11_at_13.35.45_bokbgm.png)
 
 4.2 Roll the dice, if the roll meets or exceeds the required value, the Pokémon is caught.
